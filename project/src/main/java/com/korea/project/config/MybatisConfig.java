@@ -1,4 +1,4 @@
-package com.korea.project.mybatis;
+package com.korea.project.config;
 
 import javax.sql.DataSource;
 
