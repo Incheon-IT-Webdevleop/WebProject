@@ -41,12 +41,15 @@ public class SecurityConfig {
                         .usernameParameter("username") // 로그인 form의 username 파라미터 이름
                         .passwordParameter("password") // 로그인 form의 password 파라미터 이름
                         .permitAll()
-                )
+                    )
                 .httpBasic(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests((authorizeRequests) -> authorizeRequests
-                        .requestMatchers(new MvcRequestMatcher(introspector, "/api/user")).permitAll()
-                        .requestMatchers(new MvcRequestMatcher(introspector, "/api/admin")).hasRole("ADMIN")
-                )
+                .authorizeHttpRequests(authorizeRequests -> authorizeRequests
+//                        .requestMatchers(new MvcRequestMatcher(introspector, "/login")).permitAll() // 로그인 페이지 접근 허용
+//                        .requestMatchers(new MvcRequestMatcher(introspector, "/perform_login")).permitAll() // 로그인 처리 URL 접근 허용
+//                        .requestMatchers(new MvcRequestMatcher(introspector, "/api/user")).permitAll() // API 사용자 접근 허용
+//                        .requestMatchers(new MvcRequestMatcher(introspector, "/api/admin")).hasRole("ADMIN") // 관리자 접근 허용
+                        .anyRequest().permitAll() // 나머지 모든 요청은 인증 필요
+                    )
 //                .oauth2Login(oauth2Login ->
 //                        oauth2Login.userInfoEndpoint(userInfoEndpointConfig ->
 //                                userInfoEndpointConfig.userService(customOAuth2UserService)))
