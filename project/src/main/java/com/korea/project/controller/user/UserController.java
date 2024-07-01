@@ -26,7 +26,7 @@ public class UserController {
 	public String loginPage() {
 		System.out.println("컨트롤러");
 		System.out.println();
-		return "user/login/login";
+		return "login/login";
 	}
 	
 	// 회원가입 페이지에 접근하면 view보여주기
