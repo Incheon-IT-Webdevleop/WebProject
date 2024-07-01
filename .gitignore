@@ -38,4 +38,8 @@ local.properties
 hs_err_pid*
 replay_pid*
 
+<<<<<<< HEAD
 /.metadata/
+=======
+/.metadata/
+>>>>>>> origin/main
