@@ -1,5 +1,6 @@
 package com.korea.project.test;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -16,6 +17,7 @@ public class dbmstest {
 	@Autowired
 	public TimeMapper timeMapper;
 	
+	@Test
 	public void getTime() {
 		log.info(timeMapper.getTime());
 	}
