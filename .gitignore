@@ -4,8 +4,8 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=eclipse
 
 ### Eclipse ###
-.metadata
-bin/
+/.metadata/
+/bin/
 tmp/
 *.tmp
 *.bak
@@ -38,3 +38,4 @@ local.properties
 hs_err_pid*
 replay_pid*
 
+/.metadata/
