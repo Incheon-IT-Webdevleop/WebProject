@@ -8,6 +8,6 @@ public class UserController {
 
 	@GetMapping("/register")
 	public String registerPage() {
-		return "all/register";
+		return "all/register/register";
 	}
 }

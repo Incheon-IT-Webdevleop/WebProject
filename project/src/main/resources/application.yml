@@ -5,8 +5,29 @@ server:
 spring:
   datasource:
     hikari:
-      driver-class-name: com.mysql.jdbc.Driver
+      driver-class-name: com.mysql.cj.jdbc.Driver
       jdbc-url: jdbc:mysql://localhost:3306/project?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
       username : my_user
       password : 1111
 
+security:
+  oauth2:
+    client:
+      registration:
+#        google:
+#          client-id: #애플리케이션 정보에서 제공해주는 클라우드 ID
+#          client-secret: #애플리케이션 정보에서 제공해주는 클라우드 시크릿번호
+#          scope:
+#            - email
+#            - profile
+            # 네이버는 기본적으로 provider 가 아니다. 그래서 추가적인 설정 파일이 있다. 아래코드 참고.
+        naver:
+          client-id: W8OYQZbT5uuydUIobDWQ
+          client-secret: EitqxVfGX1
+          scope:
+              - name
+              - email
+              - nickname
+          client-name: Naver
+          authorization-grant-type: authorization_code
+          redirect-uri: http://localhost:8080/login/oauth2/code/naver
