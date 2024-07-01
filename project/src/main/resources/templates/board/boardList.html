@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<table border="1">
+		<tr>
+			<td>번호idx</td>
+			<td>제목</td>
+			<td>작성자</td>
+			<td>작성날짜/시간</td>
+			<td>조회수</td>
+		</tr>
+		
+		<th:block th:each="board:${list}">
+			<tr th:object="${board}">
+				<td th:text="*{boardIdx}">
+				<td th:text="*{boardTitle}">
+				<td th:text="*{userIdx}">
+				<td th:text="*{boardWirteDate}">
+				<td th:text="*{boardView}">
+	</table>
+</body>
+</html>
