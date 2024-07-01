@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.korea.project.dto.user.LoginRequestDTO;
 import com.korea.project.service.user.UserServiceImpl;
 import com.korea.project.vo.user.UserVO;
 
@@ -22,11 +21,11 @@ public class UserController {
 	private final UserServiceImpl userService;
 	
 	// 로그인 페이지에 점근하면 view 보여주기
-	@GetMapping("/login")
+	@GetMapping("/loginPage")
 	public String loginPage() {
 		System.out.println("컨트롤러");
 		System.out.println();
-		return "user/login/login";
+		return "login/login";
 	}
 	
 	// 회원가입 페이지에 접근하면 view보여주기
@@ -64,8 +63,4 @@ public class UserController {
 //		return map;
 //	}
 	
-	@GetMapping("/")
-	public String main() {
-		return "index";
-	}
 }

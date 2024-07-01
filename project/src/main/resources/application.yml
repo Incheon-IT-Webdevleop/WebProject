@@ -4,10 +4,11 @@ server:
 
 #JDBC dataSource
 spring:
-  mvc:
-    view:
-      prefix: /templates/
-      suffix: .html
+  thymeleaf:
+    cache: false
+    check-template: true
+    prefix: classpath:templates/
+    suffix: .html
   datasource:
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
