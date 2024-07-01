@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.korea.project.mapper.user.UserMapper">
+
+	<select id="selectById">
+		select * from user where user_id = #{userId}
+	</select>
+	
+	<insert id="signUp" parameterType="userVO">
+		INSERT INTO `user` (user_id, user_nickname, user_pwd, user_name, user_email, regdate, user_role, user_del)
+					VALUES (#{userId}, #{userNickname}, #{userPwd}, #{userName}, #{userEmail}, NOW(), 0, 0);
+	</insert>
+</mapper>

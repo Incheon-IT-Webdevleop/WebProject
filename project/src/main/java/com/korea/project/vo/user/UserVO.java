@@ -1,5 +1,9 @@
 package com.korea.project.vo.user;
 
-public class UserVO {
+import lombok.Data;
 
+@Data
+public class UserVO {
+	private String userId, userNickname, userPwd, userName, userEmail, regdate;
+	private int userIdx, userRole, userDel;
 }
