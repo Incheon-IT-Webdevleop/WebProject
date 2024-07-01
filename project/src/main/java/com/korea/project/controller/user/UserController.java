@@ -9,7 +9,7 @@ public class UserController {
 	
 	@GetMapping("/login")
 	public String loginPage() {
-		return "all/user/login/login";
+		return "login/login";
 	}
 
 	@GetMapping("/register")
