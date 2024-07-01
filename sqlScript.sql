@@ -20,8 +20,15 @@ CREATE TABLE `user` (
 
 
 
-CREATE TABLE `프랜차이즈정보` (
-    -- 여기에 컬럼을 추가하세요.
+CREATE TABLE `franchise` (
+   `franchise_idx`   int   NOT NULL AUTO_INCREMENT  COMMENT 'autoincress',
+   `franchise_title`   varchar(100)   NOT NULL,
+   `franchise_sectors`   tinyint   NOT NULL   COMMENT '업종 0: 카페디저트 1: 음식점주점 2:치킨피자 3: 분식패스트푸드 4:판매업',
+   `franchise_img`   varchar(255)   NOT NULL   COMMENT '이미지 경로 삽입',
+   `franchise_stores`   int   NOT NULL   DEFAULT 0   COMMENT '프렌차이즈별 가지고 있는 매장수',
+   `franchise_avg_sales`   int   NOT NULL   COMMENT '프렌차이즈별 월 평균 매출액',
+   `franchise_startup_cost`   int   NOT NULL   COMMENT '프렌차이즈 별 창업비용',
+   PRIMARY KEY (`franchise_idx`)
 );
 
 
