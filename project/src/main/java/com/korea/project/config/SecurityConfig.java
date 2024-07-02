@@ -56,8 +56,8 @@ public class SecurityConfig {
                 .anyRequest().permitAll()//다른 요청
         )
         .formLogin(formLogin -> formLogin
-                .loginPage("/loginPage") // 커스텀 로그인 페이지 URL
-                .loginProcessingUrl("/perform_login") // 로그인 form action URL
+                .loginPage("/user/loginPage") // 커스텀 로그인 페이지 URL
+                .loginProcessingUrl("/user/perform_login") // 로그인 form action URL
                 .defaultSuccessUrl("/") // 로그인 성공 시 리디렉션 URL successHandler로 대체
                 .failureUrl("/") // 로그인 실패 시 리디렉션 URL
                 .usernameParameter("userId") // 로그인 form의 userId 파라미터 이름
@@ -68,7 +68,7 @@ public class SecurityConfig {
                 })
                 .failureHandler((req, res, exception) -> {
                     System.out.println("exception : " + exception.getMessage());
-                    res.sendRedirect("/register");
+                    res.sendRedirect("/user/register");
                 })
                 .permitAll()
         )
