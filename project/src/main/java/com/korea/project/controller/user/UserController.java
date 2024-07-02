@@ -23,13 +23,12 @@ public class UserController {
 	// 로그인 페이지에 점근하면 view 보여주기
 	@GetMapping("/loginPage")
 	public String loginPage() {
-		System.out.println("컨트롤러");
-		System.out.println();
-		return "login/login";
+
+			return "user/login/login";
 	}
 	
 	// 회원가입 페이지에 접근하면 view보여주기
-	@GetMapping("all/register")
+	@GetMapping("register")
 	public String registerPage() {
 		System.out.println("register컨트롤러");
 		return "user/register/register";
@@ -45,9 +44,7 @@ public class UserController {
 		
 		HashMap<String, String> map = new HashMap<>();
 		
-		if(userService.register(vo) == 1) {
-			map.put("result","success");
-		}
+		map.put("result", "success");
 		
 
 

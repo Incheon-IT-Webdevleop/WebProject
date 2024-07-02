@@ -22,8 +22,8 @@ public class UserDAO implements UserMapper{
 	
 	// 회원가입
 	@Override
-	public int signUp(UserVO vo) {
-		return userMapper.signUp(vo);
+	public void signUp(UserVO vo) {
+		userMapper.signUp(vo);
 	}
 	
 }

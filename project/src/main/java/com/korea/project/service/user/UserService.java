@@ -9,5 +9,5 @@ public interface UserService {
 
 	
 	// 회원가입
-	public int register(UserVO vo);
+	public void register(UserVO vo);
 }

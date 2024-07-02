@@ -1,5 +1,6 @@
 package com.korea.project.service.user;
 
+import org.apache.ibatis.logging.Log;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,9 +11,11 @@ import com.korea.project.dto.user.UserDetail;
 import com.korea.project.vo.user.UserVO;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserDetailServiceImpl implements UserDetailsService{
 	
 	private final UserDAO userDAO;
@@ -21,11 +24,11 @@ public class UserDetailServiceImpl implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 		UserVO user = userDAO.selectById(userId);
-		
-		if(user != null) {
-			return new UserDetail(user);
+		if(user == null) {
+			log.warn("User not found with userId: {}", userId);
+			throw new UsernameNotFoundException("User not found with userId: " + userId);
 		}
-		
-		return null;
+		System.out.println("유저 디테일 서비스 임플");
+		return new UserDetail(user);
 	}
 }

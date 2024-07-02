@@ -19,21 +19,18 @@ public class UserDetail implements UserDetails{
 	
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
-		return null;
+		return userVO.getUserPwd();  // UserVO에서 비밀번호를 반환
 	}
 	
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
+		return userVO.getUserId();
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> collect = new ArrayList<GrantedAuthority>();
 		collect.add(new GrantedAuthority() {
-			
 			@Override
 			public String getAuthority() {
 				if(userVO.getUserRole() == 0) {
@@ -44,6 +41,26 @@ public class UserDetail implements UserDetails{
 				
 			}
 		});
+		System.out.println(collect);
 		return collect;
 	}
+	  @Override
+	    public boolean isAccountNonExpired() {
+	        return true;  // 계정이 만료되지 않음을 나타냅니다
+	    }
+
+	    @Override
+	    public boolean isAccountNonLocked() {
+	        return true;  // 계정이 잠기지 않았음을 나타냅니다
+	    }
+
+	    @Override
+	    public boolean isCredentialsNonExpired() {
+	        return true;  // 자격 증명이 만료되지 않았음을 나타냅니다
+	    }
+
+	    @Override
+	    public boolean isEnabled() {
+	        return true;  // 계정이 활성화되었음을 나타냅니다
+	    }
 }
