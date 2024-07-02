@@ -5,6 +5,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+	
+	
+	<!-- 게시글 목록 리스트  -->
 	<table border="1">
 		<tr>
 			<td>번호idx</td>
@@ -22,5 +25,11 @@
 				<td th:text="*{boardWirteDate}">
 				<td th:text="*{boardView}">
 	</table>
+	
+	<!-- 게시글 작성하기 버튼 -->
+	<div>
+		<button type="button" onclick="location.href='/board/boardInsert'"> 게시글 작성하기 </button>
+	</div>
+	
 </body>
 </html>

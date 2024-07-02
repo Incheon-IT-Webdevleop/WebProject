@@ -19,4 +19,9 @@ public class BoardDAO {
 	public List<BoardVO> findAll(){
 		return boardMapper.selectAll();
 	}
+	
+	//게시글 목록 추가
+	public void save(BoardVO boardVO) {
+		boardMapper.insert(boardVO);
+	}
 }

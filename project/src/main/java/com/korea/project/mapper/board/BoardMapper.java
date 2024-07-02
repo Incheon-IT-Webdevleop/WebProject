@@ -12,6 +12,7 @@ public interface BoardMapper {
 	//게시판 조회
 	public List<BoardVO> selectAll();
 	
-	//게시글 등록
+	//게시글 목록 추가
+	public void insert(BoardVO boardVO);
 	
 }
