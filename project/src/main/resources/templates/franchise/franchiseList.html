@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Franchise List</title>
-    <link rel="stylesheet" href="/css/franchiseList.css">
+<link rel="stylesheet" th:href="@{/css/franchise.css}">
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
     <div class="franchise-container">
         <h1>프랜차이즈 목록</h1>
         <div th:if="${not #lists.isEmpty(franchises)}">

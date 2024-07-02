@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.korea.project.mapper.franchise.FranchiseMapper">
-    <select id="selectAllFranchises" resultType="com.korea.project.vo.franchise.FranchiseVO">
+    <select id="selectAllFranchises">
         SELECT 
             franchise_title as franchiseTitle,
             franchise_sectors as franchiseSectors,

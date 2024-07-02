@@ -1,4 +1,4 @@
-@charset "UTF-8";
+
 .logo {
   color: red;
   font-size: 40px;
@@ -51,15 +51,15 @@
   content: "";
   position: absolute;
   left: 0;
-  bottom: -2px; /* 밑줄 위치 조정 */
+  bottom: -2px; 
   width: 0%;
-  height: 2px; /* 밑줄 두께 */
+  height: 2px; 
   background-color: blue;
   transition: width 0.3s;
 }
 
 .header-menu li a:hover::after {
-  width: 100%; /* 마우스 호버 시 밑줄이 퍼지는 효과 */
+  width: 100%;
 }
 
 .mouse {
