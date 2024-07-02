@@ -1,0 +1,31 @@
+@charset "UTF-8";
+.card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 300px;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+}
+
+.card-info {
+    padding: 20px;
+}
+
+.franchise-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.franchise-details {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
