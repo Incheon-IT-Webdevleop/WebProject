@@ -9,7 +9,7 @@ CREATE TABLE `user` (
     user_idx INT NOT NULL AUTO_INCREMENT COMMENT 'Auto Increment',
     user_id VARCHAR(20) NOT NULL UNIQUE COMMENT 'unique',
     user_nickname	varchar(12)	NOT null unique,
-    user_pwd VARCHAR(20) NOT NULL,
+    user_pwd VARCHAR(255) NOT NULL,
     user_name VARCHAR(30) NOT NULL,
     user_email VARCHAR(40) NOT NULL UNIQUE COMMENT 'unique',
     regdate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -88,3 +88,7 @@ CREATE TABLE `favorite` (
     PRIMARY KEY (`favorite_idx`),
     FOREIGN KEY (`user_idx`) REFERENCES `user` (`user_idx`)
 );
+
+
+INSERT INTO `user` (user_id, user_nickname, user_pwd, user_name, user_email, regdate, user_role, user_del)
+			VALUES ("mod459", "성남베어", "$2a$10$UZZ7XTN0gwHZBm2ASdYpxeyeyjMC9AsaI2aDFy5aPh4ca8.C3JO5e", "정상필", "mod459@naver.com", NOW(), 1, 0);

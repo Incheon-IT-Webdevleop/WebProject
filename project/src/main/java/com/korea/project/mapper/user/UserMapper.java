@@ -12,5 +12,5 @@ public interface UserMapper {
 	public UserVO selectById(String userId);
 	
 	// 회원가입
-	public int signUp(UserVO vo);
+	public void signUp(UserVO vo);
 }
