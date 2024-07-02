@@ -22,4 +22,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	//게시글 등록
+	@Override
+	public void register(BoardVO boardVO) {
+		boardDAO.save(boardVO);
+		
+	}
 }
