@@ -6,13 +6,14 @@
 
 <link rel="stylesheet" href="/css/user/login.css">	
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/user/login.js"></script>
 </head>
 <body>
     <div class="login-container">
         <h1>로고</h1>
         <form id="loginForm" action="/perform_login" method="post">
-            <input class="input-text" type="text" name="userId" placeholder="아이디" required>
-            <input class="input-text" type="password" name="userPwd" placeholder="비밀번호" required>
+            <input class="input-text" type="text" name="userId" placeholder="아이디">
+            <input class="input-text" type="password" name="userPwd" placeholder="비밀번호">
             <div class="options">
                 <label>
                     <input type="checkbox" name="rememberMe"> 내 정보 저장
@@ -33,34 +34,5 @@
         	<button class="social-login naver btn-height-100">네이버 로그인</button>
        	</div>
     	</div>
-
-    <script>
-        $(document).ready(function() {
-            $('#loginForm').on('submit', function(event) {
-                event.preventDefault();
-                var $form = $(this);
-                $.ajax({
-                    type: $form.attr('method'),
-                    url: $form.attr('action'),
-                    data: $form.serialize(),
-                    success: function(response) {
-                        alert("환영합니다");
-                        // 로그인 성공 시 이전 페이지로 이동
-                        var url = '/user/index'; // 기본적인 리디렉션 URL
-                        var savedRequest = localStorage.getItem('spring-security-redirect');
-                        /* alert(savedRequest); */
-                        if (savedRequest) {
-                            url = savedRequest; // SavedRequest에서 가져온 URL로 대체
-                            localStorage.removeItem('spring-security-redirect'); // 사용한 SavedRequest는 삭제
-                        }
-                        window.location.href = url; // 리디렉션
-                    },
-                    error: function(xhr) {
-                        $('#loginError').text(xhr.responseText).show();
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 </html>
