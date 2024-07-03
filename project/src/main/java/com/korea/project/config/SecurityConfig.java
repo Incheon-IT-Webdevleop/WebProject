@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import com.korea.project.service.user.UserDetailServiceImpl;
@@ -23,6 +25,10 @@ public class SecurityConfig {
 	
 //	private UserDe
 	private final UserDetailServiceImpl userDetailServiceImpl;
+	private final CustomAuthFailureHandler customFailureHandler;
+	private final CustomAuthSuccessHandler customSuccessHandler;
+	private final CustomLogoutSuccessHandler customLogoutSuccessHandler;
+	private final CustomAccessDined customAccessDined;
 
 	
     @Bean
@@ -40,6 +46,15 @@ public class SecurityConfig {
     }
     
     @Bean
+	public RememberMeServices rememberMeServices() {
+		TokenBasedRememberMeServices rememberMeServices = new TokenBasedRememberMeServices("uniqueAndSecret", userDetailServiceImpl);
+		rememberMeServices.setParameter("rememberMe");
+		rememberMeServices.setAlwaysRemember(true); // 항상 자동 로그인 유지
+		rememberMeServices.setTokenValiditySeconds(60 * 60 * 24 * 7); // 7일 유효 기간 설정
+		return rememberMeServices;
+	}
+    
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
     	http
     	.csrf(AbstractHttpConfigurer::disable)
@@ -47,37 +62,45 @@ public class SecurityConfig {
                 sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         )
         .authorizeHttpRequests(authorize -> authorize
-        		.requestMatchers("/user").authenticated()
+        		.requestMatchers("/css/**", "/js/**", "/img/**").permitAll() // CSS, JS, 이미지 폴더에 대해 접근 허용
+        		.requestMatchers("/user/*").hasAnyRole("USER", "ADMIN")
                 // /user : 인증만 되면 들어갈 수 있는 주소
-                .requestMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN")
-                //MANAGER, ADMIN 을 가진 사용자만 /manager 접근 허용
                 .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                 //ADMIN을 가진 사용자만 /admin 접근 허용
                 .anyRequest().permitAll()//다른 요청
         )
         .formLogin(formLogin -> formLogin
-                .loginPage("/user/loginPage") // 커스텀 로그인 페이지 URL
-                .loginProcessingUrl("/user/perform_login") // 로그인 form action URL
-                .defaultSuccessUrl("/") // 로그인 성공 시 리디렉션 URL successHandler로 대체
-                .failureUrl("/") // 로그인 실패 시 리디렉션 URL
+                .loginPage("/loginPage") // 커스텀 로그인 페이지 URL
+                .loginProcessingUrl("/perform_login") // 로그인 form action URL
+//                .defaultSuccessUrl("/") // 로그인 성공 시 리디렉션 URL successHandler로 대체
+//                .failureUrl("/") // 로그인 실패 시 리디렉션 URL
                 .usernameParameter("userId") // 로그인 form의 userId 파라미터 이름
                 .passwordParameter("userPwd") // 로그인 form의 userPwd 파라미터 이름
-                .successHandler((req, res, authentication) ->{
-                	System.out.println("authentication : " + authentication.getName());
-                    res.sendRedirect("/");
-                })
-                .failureHandler((req, res, exception) -> {
-                    System.out.println("exception : " + exception.getMessage());
-                    res.sendRedirect("/user/register");
-                })
+                .successHandler(customSuccessHandler)
+                .failureHandler(customFailureHandler)
                 .permitAll()
-        )
+        ).logout(logout -> logout
+                .logoutUrl("/logout") // 로그아웃 처리 URL
+                .logoutSuccessHandler(customLogoutSuccessHandler) // 로그아웃 성공 시 핸들러 설정
+                .invalidateHttpSession(true) // 세션 무효화
+                .deleteCookies("JSESSIONID") // 로그아웃 후 삭제할 쿠키 이름 설정
+                .deleteCookies("rememberMe")
+                .permitAll()
+        ).rememberMe(remember -> remember
+        		.rememberMeServices(rememberMeServices())
+        ).exceptionHandling(exception-> exception
+        		.accessDeniedHandler(customAccessDined)
+        		
+        		
+        		)
+        ;
         
-        .httpBasic(AbstractHttpConfigurer::disable);
+
 
 
     	return http.build();
     }
     
+
     
 }

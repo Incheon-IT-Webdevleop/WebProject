@@ -4,11 +4,20 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- <link rel="stylesheet" href="css/login.css"> -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head> 
 <body>
-hello world!
-<a href="/loginPage">로그인페이지로 이동</a>
-
+    <div class="container">
+        <h1>Hello World!</h1>
+        
+        <!-- 세션에 저장된 사용자 정보 출력 -->
+        <div th:if="${session.user != null}">
+            <p >세션에 저장된 사용자 정보:</p>
+            <p>사용자 이름: <span th:text="${session.user.userName}"></span></p>
+            <!-- 필요한 경우 추가적인 사용자 정보 출력 -->
+        </div>
+        
+        <!-- 로그인 페이지로 이동 링크 -->
+        <a href="/user/loginPage">로그인페이지로 이동</a>
+    </div>
 </body>
 </html>

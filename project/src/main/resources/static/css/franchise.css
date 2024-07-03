@@ -1,0 +1,117 @@
+.franchise-title {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.franchise-card {
+  width: 276px;
+  height: 334px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 5px;
+}
+
+.card-img {
+  border-radius: 5px 5px 0 0;
+  border: solid 1px rgba(0, 0, 0, 0.08);
+  margin: -1px -1px 0;
+  height: 194px;
+}
+.card-img img {
+  display: block;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  width: 100%;
+  height: 100%;
+}
+.card-title {
+  font-weight: bold;
+  line-height: 1.65;
+  color: #222;
+}
+.text-box {
+  margin: 15px 20px;
+}
+.grid-container{
+	margin: 0 auto;
+	width: 100%;
+	max-width: 1200px;
+ display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+ 
+ }
+ 
+ .category-text{
+ font-size: 14px;
+    font-weight: normal;
+    line-height: 1.43;
+    color: #666;
+ }
+ 
+ .categoryBox {
+  max-width: 1200px;
+  margin: 20px auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.category-btn {
+  width: 100%;
+  max-width: 220px;
+  height: 122px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: solid 2px #f5f7fa;
+  background-color: #f5f7fa;
+  font-weight: 500;
+  line-height: 1.87;
+  letter-spacing: -0.9px;
+  color: #222;
+  position: relative;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+}
+.category-main {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+.category-btn.active {
+  border-color: #125de6;
+  background-color: #fff;
+}
+
+.category-btn a {
+  text-decoration: none;
+}
+
+.category-btn .category-btn-text {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.category-btn.cafe {
+  background: url("/categoryImages/ico_navi1_1.png") 50% 10px no-repeat;
+  background-size: 60px auto;
+}
+
+.category-btn.restaurant {
+  background: url("/categoryImages/ico_navi1_2.png") 50% 10px no-repeat;
+  background-size: 60px auto;
+}
+
+.category-btn.chicken {
+  background: url("/categoryImages/ico_navi1_3.png") 50% 10px no-repeat;
+  background-size: 60px auto;
+}
+
+.category-btn.fast-food {
+  background: url("/categoryImages/ico_navi1_4.png") 50% 10px no-repeat;
+  background-size: 60px auto;
+}
+ 

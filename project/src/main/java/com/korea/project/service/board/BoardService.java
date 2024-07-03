@@ -14,4 +14,7 @@ public interface BoardService {
 	
 	//게시글 추가
 	public void register(BoardVO boardVO);
+	
+//	//카테고리 추가 
+//	public List<BoardVO> sectors();
 }

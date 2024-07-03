@@ -2,7 +2,7 @@ package com.korea.project.mapper.user;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.korea.project.dto.user.LoginRequestDTO;
+import com.korea.project.dto.user.SessionUserDTO;
 import com.korea.project.vo.user.UserVO;
 
 @Mapper
@@ -13,4 +13,7 @@ public interface UserMapper {
 	
 	// 회원가입
 	public void signUp(UserVO vo);
+	
+	// 세션에 유저 이름과 닉네임을 넣기 위한 조회
+	public SessionUserDTO selectNicknameById(String id);
 }

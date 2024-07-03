@@ -6,21 +6,24 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.korea.project.service.user.UserServiceImpl;
+import com.korea.project.service.user.UserDetailServiceImpl;
 import com.korea.project.vo.user.UserVO;
 
 import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/user/*")
-public class UserController {
+public class UserAuthController {
 	
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
-	private final UserServiceImpl userService;
+	private final UserDetailServiceImpl userService;
+	
+	@GetMapping("/user/index")
+	public String index() {
+		return "index";
+	}
 	
 	// 로그인 페이지에 점근하면 view 보여주기
 	@GetMapping("/loginPage")
@@ -30,9 +33,8 @@ public class UserController {
 	}
 	
 	// 회원가입 페이지에 접근하면 view보여주기
-	@GetMapping("register")
+	@GetMapping("/register")
 	public String registerPage() {
-		System.out.println("register컨트롤러");
 		return "user/register/register";
 	}
 	
@@ -47,11 +49,24 @@ public class UserController {
 		HashMap<String, String> map = new HashMap<>();
 		
 		map.put("result", "success");
-		
-
-
 		return map;
 	}
+	
+	@PostMapping("/aip/check-duplicate")
+	@ResponseBody
+	public String checkDuplicate(String type, String value) {
+			if(type.equals("id")) {
+				
+			}else if(type.equals("email")) {
+				
+			}else if(type.equals("nickname")) {
+				
+			}else {
+				return "";
+			}
+		return "";
+	}
+
 	
 //	@PostMapping("/perform_login")
 //	@ResponseBody

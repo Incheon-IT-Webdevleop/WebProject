@@ -15,4 +15,7 @@ public interface BoardMapper {
 	//게시글 목록 추가
 	public void insert(BoardVO boardVO);
 	
+	
+//	//카테고리
+//	public List<BoardVO> 
 }

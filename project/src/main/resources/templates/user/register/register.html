@@ -1,13 +1,32 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로고</title>
+    <link rel="stylesheet" href="/css/user/register.css">	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/user/register.js"></script>
 </head>
 <body>
-	<table border="1">
-		<cation>회원가입</cation>
-		<tr></tr>
-	</table>
+    <div class="container">
+        <h1>로고</h1>
+        <h2>회원가입</h2>
+        <form id="register-form" action="/perform_login" method="post">
+            <input id="userId" class="margin-bottom-0" type="text" placeholder="아이디" required>
+            <div class="email-container">
+                <input class="height-1rem margin-top-0" type="email" placeholder="이메일" required style="flex-grow: 1;">
+                <button class="margin-top-0" type="button" style="margin-left: 10px;">인증</button>
+            </div>
+            <div id="duplication" class="error-message" ></div>
+            <input type="text" placeholder="닉네임" required>
+            <div id="duplication-nickname" class="error-message" ></div>
+            <input class="margin-bottom-0" type="password" placeholder="비밀번호" required>
+            <input class="margin-top-0" type="password" placeholder="비밀번호 확인" required>        
+                
+            <input type="text" placeholder="이름" required>
+            <button class="height-50" type="submit">가입</button>
+        </form>
+    </div>
 </body>
 </html>
