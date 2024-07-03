@@ -1,6 +1,5 @@
 package com.korea.project.service.user;
 
-import org.apache.ibatis.logging.Log;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

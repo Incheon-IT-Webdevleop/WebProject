@@ -13,6 +13,13 @@ $(document).ready(function() {
 	            checkDuplicate('email', userEmail);
 	        }
 	    });
+		
+		$('.email-container input[type="email"]').on('blur', function() {
+		    var userEmail = $(this).val();
+		    if (userEmail) {
+		        checkDuplicate('email', userEmail);
+		    }
+		});
 
 	    // 중복 검사 함수
 	    function checkDuplicate(type, value) {
