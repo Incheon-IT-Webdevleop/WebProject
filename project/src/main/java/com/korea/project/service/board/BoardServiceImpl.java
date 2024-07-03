@@ -25,6 +25,11 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void register(BoardVO boardVO) {
 		boardDAO.save(boardVO);
-		
 	}
+	
+//	//카테고리
+//	@Override
+//	public List<BoardVO> sectors(int code, String sectorsDisplay) {
+//		return boardDAO.sectorsCodes;
+//	}
 }

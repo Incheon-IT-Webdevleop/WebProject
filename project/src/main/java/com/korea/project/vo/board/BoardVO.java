@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class BoardVO {
 	private int boardIdx, //게시글 번호
-				userIdx, //작성한 사람 번호
+				userIdx , //작성한 사람 번호
 				boardSectors,//업종
 				boardCategory, // 게시판 종류(상권분석, 창업후기) 
 				boardView, // 조회수

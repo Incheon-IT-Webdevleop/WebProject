@@ -10,11 +10,13 @@
 	<!-- 게시글 목록 리스트  -->
 	<table border="1">
 		<tr>
-			<td>번호idx</td>
+			<td>번호</td>
 			<td>제목</td>
 			<td>작성자</td>
 			<td>작성날짜/시간</td>
 			<td>조회수</td>
+
+			
 		</tr>
 		
 		<th:block th:each="board:${list}">
@@ -22,14 +24,28 @@
 				<td th:text="*{boardIdx}">
 				<td th:text="*{boardTitle}">
 				<td th:text="*{userIdx}">
-				<td th:text="*{boardWirteDate}">
+				<td th:text="*{boardWriteDate}">
 				<td th:text="*{boardView}">
 	</table>
 	
+	
 	<!-- 게시글 작성하기 버튼 -->
 	<div>
-		<button type="button" onclick="location.href='/board/boardInsert'"> 게시글 작성하기 </button>
+		<button type="button" onclick="location.href='/board/register'"> 게시글 작성하기 </button>
 	</div>
+	
+	
+	
+	<!-- 작성 글 검색하기 기능 -->
+	<div>
+		<div>대분류</div>
+		<select th:fild="*{sectorCode}" class="form-select">
+			<option th:each="sectorCode" : ${sectorCodes}" th:value="${sectorCode.code}"
+					th:text="${sectorCode.displayName}">업종</option>
+		</select>
+	
+	</div>
+	
 	
 </body>
 </html>

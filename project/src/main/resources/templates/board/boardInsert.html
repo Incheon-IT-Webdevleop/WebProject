@@ -5,23 +5,31 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form th:action="@{/board/register}" th:object="${vo}" method="post">
+	<form th:action="@{/board/register}" th:object="${dto}" method="post">
 	<!-- 제목, 카테고리 대 중 소분류, 게시글내용, 작성하기버튼, 취소하기 버튼  -->
 		<div>
 			<input th:field="*{boardTitle}" placeholder="게시글 제목을 작성하세요.">
 		</div>
-		<div>
-			<input th:field="*{boardSectors}" placeholder="대분류">
+		<div>대분류
+<!-- 		<select th:field="*{boardSectors}" class="">
+			<option value="0">카페/디저트</option>
+			<option value="0">음식점/주점</option>
+			<option value="0">치킨/피자</option>
+			<option value="0">분식/패스트푸드</option>
+			<option value="0">판매업</option>
+		</select> -->
 		</div>
 		<div>
-			<input th:field="*{boardBigArea}" placeholder="중분류">
+			<!-- <input th:field="*{boardBigArea}" placeholder="중분류"> -->
 		</div>
 		<div>
-			<input th:field="*{boardSmallArea}" placeholder="소분류">
+		<!-- 	<input th:field="*{boardSmallArea}" placeholder="소분류"> -->
 		</div>
 		<div>
-			<input th:field="*{boardContent}" placeholder="게시글 내용을 작성하세요.">
+			<input type="submit" value="등록하기">
 		</div>
 	</form>
+	
+
 </body>
 </html>

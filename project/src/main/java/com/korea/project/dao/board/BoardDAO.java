@@ -24,4 +24,11 @@ public class BoardDAO {
 	public void save(BoardVO boardVO) {
 		boardMapper.insert(boardVO);
 	}
+//	
+//	//카테고리
+//	public List<BoardVO> sectorCodes(){
+//		return borderMapper.sectorCodes();
+//	}
+//	
+	
 }

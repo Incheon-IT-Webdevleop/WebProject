@@ -5,4 +5,9 @@
 	<select id="selectAll">
 		select * from board
 	</select>
+	
+	<insert id="insert">
+		insert into board(board_title, board_view)
+		values(#{boardTitle}, #{boardView})
+	</insert>
 </mapper>
