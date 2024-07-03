@@ -44,3 +44,8 @@ security:
           client-name: Naver
           authorization-grant-type: authorization_code
           redirect-uri: http://localhost:8080/login/oauth2/code/naver
+
+  kakao:
+    maps:
+      api:
+        key: b0724bf330998cfd60824078a8ffae4e
