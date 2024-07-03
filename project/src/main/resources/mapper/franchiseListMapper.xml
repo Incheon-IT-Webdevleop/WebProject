@@ -13,4 +13,15 @@
             franchise_startup_cost as franchiseStartupCost
         FROM franchise
     </select>
+    <select id="selectFranchisesBySector">
+SELECT
+franchise_title as franchiseTitle,
+franchise_sectors as franchiseSectors,
+franchise_img as franchiseImg,
+franchise_stores as franchiseStores,
+franchise_avg_sales as franchiseAvgSales,
+franchise_startup_cost as franchiseStartupCost
+FROM franchise
+WHERE franchise_sectors = #{sector}
+</select>
 </mapper>
