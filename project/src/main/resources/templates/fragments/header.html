@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>header</title>
+<link rel="stylesheet" th:href="@{/css/header.css}">
+</head>
+<body>
+   <header class="header">
+    <ul class="header-top">
+        <li class="logo mouse">
+            <a th:href="@{/}" th:text="K-Franchise">K-Franchise</a>
+        </li>
+        <li class="header-login">
+            <a class="mouse" th:href="@{/login}" th:text="로그인">로그인</a>
+            <a class="mouse" th:href="@{/register}" th:text="회원가입">회원가입</a>
+        </li>
+    </ul>
+
+    <ul class="header-menu">
+        <li class="mouse"><a th:href="@{/}">홈</a></li>
+        <li class="mouse">
+            <a th:href="@{/franchises}">프랜차이즈</a>
+        </li>
+        <li class="mouse">
+            <a th:href="@{/board1}" >창업후기 게시판</a>
+        </li>
+        <li class="mouse">
+            <a th:href="@{/board2}">상권분석 게시판</a>
+        </li>
+        <li class="mouse">
+            <a th:href="@{/}">상권분석</a>
+        </li>
+    </ul>
+</header>
+</body>
+</html>

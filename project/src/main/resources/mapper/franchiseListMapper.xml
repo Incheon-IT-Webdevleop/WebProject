@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.korea.project.mapper.franchise.FranchiseMapper">
+    <select id="selectAllFranchises">
+        SELECT 
+            franchise_title as franchiseTitle,
+            franchise_sectors as franchiseSectors,
+            franchise_img as franchiseImg,
+            franchise_stores as franchiseStores,
+            franchise_avg_sales as franchiseAvgSales,
+            franchise_startup_cost as franchiseStartupCost
+        FROM franchise
+    </select>
+</mapper>
