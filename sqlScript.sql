@@ -35,7 +35,7 @@ CREATE TABLE `franchise` (
 
 CREATE TABLE `board` (
     `board_idx` INT NOT NULL AUTO_INCREMENT COMMENT 'Auto Increment',
-    `user_idx` INT NOT NULL ,
+    `user_idx` INT NOT NULL COMMENT 'Auto Increment',
     `board_sectors` TINYINT NOT NULL COMMENT '업종 0: 카페디저트 1: 음식점주점 2: 치킨피자 3: 분식패스트푸드 4: 판매업',
     `board_big_area` VARCHAR(20) NOT NULL COMMENT '시, 도',
     `board_small_area` VARCHAR(20) NOT NULL COMMENT '시, 군, 구',
@@ -47,10 +47,13 @@ CREATE TABLE `board` (
     `board_del` TINYINT NOT NULL DEFAULT 0 COMMENT '0: 삭제 안함, -1: 삭제 완료',
     `step` INT NULL DEFAULT 0 COMMENT '댓글의 순번',
     `depth` TINYINT NULL DEFAULT 0 COMMENT '0이면 게시글, 1이면 댓글, 2면 대댓글 3이면 대대댓글...',
-    `ref` INT NULL DEFAULT NULL COMMENT '댓글의 부모가 되는 게시글의 번호',
+    `ref` INT NULL DEFAULT `board_idx` NULL COMMENT '댓글의 부모가 되는 게시글의 번호',
     PRIMARY KEY (`board_idx`),
     FOREIGN KEY (`user_idx`) REFERENCES `user` (`user_idx`)
 );
+
+INSERT INTO board (user_idx, board_sectors, board_big_area, board_small_area, board_title, board_category, board_content, board_write_date)
+VALUES (1,1, '서울', '강남구', '첫 번째 게시글', 0, '첫 번째 게시글 내용입니다.', CURRENT_TIMESTAMP);
 
 
 
