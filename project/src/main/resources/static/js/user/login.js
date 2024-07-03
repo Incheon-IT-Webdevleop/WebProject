@@ -6,10 +6,9 @@ $(document).ready(function() {
         event.preventDefault();
 		
 		let $userId = $('input[name="userId"]');
-		let $password = $('input[name="password"]');
+		let $password = $('input[name="userPwd"]');
 		let userIdValue = $userId.val();
 		let passwordValue = $password.val();
-		 
 		// 유효성 검사 플래그
 		let isValid = true;
 
@@ -35,26 +34,28 @@ $(document).ready(function() {
 		    return;
 		}
 		
+		
+		
         var $form = $(this);
         $.ajax({
             type: $form.attr('method'),
             url: $form.attr('action'),
             data: $form.serialize(),
             success: function(response) {
-                alert("환영합니다");
-                // 로그인 성공 시 이전 페이지로 이동
-                var url = '/user/index'; // 기본적인 리디렉션 URL
-                var savedRequest = localStorage.getItem('spring-security-redirect');
-                /* alert(savedRequest); */
-                if (savedRequest) {
-                    url = savedRequest; // SavedRequest에서 가져온 URL로 대체
-                    localStorage.removeItem('spring-security-redirect'); // 사용한 SavedRequest는 삭제
-                }
-                window.location.href = url; // 리디렉션
+				alert("환영합니다");
+				// 로그인 성공 시 이전 페이지로 이동
+				var url = '/user/index'; // 기본적인 리디렉션 URL
+				var savedRequest = localStorage.getItem('spring-security-redirect');
+				/* alert(savedRequest); */
+				if (savedRequest) {
+				    url = savedRequest; // SavedRequest에서 가져온 URL로 대체
+				    localStorage.removeItem('spring-security-redirect'); // 사용한 SavedRequest는 삭제
+				}
+				window.location.href = url; // 리디렉션
             },
-            error: function(xhr) {
-                $('#loginError').text(xhr.responseText).show();
-            }
+			error: function(xhr) {
+			    $('#loginError').text(xhr.responseText).show();
+			}
         });
     });
 });
