@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.korea.project.dao.user.UserDAO;
+import com.korea.project.dto.user.SessionUserDTO;
 import com.korea.project.dto.user.UserDetail;
 import com.korea.project.vo.user.UserVO;
 
@@ -16,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UserDetailServiceImpl implements UserDetailsService{
+public class UserDetailServiceImpl implements UserDetailsService, UserService{
 	
 	private final UserDAO userDAO;
 	
@@ -28,7 +29,23 @@ public class UserDetailServiceImpl implements UserDetailsService{
 			log.warn("User not found with userId: {}", userId);
 			throw new UsernameNotFoundException("User not found with userId: " + userId);
 		}
-		System.out.println("유저 디테일 서비스 임플");
+//		System.out.println("유저 디테일 서비스 임플");
+		if(user.getUserRole() == 1) {
+			user.setRoles("ADMIN");
+		}else {
+			user.setRoles("USER");
+		}
 		return new UserDetail(user);
+	}
+	
+	@Override
+	public SessionUserDTO selectNicknameById(String id) {
+		return userDAO.selectNicknameById(id);
+	}
+	
+	@Override
+	public void register(UserVO vo) {
+		// TODO Auto-generated method stub
+		
 	}
 }

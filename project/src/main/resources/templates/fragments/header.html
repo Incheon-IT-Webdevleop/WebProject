@@ -3,18 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>header</title>
-<link rel="stylesheet" th:href="@{/css/header.css}">
+
 </head>
 <body>
    <header class="header">
     <ul class="header-top">
-        <li class="logo mouse">
-            <a th:href="@{/}" th:text="K-Franchise">K-Franchise</a>
+        <li class="mouse">
+            <a th:href="@{/}" th:text="K-Franchise" class="logo">K-Franchise</a>
         </li>
-        <li class="header-login">
-            <a class="mouse" th:href="@{/login}" th:text="로그인">로그인</a>
-            <a class="mouse" th:href="@{/register}" th:text="회원가입">회원가입</a>
-        </li>
+   		<li class="header-login">
+	        <a class="mouse" th:href="@{/login}" th:text="로그인">로그인</a>
+	        <a class="mouse" th:href="@{/register}" th:text="회원가입">회원가입</a>
+	    </li>
+<!-- 		<th:block th:if="${user.user == null}">
+		    로그인하지 않은 상태
+		    <li class="header-login">
+		        <a class="mouse" th:href="@{/login}" th:text="로그인">로그인</a>
+		        <a class="mouse" th:href="@{/register}" th:text="회원가입">회원가입</a>
+		    </li>
+		</th:block>
+		
+		<th:block th:if="${user.user != null}">
+		    로그인한 상태
+		    <li class="header-login">
+		        <a class="mouse" th:href="@{/logout}" th:text="로그아웃">로그아웃</a>
+		    </li>
+		</th:block> -->
     </ul>
 
     <ul class="header-menu">

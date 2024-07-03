@@ -26,11 +26,19 @@ public class FranchiseService {
             System.out.println("Retrieved franchises: " + franchises.size());
             return franchises;
         } catch (DataAccessException e) {
-            // 예외 처리
             System.err.println("Failed to retrieve franchises: " + e.getMessage());
-            throw e; // 예외 다시 던지기
+            throw e;
         }
     }
 
-    // 필요한 다른 비즈니스 로직 메서드 추가 가능
+    public List<FranchiseVO> getFranchisesBySector(int sector) {
+        try {
+            List<FranchiseVO> franchises = franchiseMapper.selectFranchisesBySector(sector);
+            System.out.println("Retrieved franchises for sector " + sector + ": " + franchises.size());
+            return franchises;
+        } catch (DataAccessException e) {
+            System.err.println("Failed to retrieve franchises for sector " + sector + ": " + e.getMessage());
+            throw e;
+        }
+    }
 }

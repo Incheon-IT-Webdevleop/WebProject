@@ -1,27 +1,62 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Franchise List</title>
-<link rel="stylesheet" th:href="@{/css/franchise.css}">
+
+    <link rel="stylesheet" href="/css/franchise.css" />
+    <link rel="stylesheet" href="/css/header.css" />
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-    <div class="franchise-container">
-        <h1>프랜차이즈 목록</h1>
-        <div th:if="${not #lists.isEmpty(franchises)}">
+
+<h2 class="category-main">카테고리</h2>
+<div class="categoryBox">
+    <div class="category-btn">
+        <a th:href="@{/franchisesBySector(sector=0)}">
+            <span class="category-btn-text">카페 · 디저트</span>
+        </a>
+    </div>
+    <div class="category-btn">
+        <a th:href="@{/franchisesBySector(sector=1)}">
+            <span class="category-btn-text">음식점 · 주점</span>
+        </a>
+    </div>
+    <div class="category-btn">
+        <a th:href="@{/franchisesBySector(sector=2)}">
+            <span class="category-btn-text">치킨 · 피자</span>
+        </a>
+    </div>
+    <div class="category-btn">
+        <a th:href="@{/franchisesBySector(sector=3)}">
+            <span class="category-btn-text">분식 · 패스트푸드</span>
+        </a>
+    </div>
+    <div class="category-btn">
+        <a th:href="@{/franchisesBySector(sector=4)}">
+            <span class="category-btn-text">판매업</span>
+        </a>
+    </div>
+</div>
+
+<div class="franchise-container">
+    <div th:if="${not #lists.isEmpty(franchises)}">
+        <div class="grid-container">
             <div th:each="franchise : ${franchises}" class="franchise-card">
-                <h2 th:text="${franchise.franchiseTitle}">Franchise Title</h2>
-                <img th:src="${franchise.franchiseImg}" alt="Franchise Image">
-                <p th:text="'분야: ' + ${franchise.franchiseSectors}">Franchise Sector</p>
-                <p th:text="'매장 수: ' + ${franchise.franchiseStores}">Franchise Stores</p>
-                <p th:text="'평균 매출: ' + ${franchise.franchiseAvgSales} + '원'">Franchise Average Sales</p>
-                <p th:text="'창업 비용: ' + ${franchise.franchiseStartupCost} + '원'">Franchise Startup Cost</p>
+                <div class="card-img">
+                    <img th:src="${franchise.franchiseImg}" alt="Franchise Image">
+                </div>
+                <div class="text-box">
+                    <p th:text="${franchise.franchiseTitle}" class="card-title">Franchise Title</p>
+                    <p class="category-text" th:text="'카페 · 디저트 ' + ${franchise.franchiseStores} + ' 개'">Franchise Store</p>
+                </div>
             </div>
         </div>
-        <div th:if="${#lists.isEmpty(franchises)}">
-            <p>표시할 프랜차이즈 정보가 없습니다.</p>
-        </div>
     </div>
+    <div th:if="${#lists.isEmpty(franchises)}">
+        <p>표시할 프랜차이즈 정보가 없습니다.</p>
+    </div>
+</div>
+
 </body>
 </html>
