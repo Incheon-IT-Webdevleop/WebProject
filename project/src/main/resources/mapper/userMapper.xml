@@ -10,4 +10,15 @@
 		INSERT INTO `user` (user_id, user_nickname, user_pwd, user_name, user_email, regdate, user_role, user_del)
 					VALUES (#{userId}, #{userNickname}, #{userPwd}, #{userName}, #{userEmail}, NOW(), 0, 0);
 	</insert>
+	
+	<!-- 세션에 유저 이름과 닉네임을 넣기위한 조회 -->
+	<select id="selectNicknameById" parameterType="String" resultType="com.korea.project.dto.user.SessionUserDTO">
+		select 
+			user_nickname,
+			user_name
+		from 
+			user
+		where 
+			user_id = #{userId}
+	</select>
 </mapper>

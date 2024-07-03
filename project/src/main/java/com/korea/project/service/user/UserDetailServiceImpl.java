@@ -29,6 +29,11 @@ public class UserDetailServiceImpl implements UserDetailsService{
 			throw new UsernameNotFoundException("User not found with userId: " + userId);
 		}
 		System.out.println("유저 디테일 서비스 임플");
+		if(user.getUserRole() == 1) {
+			user.setRoles("ADMIN");
+		}else {
+			user.setRoles("USER");
+		}
 		return new UserDetail(user);
 	}
 }

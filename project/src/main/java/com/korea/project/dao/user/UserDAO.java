@@ -2,7 +2,7 @@ package com.korea.project.dao.user;
 
 import org.springframework.stereotype.Repository;
 
-import com.korea.project.dto.user.LoginRequestDTO;
+import com.korea.project.dto.user.SessionUserDTO;
 import com.korea.project.mapper.user.UserMapper;
 import com.korea.project.vo.user.UserVO;
 
@@ -24,6 +24,12 @@ public class UserDAO implements UserMapper{
 	@Override
 	public void signUp(UserVO vo) {
 		userMapper.signUp(vo);
+	}
+	
+	// 세션에 유저 이름과 아이디를 넣기 위한 조회
+	@Override
+	public SessionUserDTO selectNicknameById(String id) {
+		return userMapper.selectNicknameById(id);
 	}
 	
 }
