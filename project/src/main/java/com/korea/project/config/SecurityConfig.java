@@ -14,6 +14,7 @@ import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
+import com.korea.project.service.user.CustomOAuth2UserService;
 import com.korea.project.service.user.UserDetailServiceImpl;
 
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ public class SecurityConfig {
 	private final CustomAuthSuccessHandler customSuccessHandler;
 	private final CustomLogoutSuccessHandler customLogoutSuccessHandler;
 	private final CustomAccessDined customAccessDined;
+	private final CustomOAuth2UserService customOAuth2UserService;
 
 	
     @Bean
@@ -55,6 +57,16 @@ public class SecurityConfig {
 	}
     
     @Bean
+    public Oauth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler() {
+        return new Oauth2AuthenticationSuccessHandler();
+    }
+
+    @Bean
+    public Oauth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler() {
+        return new Oauth2AuthenticationFailureHandler();
+    }
+    
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
     	http
     	.csrf(AbstractHttpConfigurer::disable)
@@ -62,7 +74,7 @@ public class SecurityConfig {
                 sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         )
         .authorizeHttpRequests(authorize -> authorize
-        		.requestMatchers("/css/**", "/js/**", "/img/**").permitAll() // CSS, JS, 이미지 폴더에 대해 접근 허용
+        		.requestMatchers("/css/**", "/js/**", "/categoryImages/**").permitAll() // CSS, JS, 이미지 폴더에 대해 접근 허용
         		.requestMatchers("/user/*").hasAnyRole("USER", "ADMIN")
                 // /user : 인증만 되면 들어갈 수 있는 주소
                 .requestMatchers("/admin/**").hasAnyRole("ADMIN")
@@ -70,7 +82,7 @@ public class SecurityConfig {
                 .anyRequest().permitAll()//다른 요청
         )
         .formLogin(formLogin -> formLogin
-                .loginPage("/loginPage") // 커스텀 로그인 페이지 URL
+                .loginPage("/login") // 커스텀 로그인 페이지 URL
                 .loginProcessingUrl("/perform_login") // 로그인 form action URL
 //                .defaultSuccessUrl("/") // 로그인 성공 시 리디렉션 URL successHandler로 대체
 //                .failureUrl("/") // 로그인 실패 시 리디렉션 URL
@@ -79,7 +91,17 @@ public class SecurityConfig {
                 .successHandler(customSuccessHandler)
                 .failureHandler(customFailureHandler)
                 .permitAll()
-        ).logout(logout -> logout
+        )
+//        .oauth2Login(oauth2 -> oauth2
+//        		.userInfoEndpoint(userInfo -> userInfo
+//    				.userService(customOAuth2UserService)
+//				//.successHandler(oAuth2AuthenticationSuccessHandler())
+//                //.failureHandler(oAuth2AuthenticationFailureHandler())
+//            )
+//		)
+//        
+        
+        .logout(logout -> logout
                 .logoutUrl("/logout") // 로그아웃 처리 URL
                 .logoutSuccessHandler(customLogoutSuccessHandler) // 로그아웃 성공 시 핸들러 설정
                 .invalidateHttpSession(true) // 세션 무효화
@@ -88,11 +110,12 @@ public class SecurityConfig {
                 .permitAll()
         ).rememberMe(remember -> remember
         		.rememberMeServices(rememberMeServices())
-        ).exceptionHandling(exception-> exception
-        		.accessDeniedHandler(customAccessDined)
-        		
-        		
-        		)
+        )
+        .exceptionHandling(exception-> exception
+                    .accessDeniedHandler(customAccessDined)
+                        
+                        
+        )
         ;
         
 
