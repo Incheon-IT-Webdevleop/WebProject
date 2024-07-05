@@ -9,11 +9,11 @@ import com.korea.project.vo.user.UserVO;
 public interface UserMapper {
 	
 	// 아이디 비번을 가지고 로그인 하기
-	public UserVO selectById(String userId);
+    UserVO selectById(String userId);
 	
 	// 회원가입
-	public void signUp(UserVO vo);
+    void signUp(UserVO vo);
 	
 	// 세션에 유저 이름과 닉네임을 넣기 위한 조회
-	public SessionUserDTO selectNicknameById(String id);
+    SessionUserDTO selectNicknameById(String id);
 }

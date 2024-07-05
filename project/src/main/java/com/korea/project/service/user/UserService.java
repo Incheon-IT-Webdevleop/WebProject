@@ -10,8 +10,8 @@ public interface UserService {
 
 	
 	// 회원가입
-	public void register(UserVO vo);
+    void register(UserVO vo);
 	
 	// 세션에 유저 이름과 유저 닉네임을 저장하기 위한 조회
-	public SessionUserDTO selectNicknameById(String id);
+    SessionUserDTO selectNicknameById(String id);
 }

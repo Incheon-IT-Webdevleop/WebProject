@@ -10,10 +10,10 @@ public interface BoardService {
 	
 	
 	//게시글 조회 
-	public List<BoardVO> getList();
+    List<BoardVO> getList();
 	
 	//게시글 추가
-	public void register(BoardVO boardVO);
+    void register(BoardVO boardVO);
 	
 //	//카테고리 추가 
 //	public List<BoardVO> sectors();
