@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -22,23 +21,37 @@ public class FranchiseController {
     }
 
     @GetMapping("/franchises")
-    public String getAllFranchises(Model model) {
-        List<FranchiseVO> franchises = franchiseService.getAllFranchises();
-        model.addAttribute("franchises", franchises);
-        return "/franchise/franchiseList";
-    }
-
-    @GetMapping("/franchisesBySector")
-    public String getFranchisesBySector(@RequestParam(name = "sector", required = false) Integer sector, Model model) {
+    public String getAllFranchises(
+            @RequestParam(name = "sector", required = false) Integer sector,
+            @RequestParam(name = "search", required = false) String search,
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            @RequestParam(name = "size", defaultValue = "20") int size,
+            Model model) {
         List<FranchiseVO> franchises;
+        int totalItems;
 
-        if (sector != null) {
-            franchises = franchiseService.getFranchisesBySector(sector);
+        if (search != null && !search.isEmpty()) {
+            franchises = franchiseService.searchFranchisesByName(search, (page - 1) * size, size);
+            totalItems = franchiseService.countFranchisesByName(search);
+        } else if (sector != null) {
+            franchises = franchiseService.getFranchisesBySectorPaged(sector, (page - 1) * size, size);
+            totalItems = franchiseService.countFranchisesBySector(sector);
         } else {
-            franchises = franchiseService.getAllFranchises();
+            franchises = franchiseService.getAllFranchisesPaged((page - 1) * size, size);
+            totalItems = franchiseService.countAllFranchises();
         }
 
+        int totalPages = (int) Math.ceil((double) totalItems / size);
+
         model.addAttribute("franchises", franchises);
-        return "/franchise/franchiseList";
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("sector", sector);
+        model.addAttribute("search", search);
+        return "franchise/franchiseList";
     }
+
+  
+
+   
 }

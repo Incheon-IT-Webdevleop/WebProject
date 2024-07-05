@@ -20,25 +20,56 @@ public class FranchiseService {
         this.franchiseMapper = franchiseMapper;
     }
 
-    public List<FranchiseVO> getAllFranchises() {
+    public List<FranchiseVO> getAllFranchisesPaged(int offset, int limit) {
         try {
-            List<FranchiseVO> franchises = franchiseMapper.selectAllFranchises();
-            System.out.println("Retrieved franchises: " + franchises.size());
-            return franchises;
+            return franchiseMapper.selectAllFranchisesPaged(offset, limit);
         } catch (DataAccessException e) {
             System.err.println("Failed to retrieve franchises: " + e.getMessage());
             throw e;
         }
     }
 
-    public List<FranchiseVO> getFranchisesBySector(int sector) {
+    public List<FranchiseVO> getFranchisesBySectorPaged(int sector, int offset, int limit) {
         try {
-            List<FranchiseVO> franchises = franchiseMapper.selectFranchisesBySector(sector);
-            System.out.println("Retrieved franchises for sector " + sector + ": " + franchises.size());
-            return franchises;
+            return franchiseMapper.selectFranchisesBySectorPaged(sector, offset, limit);
         } catch (DataAccessException e) {
             System.err.println("Failed to retrieve franchises for sector " + sector + ": " + e.getMessage());
             throw e;
         }
+    }
+
+    public List<FranchiseVO> getAllFranchises() {
+        try {
+            return franchiseMapper.selectAllFranchises();
+        } catch (DataAccessException e) {
+            System.err.println("Failed to retrieve all franchises: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    public int countAllFranchises() {
+        try {
+            return franchiseMapper.countAllFranchises();
+        } catch (DataAccessException e) {
+            System.err.println("Failed to count all franchises: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    public int countFranchisesBySector(int sector) {
+        try {
+            return franchiseMapper.countFranchisesBySector(sector);
+        } catch (DataAccessException e) {
+            System.err.println("Failed to count franchises for sector " + sector + ": " + e.getMessage());
+            throw e;
+        }
+    }
+    //검색창
+    public List<FranchiseVO> searchFranchisesByName(String name, int offset, int limit) {
+        return franchiseMapper.searchFranchisesByName(name, offset, limit);
+    }
+
+    public int countFranchisesByName(String name) {
+        return franchiseMapper.countFranchisesByName(name);
     }
 }

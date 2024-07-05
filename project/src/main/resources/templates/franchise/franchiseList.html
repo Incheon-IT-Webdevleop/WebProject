@@ -6,6 +6,15 @@
 
     <link rel="stylesheet" href="/css/franchise.css" />
     <link rel="stylesheet" href="/css/header.css" />
+    <script>
+        function handleSearch(event) {
+            var searchInput = document.getElementById('searchInput');
+            if (searchInput.value.trim() === '') {
+                event.preventDefault(); // 폼 제출을 막습니다
+                alert('검색어를 입력해주세요.'); // 예시로 경고창을 띄웁니다
+            }
+        }
+    </script>
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
@@ -13,31 +22,37 @@
 <h2 class="category-main">카테고리</h2>
 <div class="categoryBox">
     <div class="category-btn">
-        <a th:href="@{/franchisesBySector(sector=0)}">
+        <a th:href="@{/franchises(sector=0)}">
             <span class="category-btn-text">카페 · 디저트</span>
         </a>
     </div>
+
     <div class="category-btn">
-        <a th:href="@{/franchisesBySector(sector=1)}">
+        <a th:href="@{/franchises(sector=1)}">
             <span class="category-btn-text">음식점 · 주점</span>
         </a>
     </div>
     <div class="category-btn">
-        <a th:href="@{/franchisesBySector(sector=2)}">
+        <a th:href="@{/franchises(sector=2)}">
             <span class="category-btn-text">치킨 · 피자</span>
         </a>
     </div>
     <div class="category-btn">
-        <a th:href="@{/franchisesBySector(sector=3)}">
+        <a th:href="@{/franchises(sector=3)}">
             <span class="category-btn-text">분식 · 패스트푸드</span>
         </a>
     </div>
     <div class="category-btn">
-        <a th:href="@{/franchisesBySector(sector=4)}">
+        <a th:href="@{/franchises(sector=4)}">
             <span class="category-btn-text">판매업</span>
         </a>
     </div>
 </div>
+
+<form th:action="@{/franchises}" method="get" class="search-form" onsubmit="handleSearch(event);">
+    <input type="text" id="searchInput" name="search" th:value="${search}" placeholder="브랜드명을 검색하세요">
+    <button type="submit">검색</button>
+</form>
 
 <div class="franchise-container">
     <div th:if="${not #lists.isEmpty(franchises)}">
@@ -48,10 +63,26 @@
                 </div>
                 <div class="text-box">
                     <p th:text="${franchise.franchiseTitle}" class="card-title">Franchise Title</p>
-                    <p class="category-text" th:text="'카페 · 디저트 ' + ${franchise.franchiseStores} + ' 개'">Franchise Store</p>
+                    <p class="category-text"
+                       th:text="${franchise.franchiseSectors == 0 ? '카페 · 디저트' :
+                                    franchise.franchiseSectors == 1 ? '음식점 · 주점' :
+                                    franchise.franchiseSectors == 2 ? '치킨 · 피자' :
+                                    franchise.franchiseSectors == 3 ? '분식 · 패스트푸드' :
+                                    franchise.franchiseSectors == 4 ? '판매업' : '기타'} + ' ' + ${franchise.franchiseStores} + ' 개'">
+                        카테고리 및 매장 수
+                    </p>
                 </div>
             </div>
         </div>
+
+        <div class="pagination pagingBox">
+            <a th:href="@{/franchises(page=1, sector=${sector}, search=${search != null ? search : null})}">a</a>
+            <span th:each="pageNum : ${#numbers.sequence(1, totalPages)}">
+                <a th:href="@{/franchises(page=${pageNum}, sector=${sector}, search=${search != null ? search : null})}" th:text="${pageNum}"></a>
+            </span>
+            <a th:href="@{/franchises(page=${totalPages}, sector=${sector}, search=${search != null ? search : null})}">c</a>
+        </div>
+
     </div>
     <div th:if="${#lists.isEmpty(franchises)}">
         <p>표시할 프랜차이즈 정보가 없습니다.</p>

@@ -25,7 +25,7 @@
 .header-login {
   display: flex;
   gap: 20px;
-  color: #666;
+  
 }
 
 .header-menu {
@@ -66,4 +66,8 @@
 
 .mouse {
   cursor: pointer;
+}
+a{
+	  text-decoration: none;
+	
 }
