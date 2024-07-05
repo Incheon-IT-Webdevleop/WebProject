@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kakao Map Example</title>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b0724bf330998cfd60824078a8ffae4e"></script>
+</head>
+<body style="display: flex;flex-direction: column;justify-content: right;align-items: flex-end;">
+	
+    <div id="map" style="width:1200px;height:95vh;"></div>
+	<div id="result" style="width:700px;height:100px"></div>
+
+    <script>
+        function initMap() {
+            var container = document.getElementById('map');
+            var options = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667),
+                level: 3
+            };
+            var map = new kakao.maps.Map(container, options);
+		
+			kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
+		    
+		    // 클릭한 위도, 경도 정보를 가져옵니다 
+		    var latlng = mouseEvent.latLng;
+		    
+		    var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+		    message += '경도는 ' + latlng.getLng() + ' 입니다';
+		    
+		    var resultDiv = document.getElementById('result'); 
+		    resultDiv.innerHTML = message;
+		    
+		});
+        }
+
+		
+		
+        // 페이지 로드가 완료된 후 맵 초기화
+        window.onload = initMap;
+    </script>
+</body>
+</html>

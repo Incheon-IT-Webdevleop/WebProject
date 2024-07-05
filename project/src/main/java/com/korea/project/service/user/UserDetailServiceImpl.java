@@ -1,12 +1,14 @@
 package com.korea.project.service.user;
 
-import org.apache.ibatis.logging.Log;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.korea.project.dao.user.UserDAO;
+import com.korea.project.dto.user.FindRequestDTO;
+import com.korea.project.dto.user.FindResponseDTO;
+import com.korea.project.dto.user.RegisterRequestDTO;
 import com.korea.project.dto.user.SessionUserDTO;
 import com.korea.project.dto.user.UserDetail;
 import com.korea.project.vo.user.UserVO;
@@ -38,14 +40,42 @@ public class UserDetailServiceImpl implements UserDetailsService, UserService{
 		return new UserDetail(user);
 	}
 	
+	// 세션에 등록하기 위한 아이디, 이름 조회
 	@Override
 	public SessionUserDTO selectNicknameById(String id) {
 		return userDAO.selectNicknameById(id);
 	}
 	
+	// 아이디 중복검사
 	@Override
-	public void register(UserVO vo) {
+	public int checkDuplicateById(String id) {
+		return userDAO.checkDuplicateById(id);
+	}
+	
+	// 이메일 중복검사
+	@Override
+	public int checkDuplicateByEmail(String email) {
 		// TODO Auto-generated method stub
+		return userDAO.checkDuplicateByEmail(email);
+	}
+	
+	// 닉네임 중복체크
+	@Override
+	public int checkDuplicateByNickname(String nickname) {
+		// TODO Auto-generated method stub
+		return userDAO.checkDuplicateByNickname(nickname);
+	}
+	
+	// 회원가입
+	@Override
+	public void register(RegisterRequestDTO vo) {
+		userDAO.signUp(vo);
 		
+	}
+	
+	// 찾기
+	@Override
+	public FindResponseDTO find(FindRequestDTO dto) {
+		return userDAO.find(dto);
 	}
 }

@@ -46,7 +46,7 @@ input, button {
     height: 80%;
 }
 h1 {
-    margin: 4rem auto;
+    margin: 2rem auto;
    	font-size: 2rem;
      text-align: center;
 }
@@ -63,13 +63,23 @@ form {
 .email-container {
     display: flex;
     align-items: center;
-    gap: 10px;
 }
 
 
 .email-container input {
-    flex-grow: 1;
+/*     flex-grow: 1; */
     height: 40px;
+    width: 150px;
+}
+
+#userEmailDomain{
+	position: relative;
+	top:-5px;
+	width: 200px;
+	height: 40px;
+	border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
 .email-container button {

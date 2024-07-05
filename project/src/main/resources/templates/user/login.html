@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" href="/css/user/login.css">	
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/user/login.js"></script>
+</head>
+<body>
+    <div class="login-container">
+        <h1>로고</h1>
+        <form id="loginForm" action="/perform_login" method="post">
+            <input class="input-text" type="text" name="userId" placeholder="아이디">
+            <input class="input-text" type="password" name="userPwd" placeholder="비밀번호">
+            <div class="options">
+                <label>
+                    <input type="checkbox" name="rememberMe"> 내 정보 저장
+                </label>
+                <div class="links">
+                   	<a th:href="@{/find(type=id)}">아이디 찾기</a> |
+            		<a th:href="@{/find(type=password)}">비밀번호 찾기</a> |
+                    <a href="register">회원가입</a>
+                </div>
+            </div>
+            <div id="loginError" class="error-message"></div>
+            <button class="height-50" type="submit">로그인</button>
+        </form>
+ 
+        <div class="divider">간편 로그인</div>
+        <div class="button-container">
+       		<a href="#" class="social-login kakao">카카오 로그인</a>
+        	<a href="/oauth2/authorization/naver" class="social-login naver">네이버 로그인</a>
+       	</div>
+    	</div>
+</body>
+</html>

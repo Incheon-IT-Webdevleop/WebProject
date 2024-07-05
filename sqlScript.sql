@@ -47,7 +47,7 @@ CREATE TABLE `board` (
     `board_del` TINYINT NOT NULL DEFAULT 0 COMMENT '0: 삭제 안함, -1: 삭제 완료',
     `step` INT NULL DEFAULT 0 COMMENT '댓글의 순번',
     `depth` TINYINT NULL DEFAULT 0 COMMENT '0이면 게시글, 1이면 댓글, 2면 대댓글 3이면 대대댓글...',
-    `ref` INT NULL DEFAULT `board_idx` NULL COMMENT '댓글의 부모가 되는 게시글의 번호',
+    `ref` INT NULL DEFAULT NULL COMMENT '댓글의 부모가 되는 게시글의 번호',
     PRIMARY KEY (`board_idx`),
     FOREIGN KEY (`user_idx`) REFERENCES `user` (`user_idx`)
 );
