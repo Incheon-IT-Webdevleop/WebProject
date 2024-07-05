@@ -1,0 +1,21 @@
+<!-- franchiseboard.html -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Franchise Detail</title>
+    <link rel="stylesheet" href="/css/franchiseboard.css">
+</head>
+<body>
+    <div class="franchise-detail">
+        <h2 th:text="${franchise.franchiseTitle}">Franchise Title</h2>
+        <div class="franchise-img">
+            <img th:src="${franchise.franchiseImg}" alt="Franchise Image">
+        </div>
+        <div class="franchise-description">
+            <p th:text="${franchise.franchiseAvgSales}">Franchise Description</p>
+        </div>
+    </div>
+</body>
+</html>

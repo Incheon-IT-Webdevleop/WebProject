@@ -9,11 +9,14 @@ $(document).ready(function() {
         $("#idTab").removeClass("active");
         $("#pw-form-container").show();
         $("#id-form-container").hide();
+		$("#title").text("비밀번호 찾기");
+		
     } else {
         $("#idTab").addClass("active");
         $("#pwTab").removeClass("active");
         $("#id-form-container").show();
         $("#pw-form-container").hide();
+		$("#title").text("아이디 찾기");
     }
 
     $("#idTab").click(function() {
@@ -22,6 +25,7 @@ $(document).ready(function() {
         $("#id-form-container").show();
         $("#pw-form-container").hide();
 		$(".error-message").hide();
+		$("#title").text("아이디 찾기");
     });
 
     $("#pwTab").click(function() {
@@ -30,6 +34,7 @@ $(document).ready(function() {
         $("#pw-form-container").show();
         $("#id-form-container").hide();
 		$(".error-message").hide();
+		$("#title").text("비밀번호 찾기");
     });
 	
 	// 아이디 찾기 폼 제출
@@ -82,7 +87,7 @@ $(document).ready(function() {
  		let $pwdFormId = $("#pw-form-container input[placeholder='아이디']").val();
  		let $pwdFormEmail = $("#pw-form-container input[placeholder='이메일']").val();
 		 		
-		if(!$pwdFormId || $pwdFormEmail){
+		if(!$pwdFormId || !$pwdFormEmail){
 			$(".error-message").html("빈칸이 존재합니다.<br> 모두 입력하신후 다시 시도해주시길 바랍니다.").show();
 			return;
 		}
@@ -93,11 +98,14 @@ $(document).ready(function() {
              type: 'POST',
              data: $(this).serialize(),
              success: function(response) {
-                 if(response.result === 'emptyPwdError'){
+                if(response.result === 'emptyPwdError'){
 					$(".error-message").html("잘못 입력하셨습니다<br>해당하는 정보가 존재하지 않습니다.").show();
-				 }else{
-					
-				 }
+				}else{
+					$(".error-message").hide();
+                    $("#pw-form-container").hide();
+                    $("#pw-reset-container").show();
+					$("#title").text("비밀번호 변경");
+				}
              },
              error: function() {
                  $(".error-message").html("비밀번호 찾기에 실패했습니다.").show();
@@ -105,4 +113,39 @@ $(document).ready(function() {
          });
      });
 	
+	// 비밀번호 재설정 폼 제출
+	$("#pw-reset-form").submit(function(e) {
+	    e.preventDefault();
+	
+	    let newPassword = $("input[name='newPassword']").val();
+    	let confirmPassword = $("input[name='confirmPassword']").val();
+
+        if (!newPassword || !confirmPassword) {
+	        $(".error-message").html("빈칸이 존재합니다.<br> 모두 입력하신후 다시 시도해주시길 바랍니다.").show();
+    	    return;
+   	 	}
+        
+    	if (newPassword !== confirmPassword) {
+        	$(".error-message").html("비밀번호가 일치하지 않습니다.<br> 다시 확인해주시길 바랍니다.").show();
+        return;
+        }
+        $(".error-message").hide();
+
+		$.ajax({
+            url: '/reset-password',
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                if (response.result === 'success') {
+                    alert("비밀번호가 성공적으로 변경되었습니다.");
+                    location.href = '/login';
+                } else {
+                    $(".error-message").html("비밀번호 변경에 실패했습니다.").show();
+                }
+            },
+            error: function() {
+                $(".error-message").html("비밀번호 변경에 실패했습니다.").show();
+            }
+        });
+    });
 });

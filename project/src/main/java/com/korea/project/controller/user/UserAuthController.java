@@ -224,6 +224,17 @@ public class UserAuthController {
     	}
     	return	map;
     }
+    
+    // 비밀번호 변경
+    @PostMapping("/reset-password")
+    @ResponseBody
+    public HashMap<String, String> resetPwd(String newPassword, String confirmPassword){
+    	
+    	HashMap<String, String> map = new HashMap<>();
+    	
+    	return map;
+    }
+    
 	
 //	// 비밀번호 검사 로직(버튼을 눌렀을 때)
 //	@PostMapping("/user/checkPwd")

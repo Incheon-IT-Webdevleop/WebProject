@@ -10,7 +10,7 @@
 <body>
 
  	<div class="container">
-        <h1>아이디/비밀번호 찾기</h1>
+        <h3 id="title"></h3>
         <div class="tab-container">
             <button class="tab" id="idTab">아이디 찾기</button>
             <button class="tab" id="pwTab">비밀번호 찾기</button>
@@ -36,6 +36,15 @@
                 <input type="email" placeholder="이메일">
                 <div class=error-message></div>
                 <button type="submit">비밀번호 찾기</button>
+            </form>
+        </div>
+        
+         <div id="pw-reset-container" style="display:none;">
+            <form id="pw-reset-form">
+                <input type="password" name="newPassword" placeholder="새 비밀번호">
+                <input type="password" name="confirmPassword" placeholder="새 비밀번호 확인">
+                <div class="error-message"></div>
+                <button type="submit">비밀번호 변경</button>
             </form>
         </div>
 
