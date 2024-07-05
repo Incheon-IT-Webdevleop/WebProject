@@ -50,6 +50,12 @@ public class FranchiseController {
         model.addAttribute("search", search);
         return "franchise/franchiseList";
     }
+    @GetMapping("/franchiseboard")
+    public String showFranchiseDetail(@RequestParam("id") Long id, Model model) {
+        FranchiseVO franchise = franchiseService.getFranchiseById(id);
+        model.addAttribute("franchise", franchise);
+        return "franchise/franchiseboard";
+    }
 
   
 

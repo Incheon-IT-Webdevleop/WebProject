@@ -59,4 +59,16 @@ SELECT COUNT(*) FROM franchise WHERE franchise_sectors = #{sector}
     FROM franchise
     WHERE franchise_title LIKE CONCAT('%', #{name}, '%')
 </select>
+<select id="selectFranchiseById" resultType="com.korea.project.vo.franchise.FranchiseVO">
+    SELECT
+    franchise_idx as franchiseIdx,
+    franchise_title as franchiseTitle,
+    franchise_sectors as franchiseSectors,
+    franchise_img as franchiseImg,
+    franchise_stores as franchiseStores,
+    franchise_avg_sales as franchiseAvgSales,
+    franchise_startup_cost as franchiseStartupCost
+    FROM franchise
+    WHERE franchise_idx = #{id}
+</select>
 </mapper>

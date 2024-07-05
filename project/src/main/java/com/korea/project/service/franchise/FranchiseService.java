@@ -72,4 +72,12 @@ public class FranchiseService {
     public int countFranchisesByName(String name) {
         return franchiseMapper.countFranchisesByName(name);
     }
+    public FranchiseVO getFranchiseById(Long id) {
+        try {
+            return franchiseMapper.selectFranchiseById(id);
+        } catch (DataAccessException e) {
+            System.err.println("Failed to retrieve franchise with id " + id + ": " + e.getMessage());
+            throw e;
+        }
+    }
 }
