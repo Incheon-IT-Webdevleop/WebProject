@@ -4,5 +4,6 @@ import lombok.Data;
 
 @Data
 public class SessionUserDTO {
-	private String userName, userNickname;
+	private String userNickname;
+	private int userIdx;
 }

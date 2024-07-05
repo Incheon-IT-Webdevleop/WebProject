@@ -2,6 +2,8 @@ package com.korea.project.mapper.user;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.korea.project.dto.user.FindRequestDTO;
+import com.korea.project.dto.user.FindResponseDTO;
 import com.korea.project.dto.user.RegisterRequestDTO;
 import com.korea.project.dto.user.SessionUserDTO;
 import com.korea.project.vo.user.UserVO;
@@ -26,4 +28,7 @@ public interface UserMapper {
 	
 	// 닉네임 중복검사
 	public int checkDuplicateByNickname(String nickname);
+	
+	// 찾기
+	public FindResponseDTO find(FindRequestDTO dto);
 }

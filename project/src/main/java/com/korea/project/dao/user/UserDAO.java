@@ -2,6 +2,8 @@ package com.korea.project.dao.user;
 
 import org.springframework.stereotype.Repository;
 
+import com.korea.project.dto.user.FindRequestDTO;
+import com.korea.project.dto.user.FindResponseDTO;
 import com.korea.project.dto.user.RegisterRequestDTO;
 import com.korea.project.dto.user.SessionUserDTO;
 import com.korea.project.mapper.user.UserMapper;
@@ -49,6 +51,12 @@ public class UserDAO implements UserMapper{
 	@Override
 	public int checkDuplicateByNickname(String nickname) {
 		return userMapper.checkDuplicateByNickname(nickname);
+	}
+	
+	// 찾기
+	@Override
+	public FindResponseDTO find(FindRequestDTO dto) {
+		return userMapper.find(dto);
 	}
 	
 }

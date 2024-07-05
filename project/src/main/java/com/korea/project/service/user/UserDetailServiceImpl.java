@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.korea.project.dao.user.UserDAO;
+import com.korea.project.dto.user.FindRequestDTO;
+import com.korea.project.dto.user.FindResponseDTO;
 import com.korea.project.dto.user.RegisterRequestDTO;
 import com.korea.project.dto.user.SessionUserDTO;
 import com.korea.project.dto.user.UserDetail;
@@ -69,5 +71,11 @@ public class UserDetailServiceImpl implements UserDetailsService, UserService{
 	public void register(RegisterRequestDTO vo) {
 		userDAO.signUp(vo);
 		
+	}
+	
+	// 찾기
+	@Override
+	public FindResponseDTO find(FindRequestDTO dto) {
+		return userDAO.find(dto);
 	}
 }

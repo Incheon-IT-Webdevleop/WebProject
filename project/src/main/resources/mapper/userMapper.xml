@@ -15,7 +15,7 @@
 	<select id="selectNicknameById" parameterType="String" resultType="com.korea.project.dto.user.SessionUserDTO">
 		select 
 			user_nickname,
-			user_name
+			user_idx
 		from 
 			user
 		where 
@@ -50,5 +50,22 @@
 			user
 		where
 			user_nickname=#{nickname}
+	</select>
+	
+	<select id="find" parameterType="com.korea.project.dto.user.FindRequestDTO" resultType="com.korea.project.dto.user.FindResponseDTO">
+      	SELECT 
+			user_id,
+           	user_pwd
+        FROM user
+        <choose>
+            <when test="type == 'id'">
+                WHERE user_name = #{req1}
+                AND user_email = #{req2}
+            </when>
+            <when test="type == 'pwd'">
+                WHERE user_id = #{req1}
+                AND user_email = #{req2}
+            </when>
+        </choose>
 	</select>
 </mapper>

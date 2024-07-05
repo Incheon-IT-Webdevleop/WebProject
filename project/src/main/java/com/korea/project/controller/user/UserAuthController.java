@@ -1,13 +1,18 @@
 package com.korea.project.controller.user;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.korea.project.dto.user.FindRequestDTO;
+import com.korea.project.dto.user.FindResponseDTO;
 import com.korea.project.dto.user.RegisterRequestDTO;
 import com.korea.project.service.user.UserDetailServiceImpl;
 
@@ -177,8 +182,55 @@ public class UserAuthController {
        
         return value.matches(regex);
     }
+    
+    // 찾기 페이지로 이동
+    @GetMapping("/find")
+    public String find(@RequestParam(name = "type", required = false, defaultValue = "id") String type, Model model) {
+        model.addAttribute("type", type);
+        return "user/find";
+    }
+    
+    // 찾기
+    @PostMapping("/find")
+    @ResponseBody
+    /**
+     * @param dto.type == "id" -> req1 = name, req2 = eamil
+     * @param dto.type.equals("pwd") -> req1 = id, req2=email
+     * @return
+     */
+    public Map<String, String> find(FindRequestDTO dto){
+		FindResponseDTO resultDTO = userService.find(dto);
+		String message = "message";
+		System.out.println(resultDTO);
+    	Map<String, String> map = new HashMap<>();
+    	
+    	// 타입이 id일 때
+    	if(dto.getType().equals("id")) {
+    		// 타입이 id인데 id가 비어있을 때
+    		if(resultDTO == null) {
+    			// 에러메세지를 보낸다
+    			map.put(message, "emptyIdError");
+    		}else{
+    			// id가 비어있지 않으면 성공이라는 메세지와 아이디를 보낸다
+    			map.put(message,"success");
+    			map.put("id", resultDTO.getUserId());
+    		}
+    	}else {
+    		if(resultDTO == null) {
+    			map.put(message, "emptyPwdError");
+    		}else {
+    			map.put(message, "success");
+    		}
+    	}
+    	return	map;
+    }
 	
-
+//	// 비밀번호 검사 로직(버튼을 눌렀을 때)
+//	@PostMapping("/user/checkPwd")
+//	@ResponseBody
+//	public HashMap<String, String> checkPwd(String pwd){
+//		
+//	}
 
 }	
 

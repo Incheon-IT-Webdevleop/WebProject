@@ -2,6 +2,8 @@ package com.korea.project.service.user;
 
 import org.springframework.stereotype.Service;
 
+import com.korea.project.dto.user.FindRequestDTO;
+import com.korea.project.dto.user.FindResponseDTO;
 import com.korea.project.dto.user.RegisterRequestDTO;
 import com.korea.project.dto.user.SessionUserDTO;
 
@@ -23,4 +25,7 @@ public interface UserService {
 	
 	// 닉네임 중복체크
 	public int checkDuplicateByNickname(String nickname);
+	
+	// 찾기
+	public FindResponseDTO find(FindRequestDTO dto);
 }
