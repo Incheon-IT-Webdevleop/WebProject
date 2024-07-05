@@ -6,10 +6,16 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.korea.project.dto.board.BoardListRequest;
+import com.korea.project.dto.board.BoardListResponse;
+import com.korea.project.dto.board.PagingResponse;
 import com.korea.project.mapper.board.BoardMapper;
 import com.korea.project.service.board.BoardService;
 import com.korea.project.vo.board.BoardVO;
@@ -24,13 +30,12 @@ public class BoardController {
 	
 	//게시글 목록 보여주기
 	@GetMapping("list")
-	public String list(Model model) {
-		List<BoardVO> list = boardService.getList();
-		model.addAttribute("boardForm",new BoardVO());
-		model.addAttribute("list",list);
-		
+	public String list(@ModelAttribute("params") final BoardListRequest params, Model model) {
+		System.out.println(params);
+		PagingResponse<BoardListRequest> response = boardService.findBoardList(params);
+		model.addAttribute("response",response);
 		return "board/boardList";
-	}
+ 	}
 	
 	//게시글 추가하기
 	@GetMapping("register")
@@ -45,15 +50,24 @@ public class BoardController {
 		return new RedirectView("list");
 	}
 	
-//	//카테고리
-//	@GetMapping("bordSectors")
-//	public List<BoardVO> boardSectors(){
-//		List<BoardVO> boardSectors = new ArrayList<>();
-//		boardSectors.add(new BoardVO());
+	//게시글 목록 필터링해서 검색하기
+//	@GetMapping("list")
+//	@ResponseBody
+//	public List<BoardListResponse> filterList(  @RequestParam(required = false) int sector,
+//									            @RequestParam(required = false) String bigArea,
+//									            @RequestParam(required = false) String smallArea,
+//									            @RequestParam(required = false) String keyword){
 //		
-//		return boardSectors;
+//		BoardListRequest boardCR = new BoardListRequest();
+//	    boardCR.setBoardSectors(sector);
+//	    boardCR.setBoardBigArea(bigArea.trim());
+//	    boardCR.setBoardSmallArea(smallArea.trim());
+//	    boardCR.setSearchKeyword(keyword.trim());
+//		System.out.println(boardCR);
+//		System.out.println(boardService.filter(boardCR));
+//		return boardService.filter(boardCR);
 //	}
-//	
+	
 	
 	
 
