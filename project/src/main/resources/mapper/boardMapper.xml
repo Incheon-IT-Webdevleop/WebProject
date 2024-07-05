@@ -1,13 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.korea.project.mapper.board.BoardMapper">
-
-	<select id="selectAll">
-		select * from board
+	
+	<!-- 게시글 리스트 조회 -->
+	<!-- <select id="findBoardList" parameterType="con.korea.project.dto.board.BoardListRequest" resultType="c.korea.project.dto.board.BoardVO">
+		SELECT B.BOARD_IDX,
+			   B.BOARD_TITLE,
+			   U.USER_NICKNAME,
+			   B.BOARD_WRITE_DATE,
+			   B.BOARD_VIEW
+		FROM BOARD B 
+		JOIN `USER` U ON B.USER_IDX = U.USER_IDX
+		ON U.USER_NICKNAME = B.USER_IDX
+		WHERE B.BOARD_DEL = 0-->
+	<!-- 게시글 목록 검색 필터 -->
+	<select id="findBoardList" parameterType="com.korea.project.dto.board.BoardListRequest" resultType="com.korea.project.dto.board.BoardListResponse">
+		SELECT B.BOARD_IDX,
+			   B.BOARD_TITLE,
+			   U.USER_NICKNAME,
+			   B.BOARD_WRITE_DATE,
+			   B.BOARD_VIEW
+		FROM BOARD B
+		JOIN `USER` U ON B.USER_IDX = U.user_idx
+		<!-- JOIN "USER" U ON B.USER_IDX = U.USER_IDX -->
+		WHERE B.board_del = 0
+		
+		<if test="boardBigArea != null and boardBigArea != '전체'">
+		    AND B.BOARD_BIG_AREA = #{boardBigArea}
+		</if>
+		<if test="boardSmallArea != null and boardSmallArea != '전체'">
+		    AND B.BOARD_SMALL_AREA = #{boardSmallArea}
+		</if>
+		<if test="searchKeyword != null and searchKeyword != ''">
+		    AND (B.BOARD_TITLE LIKE CONCAT('%', #{searchKeyword}, '%') 
+		         OR B.BOARD_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%'))
+		</if>
+		<if test="boardSectors != 5">
+		    AND B.BOARD_SECTORS = #{boardSectors}
+		</if> 
+		ORDER BY B.BOARD_IDX DESC
+		LIMIT #{pagination.limitStart}, #{recordSize}
 	</select>
 	
+<!-- 	</select> -->
+	
+	
+	
+	<!-- 게시글 페이지 수 카운팅-->
+	<select id="count" parameterType="com.korea.project.dto.board.BoardListRequest" resultType="int">
+		select count(*) 
+		from board 
+		where board_idx
+	</select>
+	
+	
+	
+	
+	<!-- 게시글 작성 -->
 	<insert id="insert">
 		insert into board(board_title, board_view)
 		values(#{boardTitle}, #{boardView})
 	</insert>
+	
+	
+	
+	
+	
 </mapper>

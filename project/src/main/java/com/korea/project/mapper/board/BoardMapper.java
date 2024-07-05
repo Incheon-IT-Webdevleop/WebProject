@@ -4,18 +4,26 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.korea.project.dto.board.BoardListRequest;
+import com.korea.project.dto.board.BoardListResponse;
 import com.korea.project.vo.board.BoardVO;
 
 @Mapper
 public interface BoardMapper {
 
 	//게시판 조회
-	public List<BoardVO> selectAll();
+	public List<BoardListRequest> findBoardList(BoardListRequest params);
 	
+	//게시글 수 카운팅
+	int boardCount(BoardListRequest params);
+	
+
 	//게시글 목록 추가
 	public void insert(BoardVO boardVO);
 	
+//	//카테고리 필터링 된 게시글 목록 가져오기
+//	List<BoardListResponse> filter(BoardListRequest boardListRequest);
 	
-//	//카테고리
-//	public List<BoardVO> 
+	//게시글 페이징
+	public int count(BoardListRequest boardListRequest);
 }

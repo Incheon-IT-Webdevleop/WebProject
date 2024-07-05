@@ -1,10 +1,14 @@
 package com.korea.project.service.board;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.korea.project.dao.board.BoardDAO;
+import com.korea.project.dto.board.BoardListRequest;
+import com.korea.project.dto.board.Pagination;
+import com.korea.project.dto.board.PagingResponse;
 import com.korea.project.vo.board.BoardVO;
 
 import lombok.RequiredArgsConstructor;
@@ -14,12 +18,28 @@ import lombok.RequiredArgsConstructor;
 public class BoardServiceImpl implements BoardService{
 
 	private final BoardDAO boardDAO;
+
 	
 	//게시글 조회
 	@Override
-	public List<BoardVO> getList() {
-		return boardDAO.findAll();
+	public PagingResponse<BoardListRequest> findBoardList(BoardListRequest params) {
+		int count = boardDAO.count(params);
+		if(count < 1) {
+			return new PagingResponse<>(Collections.emptyList(), null);
+		}
+		
+		Pagination pagination = new Pagination(count, params);
+		params.setPagination(pagination);
+		
+		List<BoardListRequest> list = boardDAO.findBoardList(params);
+		return new PagingResponse<BoardListRequest>(list, pagination);
 	}
+
+	
+//	@Override
+//	public List<BoardVO> getList() {
+//		return boardDAO.findAll();
+//	}
 	
 	//게시글 등록
 	@Override
@@ -27,9 +47,11 @@ public class BoardServiceImpl implements BoardService{
 		boardDAO.save(boardVO);
 	}
 	
-//	//카테고리
+//	//게시글 카테고리, 검색어에 대한 필터링 조회
 //	@Override
-//	public List<BoardVO> sectors(int code, String sectorsDisplay) {
-//		return boardDAO.sectorsCodes;
+//	public List<BoardListResponse> filter(BoardListRequest boardListRequest) {
+//		return boardDAO.filter(boardListRequest);
 //	}
+	
+
 }

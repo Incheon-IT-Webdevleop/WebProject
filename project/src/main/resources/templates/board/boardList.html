@@ -13,23 +13,36 @@
 		<h1>상권분석 게시판</h1>
 		
 		<!-- 게시글 목록 리스트  -->
-		<table border="1">
-			<tr>
-				<td>번호</td>
-				<td>제목</td>
-				<td>작성자</td>
-				<td>작성날짜/시간</td>
-				<td>조회수</td>
-			</tr>
-			
-			<th:block th:each="board:${list}">
+		<table id ="boardTable" border="1">
+			<thead>
+				<tr>
+					<td>번호</td>
+					<td>제목</td>
+					<td>작성자</td>
+					<td>작성날짜/시간</td>
+					<td>조회수</td>
+				</tr>
+			</thead>
+			<th:block th:each="board:${response.list}">
 				<tr th:object="${board}">
-					<td th:text="*{boardIdx}">
-					<td th:text="*{boardTitle}">
-					<td th:text="*{userIdx}">
-					<td th:text="*{boardWriteDate}">
-					<td th:text="*{boardView}">
+					<td th:text="*{boardIdx}"/>
+					<td th:text="*{boardTitle}"/>
+					<td th:text="*{userNickname}"/>
+					<td th:text="*{boardWriteDate}"/>
+					<td th:text="*{boardView}"/>
+				</tr>
+			</th:block>
+			
+			<tbody>
+			<!-- 게시글 검색하면 여기서 업데이트 -->
+			</tbody>	
 		</table>
+		
+		<!-- 페이징  -->
+		<div class="paging">
+		
+		</div><!-- 페이징 -->
+		
 		
 		
 		<!-- 게시글 작성하기 버튼 -->
@@ -40,51 +53,54 @@
 		
 		
 		<!-- 업종(대분류), 큰지역(중분류), 작은지역별(소분류)로 선택해서 분류에 따라 게시글 검색하기 기능  -->
-	 	<div id="categoryContainer">
-	 		<div id="sectorCategory">대분류
-				<select class="">
-					<option value="전체" selected> 전체 </option>
-					<option value="0">카페/디저트</option>
-					<option value="1">음식점/주점</option>
-					<option value="2">치킨/피자</option>
-					<option value="3">분식/패스트푸드</option>
-					<option value="4">판매업</option>
-				</select> 
-			</div>
-			<div>
-				<label for="bigAreaCategory">중분류</label>
-				<select id="bigAreaCategory">
-					<option value="전체" selected> 전체 </option>
-					<option value="서울특별시">서울특별시</option>
-					<option value="경기도">경기도</option>
-					<option value="충청북도">충청북도</option>
-					<option value="충청남도">충청남도</option>
-					<option value="전라남도">전라남도</option>
-					<option value="경상북도">경상북도</option>
-					<option value="경상남도">경상남도</option>
-					<option value="부산광역시">부산광역시</option>
-					<option value="인천광역시">인천광역시</option>
-					<option value="대구광역시">대구광역시</option>
-					<option value="광주광역시">광주광역시</option>
-					<option value="울산광역시">울산광역시</option>
-					<option value="세종특별자치시">	세종특별자치시</option>
-					<option value="강원특별자치도">	강원특별자치도</option>
-					<option value="전북특별자치도">	전북특별자치도</option>
-					<option value="제주특별자치도">	제주특별자치도</option>
-				</select> 
-			</div>
-			<div>
-				<label for="smallAreaCategory">소분류</label>
-				<select id="smallAreaCategory">
-					<option value="전체" selected> 전체 </option>
-				</select>
-			</div> 
-			<div> <!-- 검색어 textfield -->
-				<div><input type="search" placegolder="검색어를 입력해주세요."></</div>
-				<div><input type="button" value="검색"></div>
-			</div>
-		</div>
-	</div>
+	 	<form id="searchForm" action="/board/list" method="get">
+		 	<div id="categoryContainer">
+		 		<div id="sectorCategory">대분류
+					<select name="boardSectors" id="sectorCategorySelect">
+						<option value="5" selected > 전체 </option>
+						<option value="0">카페/디저트</option>
+						<option value="1">음식점/주점</option>
+						<option value="2">치킨/피자</option>
+						<option value="3">분식/패스트푸드</option>
+						<option value="4">판매업</option>
+					</select> 
+				</div><!-- 대분류 -->
+				<div>
+					<label for="bigAreaCategory">중분류</label>
+					<select name="boardBigArea" id="bigAreaCategory">
+						<option value="전체" selected> 전체 </option>
+						<option value="서울특별시">서울특별시</option>
+						<option value="경기도">경기도</option>
+						<option value="충청북도">충청북도</option>
+						<option value="충청남도">충청남도</option>
+						<option value="전라남도">전라남도</option>
+						<option value="경상북도">경상북도</option>
+						<option value="경상남도">경상남도</option>
+						<option value="부산광역시">부산광역시</option>
+						<option value="인천광역시">인천광역시</option>
+						<option value="대구광역시">대구광역시</option>
+						<option value="광주광역시">광주광역시</option>
+						<option value="울산광역시">울산광역시</option>
+						<option value="세종특별자치시">	세종특별자치시</option>
+						<option value="강원특별자치도">	강원특별자치도</option>
+						<option value="전북특별자치도">	전북특별자치도</option>
+						<option value="제주특별자치도">	제주특별자치도</option>
+					</select> 
+				</div><!-- 중분류 -->
+				<div>
+					<label for="smallAreaCategory">소분류</label>
+					<select name="boardSmallArea" id="smallAreaCategory">
+						<option value="전체" selected> 전체 </option>
+					</select>
+				</div> <!-- 소분류 -->
+				<div> <!-- 검색어 textfield -->
+					<div><input id="searchInput" placeholder="검색어를 입력해주세요."></</div>
+					<div><input type="submit" id="searchButton" value="검색"></div>
+				</div><!-- 검색어 -->
+				
+			</div><!-- categoryContainer -->
+		</form><!-- searchForm -->
+	</div><!-- board1 상권분석 게시판-->
 	
 </body>
 

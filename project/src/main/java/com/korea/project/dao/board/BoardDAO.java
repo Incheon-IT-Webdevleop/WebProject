@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.korea.project.dto.board.BoardListRequest;
+import com.korea.project.dto.board.BoardListResponse;
 import com.korea.project.mapper.board.BoardMapper;
 import com.korea.project.vo.board.BoardVO;
 
@@ -16,19 +18,24 @@ public class BoardDAO {
 	private final BoardMapper boardMapper;
 	
 	//게시판 조회 
-	public List<BoardVO> findAll(){
-		return boardMapper.selectAll();
+	public List<BoardListRequest> findBoardList(BoardListRequest params){
+		return boardMapper.findBoardList(params);
+	}
+	
+	//게시글 페이징
+	public int count(BoardListRequest params) {
+		return boardMapper.count(params);
 	}
 	
 	//게시글 목록 추가
 	public void save(BoardVO boardVO) {
 		boardMapper.insert(boardVO);
 	}
-//	
-//	//카테고리
-//	public List<BoardVO> sectorCodes(){
-//		return borderMapper.sectorCodes();
+	
+//	//게시판 카테고리 검색에 따라 게시판 조회 
+//	public List<BoardListResponse> filter(BoardListRequest boardCR){
+//		return boardMapper.filter(boardCR);
 //	}
-//	
+	
 	
 }
