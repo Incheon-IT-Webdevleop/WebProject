@@ -11,12 +11,9 @@ import com.korea.project.vo.board.BoardVO;
 public interface BoardMapper {
 
 	//게시판 조회
-<<<<<<< HEAD
 	public List<BoardListRequest> findBoardList(BoardListRequest params);
 //    List<BoardVO> selectAll();
-=======
-	public List<BoardVO> findAll(BoardListRequest params);
->>>>>>> origin/YUJIMYUNG
+
 	
 	//게시글 수 카운팅
 	int boardCount(BoardListRequest params);
