@@ -18,14 +18,19 @@ public class BoardDAO {
 	private final BoardMapper boardMapper;
 	
 	//게시판 조회 
-	public List<BoardListRequest> findBoardList(BoardListRequest params){
-		return boardMapper.findBoardList(params);
+	public List<BoardVO> findBoardList(BoardListRequest params){
+		return boardMapper.findAll(params);
 	}
 	
 	//게시글 페이징
 	public int count(BoardListRequest params) {
 		return boardMapper.count(params);
 	}
+	
+	// 게시글 수 카운팅
+//	public int boardCount(BoardListRequest params) {
+//		return boardMapper.boardCount(params);
+//	}
 	
 	//게시글 목록 추가
 	public void save(BoardVO boardVO) {

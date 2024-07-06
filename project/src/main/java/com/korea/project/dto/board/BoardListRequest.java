@@ -11,7 +11,7 @@ public class BoardListRequest {
 	private int boardSectors, //업종
 				nowpage, //현재 페이지 번호
 				pageSize; //화면 하단에 출력할 페이지 사이즈 
-	final private int recordSize; //페이지당 출력할 목록 개수
+	final private int recordSize; //페이지당 출력할 목록 개수, 시작위치(offset)을 기준으로 조회할 데이터의 개수
 	
 	private Pagination pagination; //페이지네이션 -> 클래스를 따로 만들어서 기능들을 갖다쓴다
 				
@@ -24,7 +24,7 @@ public class BoardListRequest {
 		this.pageSize = 10; //페이지 수는 10단위 ex)1-10, 11-20, 21-30...
 	}
 	
-	public int getOffset() {
-		return(nowpage - 1) * recordSize;
-	}
+//	public int getOffset() {
+//		return(nowpage - 1) * recordSize;
+//	}
 }
