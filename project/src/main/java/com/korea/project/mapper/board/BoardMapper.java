@@ -12,7 +12,7 @@ import com.korea.project.vo.board.BoardVO;
 public interface BoardMapper {
 
 	//게시판 조회
-	public List<BoardListRequest> findBoardList(BoardListRequest params);
+	public List<BoardVO> findAll(BoardListRequest params);
 	
 	//게시글 수 카운팅
 	int boardCount(BoardListRequest params);

@@ -14,7 +14,7 @@ public interface BoardService {
 	
 	
 	//게시글 조회 
-	public PagingResponse<BoardListRequest> findBoardList(final BoardListRequest params);
+	public PagingResponse<BoardVO> findBoardList(final BoardListRequest params);
 	//public List<BoardVO> getList();
 	
 	

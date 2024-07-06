@@ -31,8 +31,14 @@ public class BoardController {
 	//게시글 목록 보여주기
 	@GetMapping("list")
 	public String list(@ModelAttribute("params") final BoardListRequest params, Model model) {
+		int nowPage = 1;
+		System.out.println("con nowPage : " + params.getNowpage());
+		if(params.getNowpage() != 0) {
+			nowPage = params.getNowpage();
+		}
 		System.out.println(params);
-		PagingResponse<BoardListRequest> response = boardService.findBoardList(params);
+		PagingResponse<BoardVO> response = boardService.findBoardList(params);
+		System.out.println("짜잔: " + response.getList().size());
 		model.addAttribute("response",response);
 		return "board/boardList";
  	}
@@ -46,6 +52,7 @@ public class BoardController {
 	}
 	@PostMapping("register")
 	public RedirectView insert(BoardVO boardVO) {
+	System.out.println(boardVO.getBoardSectors());
 		boardService.register(boardVO);
 		return new RedirectView("list");
 	}

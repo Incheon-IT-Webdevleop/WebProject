@@ -14,7 +14,7 @@
 		ON U.USER_NICKNAME = B.USER_IDX
 		WHERE B.BOARD_DEL = 0-->
 	<!-- 게시글 목록 검색 필터 -->
-	<select id="findBoardList" parameterType="com.korea.project.dto.board.BoardListRequest" resultType="com.korea.project.dto.board.BoardListResponse">
+	<select id="findAll" parameterType="com.korea.project.dto.board.BoardListRequest" resultType="com.korea.project.dto.board.BoardListResponse">
 		SELECT B.BOARD_IDX,
 			   B.BOARD_TITLE,
 			   U.USER_NICKNAME,
@@ -25,21 +25,63 @@
 		<!-- JOIN "USER" U ON B.USER_IDX = U.USER_IDX -->
 		WHERE B.board_del = 0
 		
-		<if test="boardBigArea != null and boardBigArea != '전체'">
-		    AND B.BOARD_BIG_AREA = #{boardBigArea}
+<!-- 		<if test="boardBigArea != null">
+		    AND (B.BOARD_BIG_AREA = #{boardBigArea} OR B.BOARD_BIG_AREA = '전체')
 		</if>
-		<if test="boardSmallArea != null and boardSmallArea != '전체'">
-		    AND B.BOARD_SMALL_AREA = #{boardSmallArea}
+		<if test="boardSmallArea != null">
+		    AND (B.BOARD_SMALL_AREA = #{boardSmallArea} OR B.BOARD_SMALL_AREA = '전체')
 		</if>
 		<if test="searchKeyword != null and searchKeyword != ''">
 		    AND (B.BOARD_TITLE LIKE CONCAT('%', #{searchKeyword}, '%') 
 		         OR B.BOARD_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%'))
 		</if>
-		<if test="boardSectors != 5">
-		    AND B.BOARD_SECTORS = #{boardSectors}
+		<if test="boardSectors != 0">
+		    AND (B.BOARD_SECTORS = #{boardSectors} OR B.BOARD_SECTORS = 6)
 		</if> 
+		 -->
+		
+		<choose>
+            <when test="boardBigArea == null">
+               <!--  AND (B.BOARD_BIG_AREA = #{boardBigArea} OR B.BOARD_BIG_AREA = '전체') -->
+            </when>
+            <when test="boardBigArea == '전체'">
+            <!--비워둬서 그냥 나옴  -->
+            </when>
+            <otherwise>
+            	 AND (B.BOARD_BIG_AREA = #{boardBigArea})
+            </otherwise>
+        </choose>
+		<choose>
+            <when test="boardSmallArea == null">
+              <!--   AND (B.BOARD_SMALL_AREA = #{boardSmallArea} OR B.BOARD_SMALL_AREA = '전체') -->
+            </when>
+            <when test="boardSmallArea == '전체'">
+            <!--비워둬서 그냥 나옴  -->
+            </when>
+            <otherwise>
+            	 AND (B.BOARD_SMALL_AREA = #{boarSmallArea})
+            </otherwise>
+        </choose>
+		<choose>
+            <when test="boardSectors == 0">
+                <!-- AND (B.BOARD_SECTORS = #{boardSectors} OR B.BOARD_SECTORS = 6) -->
+            </when>
+            <when test="boardSectors == 6">
+            <!--비워둬서 그냥 나옴  -->
+            </when> 
+            <otherwise>
+            	 AND (B.BOARD_SECTORS = #{boardSectors} OR B.BOARD_SECTORS = 6)
+            </otherwise>
+        </choose>
+        <choose>
+        <when test="searchKeyword != null and searchKeyword != ''">
+		    AND (B.BOARD_TITLE LIKE CONCAT('%', #{searchKeyword}, '%') 
+		         OR B.BOARD_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%'))
+         </when>
+		</choose>
+        
 		ORDER BY B.BOARD_IDX DESC
-		LIMIT #{pagination.limitStart}, #{recordSize}
+		LIMIT #{pagination.limitStart}, #{recordSize} 
 	</select>
 	
 <!-- 	</select> -->
@@ -50,7 +92,55 @@
 	<select id="count" parameterType="com.korea.project.dto.board.BoardListRequest" resultType="int">
 		select count(*) 
 		from board 
-		where board_idx
+		
+		WHERE board_del = 0
+		
+		
+<!-- 		<choose>
+            <when test="boardBigArea == null">
+                AND (B.BOARD_BIG_AREA = #{boardBigArea} OR B.BOARD_BIG_AREA = '전체')
+            </when>
+            <when test="boardBigArea == '전체'">
+            비워둬서 그냥 나옴 
+            </when>
+            <otherwise>
+            	 AND (BOARD_BIG_AREA = #{boardBigArea})
+            </otherwise>
+        </choose>
+        
+		<choose>
+            <when test="boardSmallArea == null">
+                AND (B.BOARD_SMALL_AREA = #{boardSmallArea} OR B.BOARD_SMALL_AREA = '전체')
+            </when>
+            <when test="boardSmallArea == '전체'">
+            비워둬서 그냥 나옴 
+            </when>
+            <otherwise>
+            	 AND (BOARD_SMALL_AREA = #{boarSmallArea})
+            </otherwise>
+        </choose>
+        
+		<choose>
+            <when test="boardSectors == 0">
+                AND (B.BOARD_SECTORS = #{boardSectors} OR B.BOARD_SECTORS = 6)
+            </when>
+            <when test="boardSectors == 6">
+            비워둬서 그냥 나옴 
+            </when> 
+            <otherwise>
+            	 AND (BOARD_SECTORS = #{boardSectors} OR BOARD_SECTORS = 6)
+            </otherwise>
+        </choose>
+        
+        <choose>
+	        <when test="searchKeyword != null and searchKeyword != ''">
+			    AND (BOARD_TITLE LIKE CONCAT('%', #{searchKeyword}, '%') 
+			         OR BOARD_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%'))
+	         </when>
+		</choose> -->
+     
+	<!-- 	ORDER BY BOARD_IDX DESC
+        LIMIT #{pagination.limitStart}, #{recordSize} -->
 	</select>
 	
 	
@@ -58,8 +148,26 @@
 	
 	<!-- 게시글 작성 -->
 	<insert id="insert">
-		insert into board(board_title, board_view)
-		values(#{boardTitle}, #{boardView})
+		insert into board(user_idx,
+					      board_sectors, 
+					      board_big_area, 
+					      board_small_area, 
+					      board_title, 
+					      board_category, 
+					      board_content, 
+					      board_write_date, 
+					      board_view,
+					      ref)
+		values(1,
+			   #{boardSectors},
+			   #{boardBigArea},
+			   #{boardSmallArea},
+			   #{boardTitle},
+			   0,
+			   #{boardContent},
+			   CURRENT_TIMESTAMP,
+			   #{boardView},
+			   LAST_INSERT_ID())
 	</insert>
 	
 	

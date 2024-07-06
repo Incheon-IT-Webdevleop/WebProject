@@ -1,4 +1,12 @@
+/*<![CDATA[*/
 document.addEventListener("DOMContentLoaded", (event) =>{
+	
+	window.onload = () => {
+		//페이지가 로드 되었을 때, 한 번만 함수를 실행
+		findBoardList();
+	}
+	
+	
 	
 
 	//대분류(업종) 요소 가져오기
@@ -76,6 +84,51 @@ document.addEventListener("DOMContentLoaded", (event) =>{
 		}
 	)
 	
+	//게시글 리스트 조회
+	function findBoardList(){
+		//1. PagingResponse의 멤버인 List<T> 타입의 list를 의미함
+		const list = /*[[${response.list}]]*/ [];
+		
+		//2. PagingResponse의 멤버인 pagination을 의미
+		const pagination = /*[[ ${response.pagination} ]]*/{};
+		
+		//3. @ModelAttribute를 이용해서 뷰(HTML)로 전달한 BoardListRequest 타입의 객체인 params를 의미
+		const params = /*[[ ${params}]]*/"";
+		
+		//4. 리스트에 출력되는 게시글 번호를 처리하기 위해 사되는 변수(리스트에서 번호는 페이징 정보를 이용해서 계산해야 한다)
+		let num = pagination.totalRecordCount - ((params.nowpage -1) * params.recordSize);
+		
+		//5. 리스트 데이터 렌더링
+		drawList(list, num);
+		
+		//6. 페이지 번호 렌더링
+		drawPage(pagination, params);
+	}
+	
+	
+	// 리스트 데이터 렌더링하는 HTML 
+	function drawList(list, num){
+		
+		//1. 렌더링 할 HTML을 저장할 변수
+		let html = '';
+		console.log(list)
+		//2. 리스트 데이터 그리기 (board_idx, board_title, board_nickname, 작성날짜, 조회수,)
+		//(전체 데이터 수 - ((현재 페이지 번호 -1) * 페이지당 출력할 데이터 개수))
+		list.forEach(row=>{
+			html += `
+				<tr>
+					<td>${row.boardIdx}</td>
+					<td>${row.boardTitle}</td>
+					<td>${row.boardNickname}</td>
+					<td>${dayjs(row.boardWriteDate).format('MM-DD HH:,mm')}</td>
+					<td>${row.boardView}</td>
+				</tr>
+			`;
+		})
+		
+		//3. id가 'list'인 요소를 찾아 HTML렌더링
+		document.getElementById('list').innerHTML = html;
+	}
 	
 	
 	
@@ -102,18 +155,71 @@ document.addEventListener("DOMContentLoaded", (event) =>{
 		})
 	}
 	
+	
 	//페이지 수 그려주기
 	function drawPage(pagination, params){
+		//1. 필수 파라미터가 없는 경우, 페이지네이션 HTML을 초기화
 		if( !pagination || !params){
 			document.querySelector(".paging").innerHTML = '';
 			throw new Error('Missing required parameters...');
 		}
 		
+		//2. 렌더링 할 HTML을 저장할 변수
 		let html = '';
 		
-		//첫 페이지, 이전 페이지
+		//3. 이전 페이지가 있는 경우, 즉 시작페이지(startPage)가 1이 아닌 경우 첫 페이지 버튼과 이전 페이지 버튼을 HTML에 추가
+		if(pagination.existPrevPage){
+			html += `
+				<a href="javascript:void(0);" onclick="movePage(1)" class="pageBtnFirst">첫페이지</a>
+				<a href="javascript:void(0);" onclick="movePage(${pagination.startPage -1})" class="pageBtnPrev">이전페이지</a>
+			`;
+		}
+		
+		//4. startPage와 endPage 사이의 페이지번호(i)를 넘버링 하는 로직
+		// 페이지 번호(i) 와 현제 페이지번호가 동일한 경우, 페이지번호를 활성화(on)처리
+		html += '<p>';
+		for (let i = pagination.startPage; i <= pagination.endPage; i++){
+			html += (i !== params.page)
+				? `<a href="javascript:void(0);" onclick="movePage(${i});> ${i}</a>`
+				: `<span class="on">${i}</span>`
+		}
+		
+		//5. 현재 위치한 페이지 뒤에 데이터가 더 있는 경우, 다음 페이지 버튼과 끝 페이지 버튼을 HTML에 추가
+		if(pagination.existNextPage){
+			html += `
+			<a hre="javascript:void(0);" onclick="movePage(${pagination.endPage +1});" class=pageBtnNext> 다음 페이지</a>
+			<a hre="javascript:void(0);" onclick="movePage(${pagination.totalPageCount});" class=pageBtnLast> 마지막 페이지</a>
+			`;
+		}
+		
+		//6. class가 "paging"인 요소를 찾아 HTML 렌더링 
+		document.querySelector('.paging').innerHTML = html;
 		
 	}
 	
+	
+	//페이지 이동
+	function movePage(nowpage){
+		//1. drawPage의 각 버튼에 선언된 onclick이벤트를 토해 전다받는 nowpage를 기준으로 객체 생성
+		const queryParams = {
+			nowpage : (nowpage) ? nowpage : 1,
+			recordSize : 10,
+			pageSize : 10 
+		}
+		
+		 /*
+		 * 2. location.pathname : 리스트 페이지의 URI("/post/list.do")를 의미
+		 *    new URLSearchParams(queryParams).toString() : queryParams의 모든 프로퍼티(key-value)를 쿼리 스트링으로 변환
+		 *    URI + 쿼리 스트링에 해당하는 주소로 이동
+         *    (해당 함수가 리턴해주는 값을 브라우저 콘솔(console)에 찍어보시면 쉽게 이해하실 수 있습니다.)
+		 *  라는데 존나 뭐라고 하는지 1도 모르겠음
+		                 */
+		 location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
+		
+		
+	}
+	
+	
 
 })
+/*<![CDATA[*/
