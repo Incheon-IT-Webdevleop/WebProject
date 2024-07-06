@@ -38,5 +38,9 @@ public interface UserService {
 	 * @param ResetPasswordRequestDTO dto
 	 */
 	public void resetPwd(ResetPasswordRequestDTO dto);
+	
+	
+	// 세션에 저장되어 있는 정보를 가지고 비밀번호 검사
+	public String checkPwd(String pwd, SessionUserDTO user);
 
 }

@@ -4,52 +4,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.korea.project.dto.user.FindRequestDTO;
 import com.korea.project.dto.user.RegisterRequestDTO;
 import com.korea.project.dto.user.ResetPasswordRequestDTO;
+import com.korea.project.dto.user.SessionUserDTO;
 import com.korea.project.service.user.UserDetailServiceImpl;
+import com.korea.project.service.user.UserServiceImpl;
 import com.korea.project.vo.user.UserVO;
 
 import lombok.RequiredArgsConstructor;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class UserAuthController {
 	
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
-	private final UserDetailServiceImpl userService;
+	private final UserServiceImpl userService;
 	
-	
-	@GetMapping("/user/index")
-	public String index() {
-		return "index";
-	}
-	
-	// 로그인 페이지에 점근하면 view 보여주기
-    @GetMapping("/login")
-    public String login() {
-        return "user/login";
-    }
-    
 
-	
-	// 회원가입 페이지에 접근하면 view보여주기
-	@GetMapping("/register")
-	public String registerPage() {
-		return "user/register";
-	}
-	
 	// 회원가입 페이지에서 회원가입 버튼을 눌렀을 때 작동하는 컨트롤러
     @PostMapping("/register")
-    @ResponseBody
     public HashMap<String, String> postRegister(RegisterRequestDTO vo) {
         HashMap<String, String> map = new HashMap<>();
         vo.setUserEmail(vo.getLocalEmail()+vo.getDomainEmail());
@@ -99,9 +79,9 @@ public class UserAuthController {
         }
 
         // 비밀번호 암호화
-        String rawPassword = vo.getUserPwd();
-        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-        vo.setUserPwd(encPassword);
+ 	   String rawPassword = vo.getUserPwd();
+ 	   String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+	   vo.setUserPwd(encPassword);
 
         // 회원가입 처리
         //System.out.println("서비스 시작전");
@@ -118,7 +98,6 @@ public class UserAuthController {
 	 * @return map<"isDuplicate", boolean>
 	 */
 	@PostMapping("/api/check-duplicate")
-	@ResponseBody
 	public HashMap<String, Boolean> checkDuplicate( String type, String value) {
 		HashMap<String, Boolean> map = new HashMap<>();	
 		String key = "isDuplicate";
@@ -185,16 +164,8 @@ public class UserAuthController {
         return value.matches(regex);
     }
     
-    // 찾기 페이지로 이동
-    @GetMapping("/find")
-    public String find(@RequestParam(name = "type", required = false, defaultValue = "id") String type, Model model) {
-        model.addAttribute("type", type);
-        return "user/find";
-    }
-    
     // 찾기
     @PostMapping("/find")
-    @ResponseBody
     /**
      * @param dto.type == "id" -> req1 = name, req2 = eamil
      * @param dto.type.equals("pwd") -> req1 = id, req2=email
@@ -236,7 +207,6 @@ public class UserAuthController {
     
     // 비밀번호 변경
     @PostMapping("/reset-password")
-    @ResponseBody
     public HashMap<String, String> resetPwd(
     		@RequestBody ResetPasswordRequestDTO dto ){
     	HashMap<String, String> map = new HashMap<>();
@@ -266,6 +236,8 @@ public class UserAuthController {
         String encPassword = bCryptPasswordEncoder.encode(newPwd);
         dto.setEncodingPwd(encPassword);
     	
+        
+        
         userService.resetPwd(dto);
     	map.put(message, "success");
     	
@@ -273,12 +245,22 @@ public class UserAuthController {
     }
     
 	
-//	// 비밀번호 검사 로직(버튼을 눌렀을 때)
-//	@PostMapping("/user/checkPwd")
-//	@ResponseBody
-//	public HashMap<String, String> checkPwd(String pwd){
-//		
-//	}
+	// 비밀번호 검사 로직(버튼을 눌렀을 때)
+	@PostMapping("/user/check-password")
+	public HashMap<String, String> checkPwd(String password,
+		@SessionAttribute(value = "user", required = false) SessionUserDTO user){
+		HashMap <String, String> map = new HashMap<>();
+		
+		String result = userService.checkPwd(password, user);
+		if(result.equals("success")) {
+			map.put("message", result);
+			return map;
+		}else {
+			map.put("message", result);
+			return map;
+		}
+		
+	}
 
 }	
 

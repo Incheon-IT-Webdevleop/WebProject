@@ -33,7 +33,7 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
         
         // 사용자 이름을 세션에 저장합니다. 예시로 사용자 이름을 "username"이라는 이름으로 저장합니다.
         session.setAttribute("user",dto);
-        session.setMaxInactiveInterval(60);
+        session.setMaxInactiveInterval(60*30);
 //        System.out.println("세션 정보 : " + session.getAttribute("user"));
         super.onAuthenticationSuccess(request, response, authentication);
 	}

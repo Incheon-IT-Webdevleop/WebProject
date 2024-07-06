@@ -74,4 +74,15 @@
 		set user_pwd = #{encodingPwd}
 		where user_id = #{userId}
 	</update>
+	
+	<!-- 세션으로 유저 조회 -->
+	<select id="selectBySession">
+		select *
+		from user
+		where 
+			user_idx = #{userIdx}
+		AND
+			user_nickname = #{userNickname}
+	</select>
+	
 </mapper>

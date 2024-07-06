@@ -38,4 +38,10 @@ public interface UserMapper {
 	 */
 	public void updatePwd(ResetPasswordRequestDTO dto);
 
+	
+	/**
+	 * 세션정보로 유저 정보 찾기
+	 * @param SessionUserDTO
+	 */
+	public UserVO selectBySession(SessionUserDTO dto);
 }

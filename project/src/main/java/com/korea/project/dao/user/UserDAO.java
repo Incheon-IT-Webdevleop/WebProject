@@ -69,4 +69,13 @@ public class UserDAO implements UserMapper{
 		userMapper.updatePwd(dto);
 	}
 	
+	/**
+	 * 세션 정보로 유저 정보찾기
+	 * @param SessionUserDTO
+	 */
+	@Override
+	public UserVO selectBySession(SessionUserDTO dto) {
+		return userMapper.selectBySession(dto);
+	}
+	
 }

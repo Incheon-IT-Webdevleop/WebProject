@@ -1,0 +1,15 @@
+<!-- templates/fragments/sidebar.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="sidebar">
+        <div class="sidebar">
+            <ul>
+                <li><a href="#" th:href="@{/user/change-password}">비밀번호 변경</a></li>
+                <li><a href="#" th:href="@{/user/my-posts}">내 계시글 보기</a></li>
+                <li><a href="#" th:href="@{/user/withdrawal}">탈퇴</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

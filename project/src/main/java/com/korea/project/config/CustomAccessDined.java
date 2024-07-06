@@ -17,8 +17,6 @@ public class CustomAccessDined extends AccessDeniedHandlerImpl{
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
 		
 		
-		response.setStatus(HttpServletResponse.SC_FORBIDDEN); // HTTP 상태 코드 403 설정
-        response.setContentType("text/plain;charset=UTF-8"); // 응답 컨텐츠 타입 설정
-        response.getWriter().write("로그인이 필요한 서비스입니다."); // 메시지 출력
+		response.sendRedirect("/acces-denied");
 	}
 }
