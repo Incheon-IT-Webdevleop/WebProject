@@ -52,10 +52,9 @@
 			user_nickname=#{nickname}
 	</select>
 	
-	<select id="find" parameterType="com.korea.project.dto.user.FindRequestDTO" resultType="com.korea.project.dto.user.FindResponseDTO">
+	<select id="find" parameterType="com.korea.project.dto.user.FindRequestDTO" >
       	SELECT 
-			user_id,
-           	user_pwd
+			user_id
         FROM user
         <choose>
             <when test="type == 'id'">
@@ -68,4 +67,11 @@
             </when>
         </choose>
 	</select>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updatePwd">
+		update user
+		set user_pwd = #{encodingPwd}
+		where user_id = #{userId}
+	</update>
 </mapper>

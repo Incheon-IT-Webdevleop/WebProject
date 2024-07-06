@@ -13,7 +13,7 @@
         <!-- 세션에 저장된 사용자 정보 출력 -->
         <div th:if="${session.user != null}">
             <p >세션에 저장된 사용자 정보:</p>
-            <p>사용자 이름: <span th:text="${session.user.userName}"></span></p>
+            <p>사용자 이름: <span th:text="${session.user.userIdx}"></span></p>
             <!-- 필요한 경우 추가적인 사용자 정보 출력 -->
         </div>
         

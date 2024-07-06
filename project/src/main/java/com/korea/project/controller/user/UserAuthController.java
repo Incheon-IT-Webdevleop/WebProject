@@ -8,13 +8,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.korea.project.dto.user.FindRequestDTO;
-import com.korea.project.dto.user.FindResponseDTO;
 import com.korea.project.dto.user.RegisterRequestDTO;
+import com.korea.project.dto.user.ResetPasswordRequestDTO;
 import com.korea.project.service.user.UserDetailServiceImpl;
+import com.korea.project.vo.user.UserVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -198,39 +200,74 @@ public class UserAuthController {
      * @param dto.type.equals("pwd") -> req1 = id, req2=email
      * @return
      */
-    public Map<String, String> find(FindRequestDTO dto){
-		FindResponseDTO resultDTO = userService.find(dto);
+    public Map<String, String> find(FindRequestDTO dto, Model model){
+//    	System.out.println("dto :" + dto);
+		String userId = userService.find(dto);
 		String message = "message";
-		System.out.println(resultDTO);
+
     	Map<String, String> map = new HashMap<>();
     	
     	// 타입이 id일 때
     	if(dto.getType().equals("id")) {
     		// 타입이 id인데 id가 비어있을 때
-    		if(resultDTO == null) {
+    		if(userId == null || userId.isEmpty()) {
     			// 에러메세지를 보낸다
     			map.put(message, "emptyIdError");
+    			return map;
     		}else{
     			// id가 비어있지 않으면 성공이라는 메세지와 아이디를 보낸다
     			map.put(message,"success");
-    			map.put("id", resultDTO.getUserId());
+    			map.put("id", userId);
+    			return map;
     		}
-    	}else {
-    		if(resultDTO == null) {
+    	}else if(dto.getType().equals("pwd")){
+    		if(userId == null || userId.isEmpty()) {
     			map.put(message, "emptyPwdError");
+    			return map;
     		}else {
     			map.put(message, "success");
+    			map.put("userId", userId);
+    			return map;
     		}
     	}
+    	model.addAttribute("userId", userId);
     	return	map;
     }
     
     // 비밀번호 변경
     @PostMapping("/reset-password")
     @ResponseBody
-    public HashMap<String, String> resetPwd(String newPassword, String confirmPassword){
-    	
+    public HashMap<String, String> resetPwd(
+    		@RequestBody ResetPasswordRequestDTO dto ){
     	HashMap<String, String> map = new HashMap<>();
+    	String message = "message";
+    	
+    	UserVO savedUser = userService.selectById(dto.getUserId());
+    	
+    	if(savedUser == null) {
+    		map.put(message, "Wrong Approach");
+    		return map;
+    	}
+    	
+    	String newPwd = dto.getNewPassword();
+    	String conPwd = dto.getConfirmPassword();
+    	
+    	if(!newPwd.equals(conPwd)) {
+    		map.put(message, "differentPwd");
+    		return map;
+    	}
+    	
+    	if(bCryptPasswordEncoder.matches(newPwd, savedUser.getUserPwd())) {
+    		map.put(message, "samePwdError");
+    		return map;
+    	}
+
+    	
+        String encPassword = bCryptPasswordEncoder.encode(newPwd);
+        dto.setEncodingPwd(encPassword);
+    	
+        userService.resetPwd(dto);
+    	map.put(message, "success");
     	
     	return map;
     }

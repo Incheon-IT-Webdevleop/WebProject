@@ -3,8 +3,8 @@ package com.korea.project.mapper.user;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.korea.project.dto.user.FindRequestDTO;
-import com.korea.project.dto.user.FindResponseDTO;
 import com.korea.project.dto.user.RegisterRequestDTO;
+import com.korea.project.dto.user.ResetPasswordRequestDTO;
 import com.korea.project.dto.user.SessionUserDTO;
 import com.korea.project.vo.user.UserVO;
 
@@ -30,5 +30,11 @@ public interface UserMapper {
 	public int checkDuplicateByNickname(String nickname);
 	
 	// 찾기
-	public FindResponseDTO find(FindRequestDTO dto);
+	public String find(FindRequestDTO dto);
+	
+	/**
+	 * 비밀번호 변경
+	 * @param ResetPasswordRequestDTO dto
+	 */
+	public void updatePwd(ResetPasswordRequestDTO dto);
 }
