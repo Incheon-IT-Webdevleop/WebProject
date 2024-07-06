@@ -2,41 +2,195 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Kakao Map Example</title>
+    <title></title>
+	<link rel="stylesheet" href="/css/map/mapStyle.css">
+	<link rel="stylesheet" href="/css/header.css">	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b0724bf330998cfd60824078a8ffae4e"></script>
 </head>
-<body style="display: flex;flex-direction: column;justify-content: right;align-items: flex-end;">
+<body>
+	<header class="header">
+	    <ul class="header-top">
+	        <li class="mouse">
+	            <a th:href="@{/}" th:text="K-Franchise" class="logo">K-Franchise</a>
+	        </li>
+	   		<li class="header-login">
+		        <a class="mouse" th:href="@{/login}" th:text="로그인">로그인</a>
+		        <a class="mouse" th:href="@{/register}" th:text="회원가입">회원가입</a>
+		    </li>
+	<!-- 		<th:block th:if="${user.user == null}">
+			    로그인하지 않은 상태
+			    <li class="header-login">
+			        <a class="mouse" th:href="@{/login}" th:text="로그인">로그인</a>
+			        <a class="mouse" th:href="@{/register}" th:text="회원가입">회원가입</a>
+			    </li>
+			</th:block>
+			
+			<th:block th:if="${user.user != null}">
+			    로그인한 상태
+			    <li class="header-login">
+			        <a class="mouse" th:href="@{/logout}" th:text="로그아웃">로그아웃</a>
+			    </li>
+			</th:block> -->
+	    </ul>
+
+	    <ul class="header-menu">
+	        <li class="mouse"><a th:href="@{/}">홈</a></li>
+	        <li class="mouse">
+	            <a th:href="@{/franchises}">프랜차이즈</a>
+	        </li>
+	        <li class="mouse">
+	            <a th:href="@{/board1}" >창업후기 게시판</a>
+	        </li>
+	        <li class="mouse">
+	            <a th:href="@{/board2}">상권분석 게시판</a>
+	        </li>
+	        <li class="mouse">
+	            <a th:href="@{/}">상권분석</a>
+	        </li>
+	    </ul>
+	</header>
 	
-    <div id="map" style="width:1200px;height:95vh;"></div>
-	<div id="result" style="width:700px;height:100px"></div>
+	<div id="sidebar">
+	        <span class="closebtn" onclick="closeSidebar()">&times;</span>
+	        <div class="form-group">
+	            <label for="current-location">현재 위치</label>
+	            <input type="text" id="current-location" th:value="${name}" disabled>
+	        </div>
+	        <div class="form-group">
+	            <label for="region-select">분석 지역 | 업종 선택</label>
+	            <select id="region-select">
+	                <option>분석 지역을 선택해 주세요</option>
+	            </select>
+	        </div>
+	        <div class="form-group">
+	            <select id="industry-select">
+	                <option>분석 업종을 선택해 주세요</option>
+	            </select>
+	        </div>
+	        <button class="button" onclick="viewReport()">상권 분석</button>
+	</div>
 
-    <script>
-        function initMap() {
-            var container = document.getElementById('map');
-            var options = {
-                center: new kakao.maps.LatLng(33.450701, 126.570667),
-                level: 3
-            };
-            var map = new kakao.maps.Map(container, options);
+	<button class="openbtn" onclick="openSidebar()">☰ Open Sidebar</button>
 		
-			kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
-		    
-		    // 클릭한 위도, 경도 정보를 가져옵니다 
-		    var latlng = mouseEvent.latLng;
-		    
-		    var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-		    message += '경도는 ' + latlng.getLng() + ' 입니다';
-		    
-		    var resultDiv = document.getElementById('result'); 
-		    resultDiv.innerHTML = message;
-		    
-		});
-        }
+	<div id="map"></div>
+	
+	<script th:inline="javascript">
+	        function initMap() {
+				const areaNameArr = [];
+	            var container = document.getElementById('map');
+	            var currentPolygon = null;
+	            var options = {
+	                center: new kakao.maps.LatLng(37.57032009405621, 126.97880973527991),
+	                level: 11
+	            };
+	            var map = new kakao.maps.Map(container, options);
 
-		
-		
-        // 페이지 로드가 완료된 후 맵 초기화
-        window.onload = initMap;
-    </script>
+	            kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+	                var latlng = mouseEvent.latLng;
+	                var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+	                message += '경도는 ' + latlng.getLng() + ' 입니다';
+	                console.log(message);
+	            });
+				
+				console.log('시/도 행정구역 json fetch 시작전');
+				fetch('data/sido.json')
+				.then(response => response.json())
+				.then(data => {
+					data.features.forEach(properties => {
+						areaNameArr.push(properties.SIG_KOR_NM + "도");
+					})
+				})
+
+	            // JSON 파일 로드
+	            fetch('data/emd.json')
+	            .then(response => response.json())
+	            .then(data => {
+	                data.features.forEach(feature => {
+	                    if (feature.geometry === null) {
+	                        console.warn('Geometry 값이 null 입니다.', feature);
+	                        return; // null 값인 행정구역 스킵하고 넘어가기
+
+	                    }
+	                    var coordinatesArray = feature.geometry.coordinates;
+						
+	                    coordinatesArray.forEach(coordinateSet => {
+	                        var coordinates = coordinateSet.map(coord => new kakao.maps.LatLng(coord[1], coord[0]));
+	                        // json에 저장된 경계구역 꼭지점 좌표들로 폴리곤 그리기
+							
+							var name = feature.properties.EMD_KOR_NM;
+							
+	                        // 폴리곤 생성 (초기에는 보이지 않도록 설정)
+	                        var polygon = new kakao.maps.Polygon({
+	                            map: map,
+	                            path: coordinates,
+	                            strokeWeight: 2,
+	                            strokeColor: 'rgba(0, 0, 0, 0)', // 초기 경계선 색상 투명
+	                            strokeOpacity: 0.8,
+	                            fillColor: 'rgba(0, 0, 0, 0)', // 초기 채우기 색상 투명
+	                            fillOpacity: 0.3
+	                        });
+
+	                        // 마우스 오버 이벤트
+	                        kakao.maps.event.addListener(polygon, 'mouseover', function(mouseEvent) {
+	                            if (currentPolygon !== polygon) { // currentPolygon 초기값은 null 로 되어있음
+	                                if (currentPolygon) {
+	                                    currentPolygon.setOptions({
+	                                        fillColor: 'rgba(0, 0, 0, 0)', // 초기 채우기 색상으로 복원
+	                                        strokeColor: 'rgba(0, 0, 0, 0)' // 초기 경계선 색상으로 복원
+	                                    });
+	                                }
+	                                polygon.setOptions({
+	                                    fillColor: '#ADD8E6', // 경계지역 연한 하늘색
+	                                    strokeColor: '#0000FF' // 경계선 진한 파란색
+	                                });
+	                                currentPolygon = polygon;
+	                            }
+									updateCurrentLocation(name);
+								//var name = feature.properties.EMD_KOR_NM; // 읍면동 이름 가져오기
+								//document.getElementById('current-location').value = name;
+								// 마우스 호버한 위치 -> 현재 위치에 최신화
+	                        });
+							
+	                        // 마우스 아웃 이벤트
+	                        kakao.maps.event.addListener(polygon, 'mouseout', function() {
+	                            if (currentPolygon === polygon) {
+	                                polygon.setOptions({
+	                                    fillColor: 'rgba(0, 0, 0, 0)', // 투명으로 복원
+	                                    strokeColor: 'rgba(0, 0, 0, 0)' // 투명으로 복원
+	                                });
+	                                currentPolygon = null; // 현재 폴리곤 null로 변경
+	                            }
+								updateCurrentLocation('');
+	                        });
+	                    });
+	                });
+	            })
+	            .catch(error => console.error('행정구역 경계정보 로딩 실패: ', error));
+	        }
+			
+			function updateCurrentLocation(location) {
+			    document.getElementById('current-location').value = location;
+			}
+
+
+	        // 페이지 로드가 완료된 후 맵 초기화
+	        window.onload = initMap;
+			
+
+			// 마우스 이벤트를 감지하여 사이드바를 보여주는 함수
+//			document.addEventListener('mousemove', function(event) {
+//			    var sidebar = document.getElementById('sidebar');
+//			    var dragRange = 50; // 사이드바가 나타날 오른쪽으로의 드래그 거리 임계값
+
+			    // 마우스가 왼쪽 사이드 영역에서 오른쪽으로 threshold 이상 드래그했을 때
+//			    if (event.clientX < dragRange) {
+//			        sidebar.style.left = '0'; // 사이드바를 화면 내에 나타나도록 left 값을 0으로 변경
+//			    } else {
+//			        sidebar.style.left = '-200px'; // threshold 미만으로 드래그할 경우 다시 사이드바를 왼쪽으로 숨김
+//			   }
+//			});
+			
+	</script>
 </body>
 </html>

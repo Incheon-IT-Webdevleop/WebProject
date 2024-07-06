@@ -12,7 +12,7 @@ import com.korea.project.vo.user.UserVO;
 public interface UserMapper {
 	
 	// 아이디 비번을 가지고 로그인 하기
-	public UserVO selectById(String userId);
+    UserVO selectById(String userId);
 	
 	// 회원가입
 	public void signUp(RegisterRequestDTO vo);
@@ -37,4 +37,5 @@ public interface UserMapper {
 	 * @param ResetPasswordRequestDTO dto
 	 */
 	public void updatePwd(ResetPasswordRequestDTO dto);
+
 }

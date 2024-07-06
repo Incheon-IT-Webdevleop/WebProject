@@ -6,12 +6,12 @@
 }
 
 .header {
-  width: 100%;
-  height: 80px;
-  max-width: 1200px;
-  margin: 0 auto;
-  margin-bottom: 30px;
-  
+	z-index: 1;
+	width: 100vw;
+	height: 80px;
+	margin: 0 auto;
+	height: 40px;
+	background-color: #ffffff;
 }
 
 .header-top {

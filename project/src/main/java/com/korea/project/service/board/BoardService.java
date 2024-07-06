@@ -20,7 +20,7 @@ public interface BoardService {
 	
 	
 	//게시글 추가
-	public void register(BoardVO boardVO);
+    void register(BoardVO boardVO);
 	
 //	//게시글 카테고리, 검색어에 관한 필터링 조회 
 //	public List<BoardListResponse> filter(BoardListRequest boardListRequest);

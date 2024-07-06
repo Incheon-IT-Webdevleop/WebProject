@@ -27,7 +27,7 @@ security:
   oauth2:
     client:
       registration:
-#        google:
+#        google:rr
 #          client-id: #애플리케이션 정보에서 제공해주는 클라우드 ID
 #          client-secret: #애플리케이션 정보에서 제공해주는 클라우드 시크릿번호
 #          scope:
