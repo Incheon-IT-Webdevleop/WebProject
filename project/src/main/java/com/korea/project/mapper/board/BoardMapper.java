@@ -11,7 +11,7 @@ import com.korea.project.vo.board.BoardVO;
 public interface BoardMapper {
 
 	//게시판 조회
-	public List<BoardListRequest> findBoardList(BoardListRequest params);
+	public List<BoardVO> findAll(BoardListRequest params);
 //    List<BoardVO> selectAll();
 
 	
@@ -27,4 +27,6 @@ public interface BoardMapper {
 	
 	//게시글 페이징
 	public int count(BoardListRequest boardListRequest);
+
+
 }
