@@ -26,11 +26,12 @@ public class Pagination {
 	//페이지 수, 번호, 위치 계산하는 기능 만들어 놓음
 	private void calculation(BoardListRequest params) {
 		
+		nowPage = params.getNowpage();
 		//전체 페이지 수 계산
 		totalPageCount = ((totalRecordCount -1) / params.getRecordSize()) + 1;
 	//	System.out.println("totalPageCount : " +totalPageCount);
 		//현재 페이지 번호가 전체 페이지 수 보다 큰 경우, 현재 페이지 번호에 전체 페이지 수 저장
-		System.out.println("바꾸기 전 nowPage : " +nowPage);
+		System.out.println("바꾸기 전 nowPage : " +params.getNowpage());
 		
 		if(params.getNowpage() > totalPageCount) {
 			params.setNowpage(totalPageCount);
@@ -50,7 +51,7 @@ public class Pagination {
 		System.out.println("너야 ?nowPage : " +params.getNowpage() );
 		//Limit 시작 위치 계산 
 		limitStart = (params.getNowpage() - 1) * params.getRecordSize();
-		System.out.println(limitStart);
+		
 		//이전 페이지 존재 여부 확인
 		existPrevPage = startPage != 1;
 		

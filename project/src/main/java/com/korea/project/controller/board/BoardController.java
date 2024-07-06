@@ -36,7 +36,7 @@ public class BoardController {
 		if(params.getNowpage() != 0) {
 			nowPage = params.getNowpage();
 		}
-		System.out.println(params);
+		params.setNowpage(nowPage);
 		PagingResponse<BoardVO> response = boardService.findBoardList(params);
 		System.out.println("짜잔: " + response.getList().size());
 		model.addAttribute("response",response);

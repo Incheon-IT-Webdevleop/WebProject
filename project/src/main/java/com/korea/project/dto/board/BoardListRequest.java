@@ -19,6 +19,7 @@ public class BoardListRequest {
 	
 	
 	public BoardListRequest() {
+		System.out.println("생성");
 		this.nowpage = 1; //현재 페이지는 1
 		this.recordSize = 10; //한 페이지당 글의 수는 10개씩 보여주기
 		this.pageSize = 10; //페이지 수는 10단위 ex)1-10, 11-20, 21-30...

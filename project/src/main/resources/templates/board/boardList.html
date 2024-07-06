@@ -292,7 +292,7 @@
 			html += '<p>';
 			for (let i = pagination.startPage; i <= pagination.endPage; i++){
 				html += (i !== params.nowpage)
-					? `<a href="javascript:void(0);" onclick="movePage(${i});> ${i}</a>`
+					? `<a href="javascript:void(0);" onclick="movePage(${i})");> ${i}</a>`
 					: `<span class="on">${i}</span>`
 			}
 			

@@ -33,7 +33,8 @@ public class BoardServiceImpl implements BoardService{
 			return new PagingResponse<>(Collections.emptyList(), null);
 		}
 		
-		//Pagination 객체를 생성해서 페이지 정보 계산 후 params에 계산된 페이지 정보 저장
+		//Pagination 객체를 생성해서 페이지 정보 계산 후 params에 계산된 페이지 정보 
+		System.out.println(params);
 		Pagination pagination = new Pagination(count, params);
 		System.out.println("pagination :" +pagination);
 		params.setPagination(pagination);
