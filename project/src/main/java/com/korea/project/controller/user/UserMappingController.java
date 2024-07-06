@@ -1,5 +1,7 @@
 package com.korea.project.controller.user;
 
+
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,7 @@ import com.korea.project.dao.user.UserDAO;
 import com.korea.project.dto.user.SessionUserDTO;
 import com.korea.project.vo.user.UserVO;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -17,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class UserMappingController {
 
 	private final UserDAO userDAO;
+	private final HttpSession session;
 	
 	@GetMapping("/user/index")
 	public String index() {
@@ -55,17 +59,24 @@ public class UserMappingController {
     
     // 마이페이지의 메인
     @GetMapping("/user/mypage")
-    	public String myPageMain(@SessionAttribute(value = "user", required = false) SessionUserDTO user,
+	public String myPageMain(@SessionAttribute(value = "user", required = false) SessionUserDTO user,
     							 Model model) {
-    		if(user == null) {
-    			return "redirect:/access-denied"; 
-    		}
+		if(user == null) {
+			return "redirect:/access-denied"; 
+		}
     		
     	UserVO vo = userDAO.selectBySession(user);
     	model.addAttribute("user", vo);
-		return "user/myPageMain";
+		return "user/myapge/myPageMain";
     }
     
+    @GetMapping("/user/mypage/change-pwd")
+    public String myPageResetPwd() {
+    	if(session.getAttribute("user") == null ) {
+    		return "redirect:/access-denied";
+    	}
+    	return "user/mypage/resetPwd";
+    }
 
 	
 }
