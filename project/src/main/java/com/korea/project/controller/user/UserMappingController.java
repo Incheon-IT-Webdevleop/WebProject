@@ -5,11 +5,16 @@ package com.korea.project.controller.user;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.korea.project.dto.board.BoardListRequest;
+import com.korea.project.dto.board.PagingResponse;
 import com.korea.project.dto.user.SessionUserDTO;
+import com.korea.project.service.board.BoardServiceImpl;
 import com.korea.project.service.user.UserServiceImpl;
+import com.korea.project.vo.board.BoardVO;
 import com.korea.project.vo.user.UserVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -20,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class UserMappingController {
 
 	private final UserServiceImpl userService;
+	private final BoardServiceImpl boardService;
 	private final HttpSession session;
 	
 	@GetMapping("/user/index")
@@ -92,26 +98,24 @@ public class UserMappingController {
     	return "user/mypage/withdraw";
     }
     
-    // 마이페이지의 내게시글 보기 페이지
-    @GetMapping("/user/mypage/my-post")
-    public String myPost(
-    		@SessionAttribute(value = "user", required = false) SessionUserDTO user
-    		,Model model) {
-    	
-    	
-    	if(session.getAttribute("user") == null ) {
+    
+    //게시글 목록 보여주기
+  	@GetMapping("/user/mypage/my-post")
+  	public String list(
+  			@ModelAttribute("params") final BoardListRequest params,
+  			@SessionAttribute(value = "user", required = false) SessionUserDTO user,
+  			Model model) {
+  		
+  		if(session.getAttribute("user") == null ) {
     		return "redirect:/access-denied";
     	}
-    	// 세션 정보로 찾은 유저
-    	UserVO vo = userService.selectBySession(user);
-    	
-    	// 세션정보에 있는 정보로 게시글 조회
-    	
-    	
-    	model.addAttribute("user", vo);
-    	return "user/mypage/withdraw";
-    	
-    }
+  		
+  		PagingResponse<BoardVO> res = userService.myPost(params, user);
+  		
+
+  		model.addAttribute("response",res);
+  		return "user/mypage/myPost";
+   	}
 
 	
 }

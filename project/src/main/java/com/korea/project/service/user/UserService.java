@@ -2,10 +2,13 @@ package com.korea.project.service.user;
 
 import org.springframework.stereotype.Service;
 
+import com.korea.project.dto.board.BoardListRequest;
+import com.korea.project.dto.board.PagingResponse;
 import com.korea.project.dto.user.FindRequestDTO;
 import com.korea.project.dto.user.RegisterRequestDTO;
 import com.korea.project.dto.user.ResetPasswordRequestDTO;
 import com.korea.project.dto.user.SessionUserDTO;
+import com.korea.project.vo.board.BoardVO;
 import com.korea.project.vo.user.UserVO;
 
 @Service
@@ -63,5 +66,13 @@ public interface UserService {
 	 * @return String result
 	 */
 	public String withdraw(SessionUserDTO user);
+	
+	/**
+	 * 마이페이지 게시글 목록
+	 * @params BoardListRequest, SessionUserDTO
+	 * @return PaginResponse<BoardVO>
+	 */
+	
+	public PagingResponse<BoardVO> myPost(BoardListRequest params, SessionUserDTO user);
 	
 }

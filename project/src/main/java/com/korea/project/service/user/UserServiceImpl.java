@@ -1,14 +1,22 @@
 package com.korea.project.service.user;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.korea.project.dao.board.BoardDAO;
 import com.korea.project.dao.user.UserDAO;
+import com.korea.project.dto.board.BoardListRequest;
+import com.korea.project.dto.board.Pagination;
+import com.korea.project.dto.board.PagingResponse;
 import com.korea.project.dto.user.FindRequestDTO;
 import com.korea.project.dto.user.RegisterRequestDTO;
 import com.korea.project.dto.user.ResetPasswordRequestDTO;
 import com.korea.project.dto.user.SessionUserDTO;
+import com.korea.project.vo.board.BoardVO;
 import com.korea.project.vo.user.UserVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -21,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserServiceImpl implements UserService{
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	private final UserDAO userDAO;
+	private final BoardDAO boardDAO;
 	private final HttpSession session;
 	
 	// 세션에 등록하기 위한 아이디, 이름 조회
@@ -154,7 +163,11 @@ public class UserServiceImpl implements UserService{
 			
 			return "success";
 		}
-		
+		/**
+		 * 탈퇴
+		 * @param SessionUserDTo
+		 * @return String result
+		 */
 		@Override
 		public String withdraw(SessionUserDTO user) {
 			
@@ -163,6 +176,35 @@ public class UserServiceImpl implements UserService{
 			return "success";
 		}
 		
+		
+		/**
+		 * 마이페이지 게시글 목록
+		 * @params BoardListRequest, SessionUserDTO
+		 * @return PaginResponse<BoardVO>
+		 */
+		@Override
+		public PagingResponse<BoardVO> myPost(BoardListRequest params, SessionUserDTO user) {
+	  		int nowPage = 1;
+	  		System.out.println("con nowPage : " + params.getNowpage());
+	  		if(params.getNowpage() != 0) {
+	  			nowPage = params.getNowpage();
+	  		}
+	  	
+	  		params.setNowpage(nowPage);
+	  		
+	  		int count = boardDAO.count(params);
+			if(count < 1) {
+				return new PagingResponse<>(Collections.emptyList(), null);
+			}
+			
+			//Pagination 객체를 생성해서 페이지 정보 계산 후 params에 계산된 페이지 정보 
+			Pagination pagination = new Pagination(count, params);
+			params.setPagination(pagination);
+
+			//계산된 페이지 정보의 일부(limitStart, recordSize)를 기준으로 리스트 데이터 조회 후 반환
+			List<BoardVO> list = boardDAO.findBoardList(params);
+			return  new PagingResponse<>(list, pagination);
+		}
 		
 		
 }
