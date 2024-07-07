@@ -47,7 +47,25 @@ document.addEventListener("DOMContentLoaded", (event) =>{
 		        });
 		    }
 		})
-
+	
+     
+	//제목, 내용 입력하지 않으면 메세지 띄워주는 유효성검사 	
+	 const form = document.getElementById("postForm");	
+	 const boardTitle = document.getElementById("boardTitle");
+	 const boardContent = document.getElementById("boardContent");
+		
+	 form.addEventListener("submit", (event) =>{
+		if(boardTitle.value.trim() === ""){
+			alert("제목을 입력해주세요.");
+			event.preventDefault();
+			return;
+		}
+		if(boardContent.value.trim() === ""){
+			alert("내용을 입력해주세요.");
+			event.preventDefault();
+			return;
+		}
+	});
 	
 
 })

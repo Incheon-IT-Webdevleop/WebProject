@@ -66,5 +66,27 @@ public class BoardServiceImpl implements BoardService{
 //		return boardDAO.filter(boardListRequest);
 //	}
 	
+	
+	//게시글 조회
+	@Override
+	public BoardVO findById(int boardIdx) {
+		return boardDAO.findById(boardIdx);
+	}
+	
+	@Override
+	public PagingResponse<BoardVO> findBoardPost(BoardListRequest params) {
+		int count = boardDAO.boardCount(params);
+		if(count < 1) {
+			return new PagingResponse<>(Collections.emptyList(), null);
+		}
+		
+		Pagination pagination = new Pagination(count, params);
+		params.setPagination(pagination);
+		
+		List<BoardVO> list = boardDAO.findBoardList(params);
+		return new PagingResponse<>(list, pagination);
+	}
+	
+	
 
 }

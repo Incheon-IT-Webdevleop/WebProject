@@ -27,6 +27,9 @@ public interface BoardMapper {
 	
 	//게시글 페이징
 	public int count(BoardListRequest boardListRequest);
+	
+	//게시글 조회
+	public BoardVO findById(int boardIdx);
 
 
 }

@@ -59,7 +59,7 @@
             <!--비워둬서 그냥 나옴  -->
             </when>
             <otherwise>
-            	 AND (B.BOARD_SMALL_AREA = #{boarSmallArea})
+            	 AND (B.BOARD_SMALL_AREA = #{boardSmallArea})
             </otherwise>
         </choose>
 		<choose>
@@ -95,6 +95,45 @@
 		
 		WHERE board_del = 0
 		
+		<choose>
+            <when test="boardBigArea == null">
+               <!--  AND (B.BOARD_BIG_AREA = #{boardBigArea} OR B.BOARD_BIG_AREA = '전체') -->
+            </when>
+            <when test="boardBigArea == '전체'">
+            <!--비워둬서 그냥 나옴  -->
+            </when>
+            <otherwise>
+            	 AND (BOARD_BIG_AREA = #{boardBigArea})
+            </otherwise>
+        </choose>
+		<choose>
+            <when test="boardSmallArea == null">
+              <!--   AND (B.BOARD_SMALL_AREA = #{boardSmallArea} OR B.BOARD_SMALL_AREA = '전체') -->
+            </when>
+            <when test="boardSmallArea == '전체'">
+            <!--비워둬서 그냥 나옴  -->
+            </when>
+            <otherwise>
+            	 AND (BOARD_SMALL_AREA = #{boardSmallArea})
+            </otherwise>
+        </choose>
+		<choose>
+            <when test="boardSectors == 0">
+                <!-- AND (B.BOARD_SECTORS = #{boardSectors} OR B.BOARD_SECTORS = 6) -->
+            </when>
+            <when test="boardSectors == 6">
+            <!--비워둬서 그냥 나옴  -->
+            </when> 
+            <otherwise>
+            	 AND (BOARD_SECTORS = #{boardSectors} OR BOARD_SECTORS = 6)
+            </otherwise>
+        </choose>
+        <choose>
+        <when test="searchKeyword != null and searchKeyword != ''">
+		    AND (BOARD_TITLE LIKE CONCAT('%', #{searchKeyword}, '%') 
+		         OR BOARD_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%'))
+         </when>
+		</choose>
 		
 <!-- 		<choose>
             <when test="boardBigArea == null">
@@ -137,9 +176,9 @@
 			    AND (BOARD_TITLE LIKE CONCAT('%', #{searchKeyword}, '%') 
 			         OR BOARD_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%'))
 	         </when>
-		</choose> -->
+		</choose>
      
-	<!-- 	ORDER BY BOARD_IDX DESC
+		ORDER BY BOARD_IDX DESC
         LIMIT #{pagination.limitStart}, #{recordSize} -->
 	</select>
 	
@@ -170,7 +209,19 @@
 			   LAST_INSERT_ID())
 	</insert>
 	
-	
+	<select id="findById" parameterType="int" resultType="com.korea.project.vo.board.BoardVO">
+		SELECT
+			B.BOARD_TITLE,
+			B.BOARD_SECTORS,
+			B.BOARD_BIG_AREA,
+			B.BOARD_SMALL_AREA,
+			U.USER_NICKNAME,
+			B.BOARD_WRITE_DATE,
+			B.BOARD_CONTENT
+		FROM BOARD B
+		JOIN `USER` U ON B.USER_IDX = U.user_idx
+		WHERE B.BOARD_IDX = #{boardIdx}
+	</select>
 	
 	
 	
