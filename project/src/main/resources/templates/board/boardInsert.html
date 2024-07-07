@@ -9,10 +9,11 @@
 	
 	<h1>게시글 작성하기</h1>
 	
-	<form th:action="@{/board/register}" th:object="${vo}" method="post">
+	<form id="postForm" th:action="@{/board/register}" th:object="${vo}" method="post">
+	
 	<!-- 제목, 카테고리 대 중 소분류, 게시글내용, 작성하기버튼, 취소하기 버튼  -->
 		<div>
-			<input th:field="*{boardTitle}" placeholder="게시글 제목을 작성하세요.">
+			<input id="boardTitle" th:field="*{boardTitle}" placeholder="게시글 제목을 작성하세요.">
 		</div>
 		<!-- 카테고리 저장해서 보내주기 -->
 
@@ -57,11 +58,13 @@
 				</div> <!-- 소분류 -->		
 			</div><!-- categoryContainer -->
 		<div>
-			<input th:field="*{boardContent}" placeholder="내용을 작성하세요.">
+			<input id="boardContent" th:field="*{boardContent}" placeholder="내용을 작성하세요.">
 		</div>
-		<div>
+		<div> 
 			<input type="submit" value="등록하기">
 		</div>
+		
+		
 	</form>
 
 

@@ -54,8 +54,20 @@ public class BoardController {
 	public RedirectView insert(BoardVO boardVO) {
 	System.out.println(boardVO.getBoardSectors());
 		boardService.register(boardVO);
+		
+		
 		return new RedirectView("list");
 	}
+	
+	//게시글 상세 페이지
+	@GetMapping("view")
+	public String openBoardView(@RequestParam int boardIdx, Model model) {
+		//id는  findBoardById 쿼리의 WHERER조건으로 사용되는 게시글 번호임
+		BoardVO vo = boardService.findById(boardIdx);
+		model.addAttribute("vo",vo);
+		return "board/boardView";
+	}
+	
 	
 	//게시글 목록 필터링해서 검색하기
 //	@GetMapping("list")

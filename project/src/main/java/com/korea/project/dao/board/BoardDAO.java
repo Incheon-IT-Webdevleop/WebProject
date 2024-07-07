@@ -17,7 +17,7 @@ public class BoardDAO {
 	
 	private final BoardMapper boardMapper;
 	
-	//게시판 조회 
+	//게시판 리스트 목록 
 	public List<BoardVO> findBoardList(BoardListRequest params){
 		return boardMapper.findAll(params);
 	}
@@ -42,5 +42,12 @@ public class BoardDAO {
 //		return boardMapper.filter(boardCR);
 //	}
 	
+	//게시글 조회하기
+	public BoardVO findById(int boardIdx) {
+		return boardMapper.findById(boardIdx);
+	}
 	
+	public int boardCount(BoardListRequest params) {
+		return boardMapper.boardCount(params);
+	}
 }
