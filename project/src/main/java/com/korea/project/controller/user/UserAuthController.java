@@ -7,6 +7,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -14,10 +16,10 @@ import com.korea.project.dto.user.FindRequestDTO;
 import com.korea.project.dto.user.RegisterRequestDTO;
 import com.korea.project.dto.user.ResetPasswordRequestDTO;
 import com.korea.project.dto.user.SessionUserDTO;
-import com.korea.project.service.user.UserDetailServiceImpl;
 import com.korea.project.service.user.UserServiceImpl;
 import com.korea.project.vo.user.UserVO;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -145,19 +147,19 @@ public class UserAuthController {
         String regex = ""; 
         switch(type) {
         case "id":
-        	regex = "^(?!.*admin)[a-z0-9]{5,20}$";
+        	regex = "^(?!.*\\\\s)(?!.*admin)[a-z0-9]{5,20}$";
         	break;
         case "email":
-        	regex =  "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        	regex =  "^(?!.*\\\\s)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         	break;
         case "nickname":
-        	regex = "^(?:(?:[가-힣]{2,6})|(?:[a-z]{4,12}))(?!.*\\b(?:관리자|운영자|admin)\\b).*$";
+        	regex = "^(?!.*\\\\s)(?:(?:[가-힣]{2,6})|(?:[a-z]{4,12}))(?!.*\\b(?:관리자|운영자|admin)\\b).*$";
         	break;
         case "pwd":
-        	regex = "^(?=.*[a-z])(?=.*\\d)[a-z\\d]{8,20}$";
+        	regex = "^(?!.*\\\\s)(?=.*[a-z])(?=.*\\d)[a-z\\d]{8,20}$";
         	break;
         case "name":
-        	regex = "^[가-힣]{2,6}$";
+        	regex = "^(?!.*\\\\s)[가-힣]{2,6}$";
         	break;
         }
        
@@ -250,7 +252,6 @@ public class UserAuthController {
 	public HashMap<String, String> checkPwd(String password,
 		@SessionAttribute(value = "user", required = false) SessionUserDTO user){
 		HashMap <String, String> map = new HashMap<>();
-		
 		String result = userService.checkPwd(password, user);
 		if(result.equals("success")) {
 			map.put("message", result);
@@ -261,6 +262,53 @@ public class UserAuthController {
 		}
 		
 	}
+	  // 비밀번호 변경
+    @PostMapping("/user/mypage/reset-password")
+    @ResponseBody
+    public HashMap<String, String> resetPwd(
+    		@SessionAttribute("user") SessionUserDTO user,
+    		@RequestBody ResetPasswordRequestDTO dto){
+    	HashMap<String, String> map = new HashMap<>();
+    	
+    	System.out.println(dto);
+    	
+    	if(!isValid("pwd", dto.getCurrentPassword())) {
+    		map.put("message", "Not Valid cpwd");
+    		return map;
+    	}
+    	if(!isValid("pwd", dto.getNewPassword())) {
+    		map.put("message", "Not Valid npwd");
+    		return map;
+    	}
+    	if(!isValid("pwd", dto.getConfirmPassword())) {
+    		map.put("message", "Not Valid cfpwd");
+    		return map;
+    	}
+    	
+    	
+    	String message = userService.updatePwd(user, dto);
+    	System.out.println(message);
+    	map.put("message", message);
+    	
+    	return map;
+    }
+    
+    // 탈퇴
+    @PostMapping("user/mypage/withdrawal")
+    @ResponseBody
+    public HashMap<String, String> withdrawal(
+    		@SessionAttribute("user") SessionUserDTO user){
+    	String result = "";
+    	HashMap<String, String> map = new HashMap<>();
+    	if(user == null) {
+    		map.put("message", "Wrong Approach");
+    		return map;
+    	}
+    	
+    	result = userService.withdraw(user);
+    	
+    	return map;
+    }
 
 }	
 

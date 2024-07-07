@@ -39,8 +39,29 @@ public interface UserService {
 	 */
 	public void resetPwd(ResetPasswordRequestDTO dto);
 	
-	
 	// 세션에 저장되어 있는 정보를 가지고 비밀번호 검사
 	public String checkPwd(String pwd, SessionUserDTO user);
 
+	/**
+	 * 세션 정보로 유저 찾기
+	 * @param SessionUserDTO
+	 * @return userVO
+	 */
+	
+	public UserVO selectBySession(SessionUserDTO user);
+	
+	/**
+	 * 비밀번호 변경 서비스에서 하는것으로 새로 작성
+	 * @param SessionUserDTO, ResetPasswordRequestDTO
+	 * @return String message
+	 */
+	public String updatePwd(SessionUserDTO user, ResetPasswordRequestDTO dto);
+	
+	/**
+	 * 탈퇴
+	 * @param SessionUserDTo
+	 * @return String result
+	 */
+	public String withdraw(SessionUserDTO user);
+	
 }

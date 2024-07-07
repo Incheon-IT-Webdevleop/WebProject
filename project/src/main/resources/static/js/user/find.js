@@ -132,10 +132,10 @@ $(document).ready(function() {
 		
 		
 		// 정규표현식
-		let re = /^(?=.*[a-z])(?=.*\d)[a-z\d]{8,20}$/;
+		let re = /^(?!.*\\s)(?=.*[a-z])(?=.*\d)[a-z\d]{8,20}$/;
 		
 		if(!re.test(newPassword) || !re.test(confirmPassword)){
-			$(".error-message").html("빈칸이 존재합니다.<br> 모두 입력하신후 다시 시도해주시길 바랍니다.").show();
+			$(".error-message").html("비밀번호는 영어 소문자와 숫자를 최소 한 글자씩 포함하고 8~20자여야 하며,<br> 공백을 포함할 수 없습니다.").show();
     	    return;
 		}
 		

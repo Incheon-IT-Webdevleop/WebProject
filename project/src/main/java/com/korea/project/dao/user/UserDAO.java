@@ -78,4 +78,12 @@ public class UserDAO implements UserMapper{
 		return userMapper.selectBySession(dto);
 	}
 	
+	/**
+	 * 탈퇴
+	 * @param SessionUserDTO
+	 */
+	@Override
+	public void updateUserDel(SessionUserDTO dto) {
+		userMapper.updateUserDel(dto);
+	}
 }

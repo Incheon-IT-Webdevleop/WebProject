@@ -2,6 +2,7 @@ package com.korea.project.service.user;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.korea.project.dao.user.UserDAO;
 import com.korea.project.dto.user.FindRequestDTO;
@@ -10,6 +11,7 @@ import com.korea.project.dto.user.ResetPasswordRequestDTO;
 import com.korea.project.dto.user.SessionUserDTO;
 import com.korea.project.vo.user.UserVO;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserServiceImpl implements UserService{
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	private final UserDAO userDAO;
+	private final HttpSession session;
 	
 	// 세션에 등록하기 위한 아이디, 이름 조회
 		@Override
@@ -98,4 +101,68 @@ public class UserServiceImpl implements UserService{
 			return result;
 		}
 	
+		/**
+		 * 세션 정보에 따른 유저 조회
+		 * @param SessionUserDTO user
+		 * @return userVO
+		 */
+		@Override
+		public UserVO selectBySession(SessionUserDTO user) {
+			return userDAO.selectBySession(user);
+		}
+		
+		/**
+		 * 비밀번호 변경 서비스에서 하는것으로 새로 작성
+		 * @param SessionUserDTO, ResetPasswordRequestDTO
+		 * @return String message
+		 */
+		
+		@Override
+		@ResponseBody
+		public String updatePwd(SessionUserDTO user, ResetPasswordRequestDTO dto) {
+			
+			// 세션에 정보가 없으면
+			if(user == null) {
+				return "Wrong Approach";
+			}
+			// 입력값이 없으면
+			if(dto == null) {
+				return "Wrong Request";
+			}
+			
+			// 입력한 비밀버호 두개가 같지 않을 때
+			if(!dto.getNewPassword().equals(dto.getConfirmPassword())) {
+				return "Diff Pwd";
+			}
+			
+			// 세션 정보로 유저 정보 찾기
+			UserVO vo = userDAO.selectBySession(user);
+			
+			if(bCryptPasswordEncoder.matches(dto.getConfirmPassword(), vo.getUserPwd())){
+				return "Same Pwd";
+			}
+			
+			if(!bCryptPasswordEncoder.matches(dto.getCurrentPassword(),userDAO.selectBySession(user).getUserPwd())) {
+	    		return "Wrong Pwd";
+	    	}
+			
+			// 암호화
+			dto.setEncodingPwd(bCryptPasswordEncoder.encode(dto.getConfirmPassword()));
+			dto.setUserId(vo.getUserId());
+			
+			userDAO.updatePwd(dto);
+			
+			return "success";
+		}
+		
+		@Override
+		public String withdraw(SessionUserDTO user) {
+			
+			userDAO.updateUserDel(user);
+			session.removeAttribute("user");
+			return "success";
+		}
+		
+		
+		
 }

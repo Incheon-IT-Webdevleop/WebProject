@@ -42,6 +42,15 @@ public interface UserMapper {
 	/**
 	 * 세션정보로 유저 정보 찾기
 	 * @param SessionUserDTO
+	 * @return UserVO
 	 */
 	public UserVO selectBySession(SessionUserDTO dto);
+	
+	/**
+	 * 탈퇴
+	 * @param SessionUserDTO
+	 */
+	public void updateUserDel(SessionUserDTO dto);
 }
+
+

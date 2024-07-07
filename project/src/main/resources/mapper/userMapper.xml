@@ -3,8 +3,10 @@
 <mapper namespace="com.korea.project.mapper.user.UserMapper">
 
 	<select id="selectById">
-		select * from user where user_id = #{userId}
-	</select>
+		select * from user 
+		where user_id = #{userId} 
+		and user_del = 0
+ 	</select>
 	
 	<insert id="signUp" parameterType="com.korea.project.dto.user.RegisterRequestDTO">
 		INSERT INTO `user` (user_id, user_nickname, user_pwd, user_name, user_email, regdate, user_role, user_del)
@@ -84,5 +86,16 @@
 		AND
 			user_nickname = #{userNickname}
 	</select>
+	
+	<update id="updateUserDel">
+		update
+			user
+		set
+			user_del = -1
+		where
+			user_idx = #{userIdx}
+		and
+			user_nickname = #{userNickname}
+	</update>
 	
 </mapper>

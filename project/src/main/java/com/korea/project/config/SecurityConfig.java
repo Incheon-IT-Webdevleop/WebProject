@@ -70,9 +70,12 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
     	http
     	.csrf(AbstractHttpConfigurer::disable)
-        .sessionManagement(sessionManagement ->
-                sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        )
+    	.sessionManagement(session -> session
+                .sessionFixation().changeSessionId()
+            )
+//        .sessionManagement(sessionManagement ->
+//                sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//        )
         .authorizeHttpRequests(authorize -> authorize
         		.requestMatchers("/css/**", "/js/**", "/categoryImages/**", "/data/**").permitAll() // CSS, JS, 이미지 폴더에 대해 접근 허용
         		.requestMatchers("/user/*").hasAnyRole("USER", "ADMIN")
@@ -106,10 +109,13 @@ public class SecurityConfig {
                 .logoutSuccessHandler(customLogoutSuccessHandler) // 로그아웃 성공 시 핸들러 설정
                 .invalidateHttpSession(true) // 세션 무효화
                 .deleteCookies("JSESSIONID") // 로그아웃 후 삭제할 쿠키 이름 설정
-                .deleteCookies("rememberMe")
+                .deleteCookies("remember-me")
                 .permitAll()
         ).rememberMe(remember -> remember
         		.rememberMeServices(rememberMeServices())
+        		 .key("uniqueAndSecret")
+                 .tokenValiditySeconds(60 * 60 * 24 * 7) // 7 days
+                 .rememberMeParameter("rememberMe")
         )
         .exceptionHandling(exception-> exception
                     .accessDeniedHandler(customAccessDined)
