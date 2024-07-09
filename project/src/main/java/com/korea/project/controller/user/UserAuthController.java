@@ -33,7 +33,7 @@ public class UserAuthController {
 	// 회원가입 페이지에서 회원가입 버튼을 눌렀을 때 작동하는 컨트롤러
     @PostMapping("/register")
     public HashMap<String, String> postRegister(RegisterRequestDTO vo) {
-        HashMap<String, String> map = new HashMap<>();
+        HashMap<String, String> map = new HashMap<>();	
         vo.setUserEmail(vo.getLocalEmail()+vo.getDomainEmail());
         String reKey = "result";
         String meKey = "message";
@@ -79,12 +79,14 @@ public class UserAuthController {
         	map.put(meKey, "이름은 2자~6자의 한글만 가능합니다.");
         	return map;
         }
+        
 
         // 비밀번호 암호화
  	   String rawPassword = vo.getUserPwd();
  	   String encPassword = bCryptPasswordEncoder.encode(rawPassword);
 	   vo.setUserPwd(encPassword);
 
+	   
         // 회원가입 처리
         //System.out.println("서비스 시작전");
         userService.register(vo);

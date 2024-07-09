@@ -7,6 +7,7 @@ import com.korea.project.dto.user.FindResponseDTO;
 import com.korea.project.dto.user.RegisterRequestDTO;
 import com.korea.project.dto.user.ResetPasswordRequestDTO;
 import com.korea.project.dto.user.SessionUserDTO;
+import com.korea.project.dto.user.oauth2.Oauth2UserInfo;
 import com.korea.project.mapper.user.UserMapper;
 import com.korea.project.vo.user.UserVO;
 
@@ -23,9 +24,9 @@ public class UserDAO implements UserMapper{
 		return userMapper.selectById(userId);
 	}
 	
-	// 회원가입
+	// 사이트 자체 회원가입
 	@Override
-	public void signUp(RegisterRequestDTO vo) {
+	public void signUp(UserVO vo) {
 		//System.out.println("회언가입 DAO");
 		userMapper.signUp(vo);
 	}
@@ -86,4 +87,20 @@ public class UserDAO implements UserMapper{
 	public void updateUserDel(SessionUserDTO dto) {
 		userMapper.updateUserDel(dto);
 	}
+	
+	/**
+	 * 소셜미디어 로그인 정보를 확인하기 위한 login_id로 찾기
+	 * @param String loginId
+	 * @return UserVO
+	 */
+	@Override
+	public UserVO findByOAuth2UserInfo(Oauth2UserInfo oAuth2UserInfo) {
+		return userMapper.findByOAuth2UserInfo(oAuth2UserInfo);
+	}
+ 	
+	/**
+	 * 소셜미디어 정보로 로그인
+	 * @param UserVO 
+	 */
+	
 }

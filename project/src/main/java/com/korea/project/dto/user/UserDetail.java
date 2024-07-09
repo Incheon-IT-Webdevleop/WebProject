@@ -2,9 +2,11 @@ package com.korea.project.dto.user;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.korea.project.vo.user.UserVO;
 
@@ -13,9 +15,17 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Data
-public class UserDetail implements UserDetails{
+public class UserDetail implements UserDetails, OAuth2User{
 	
 	private final UserVO userVO;
+	
+	private Map<String, Object> attributes;
+	
+	public UserDetail(UserVO userVO, Map<String, Object> attributes) {
+
+        this.userVO = userVO;
+        this.attributes = attributes;
+    }
 	
 	@Override
 	public String getPassword() {
@@ -41,9 +51,21 @@ public class UserDetail implements UserDetails{
 				
 			}
 		});
-		System.out.println(collect);
+//		System.out.println(collect);
 		return collect;
 	}
+	
+	@Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+	
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	  @Override
 	    public boolean isAccountNonExpired() {
 	        return true;  // 계정이 만료되지 않음을 나타냅니다

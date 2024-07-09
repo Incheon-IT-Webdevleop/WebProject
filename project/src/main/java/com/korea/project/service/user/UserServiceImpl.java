@@ -61,11 +61,14 @@ public class UserServiceImpl implements UserService{
 		// 회원가입
 		@Override
 		public void register(RegisterRequestDTO vo) {
-//		   String rawPassword = vo.getUserPwd();
-//	       String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-//		   vo.setUserPwd(encPassword);
+			UserVO user = new UserVO();
+			user.setUserId(vo.getUserId());
+			user.setUserPwd(vo.getUserPwd());
+			user.setUserEmail(vo.getUserEmail());
+			user.setUserName(vo.getUserName());
+			user.setUserNickname(vo.getUserNickname());
 		   
-		   userDAO.signUp(vo);
+		   userDAO.signUp(user);
 			
 		}
 		
