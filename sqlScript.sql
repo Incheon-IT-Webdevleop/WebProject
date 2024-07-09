@@ -11,11 +11,11 @@ CREATE TABLE `user` (
     user_nickname	varchar(12)	null unique,
     user_pwd VARCHAR(255),
     user_name VARCHAR(30),
-    user_email VARCHAR(40) NOT NULL UNIQUE COMMENT 'unique',
+    user_email VARCHAR(40) NOT NULL COMMENT 'unique',
     regdate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     user_role TINYINT NOT NULL DEFAULT 0 COMMENT '0: 유저, 1: 관리자',
     user_del TINYINT NOT NULL DEFAULT 0 COMMENT '-1 : 탈퇴, 0 : 활동',
-    provider VARCHAR(10) comment '소셜 회원가입 시 회원가입한 소셜',
+    provider VARCHAR(10) default "일반" comment '소셜 회원가입 시 회원가입한 소셜',
     provider_id VARCHAR(100) unique comment '소셜 회원가입시 소셜에서 넘겨준는 유저의 고유ID',
     PRIMARY KEY (`user_idx`)
 );

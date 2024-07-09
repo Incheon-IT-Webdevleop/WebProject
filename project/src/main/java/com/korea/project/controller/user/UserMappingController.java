@@ -117,5 +117,14 @@ public class UserMappingController {
   		return "user/mypage/myPost";
    	}
 
+  	// 닉네임 정하는 곳
+  	@GetMapping("/user/set-nickname")
+  	public String setNickname(@SessionAttribute("user") SessionUserDTO dto, Model model) {
+  		if(dto == null) {
+  			return "/access-denied";
+  		}else {
+  			return "user/setNickname";
+  		}
+  	}
 	
 }

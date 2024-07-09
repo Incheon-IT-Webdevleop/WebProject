@@ -2,8 +2,8 @@ package com.korea.project.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -62,6 +62,14 @@ public class SecurityConfig {
 		return rememberMeServices;
 	}
     
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailServiceImpl);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
+    }
+    
 
     @Bean
     public Oauth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler() {
@@ -92,6 +100,15 @@ public class SecurityConfig {
                 .anyRequest().permitAll()//다른 요청
         )
         .formLogin(formLogin -> formLogin
+                .loginPage("/admin-login") // 관리자 로그인 페이지 URL
+                .loginProcessingUrl("/admin-perform-login") // 관리자 로그인 form action URL
+                .usernameParameter("userId") // 로그인 form의 userId 파라미터 이름
+                .passwordParameter("userPwd") // 로그인 form의 userPwd 파라미터 이름
+                .successHandler(adminSuccessHandler)
+                .failureHandler(adminFailureHandler)
+                .permitAll()
+        )
+        .formLogin(formLogin -> formLogin
                 .loginPage("/login") // 커스텀 로그인 페이지 URL
                 .loginProcessingUrl("/perform_login") // 로그인 form action URL
 //                .defaultSuccessUrl("/") // 로그인 성공 시 리디렉션 URL successHandler로 대체
@@ -102,17 +119,10 @@ public class SecurityConfig {
                 .failureHandler(customFailureHandler)
                 .permitAll()
         )
-        .formLogin(formLogin -> formLogin
-                .loginPage("/admin-login") // 관리자 로그인 페이지 URL
-                .loginProcessingUrl("/admin-perform-login") // 관리자 로그인 form action URL
-                .usernameParameter("userId") // 로그인 form의 userId 파라미터 이름
-                .passwordParameter("userPwd") // 로그인 form의 userPwd 파라미터 이름
-                .successHandler(adminSuccessHandler)
-                .failureHandler(adminFailureHandler)
-                .permitAll()
-        )
         .oauth2Login((auth) -> auth.loginPage("/oauth-login/login")
         		.successHandler(customSuccessHandler)
+//        		.userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
+//                        .userService(customOAuth2UserService))
                 .failureUrl("/login")
                 .permitAll())
         .logout(logout -> logout

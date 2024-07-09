@@ -66,7 +66,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 	        if (findUser == null) {
 	        	user.setProvider(provider);
 	        	user.setProviderId(providerId);
-	        	user.getUserName();
+	        	user.setUserName(name);
 	        	user.setUserId(loginId);
 	        	user.setUserNickname(oAuth2UserInfo.getNickname());
 	        	user.setUserEmail(email);

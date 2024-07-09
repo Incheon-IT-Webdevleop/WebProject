@@ -12,14 +12,17 @@ import com.korea.project.vo.user.UserVO;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Data
+@Slf4j
 public class UserDetail implements UserDetails, OAuth2User{
 	
 	private final UserVO userVO;
 	
 	private Map<String, Object> attributes;
+	
 	
 	public UserDetail(UserVO userVO, Map<String, Object> attributes) {
 
@@ -62,8 +65,7 @@ public class UserDetail implements UserDetails, OAuth2User{
 	
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return userVO.getUserId();
 	}
 	
 	  @Override
