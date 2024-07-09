@@ -36,7 +36,9 @@ public class SecurityConfig {
 	private final CustomAccessDined customAccessDined;
 	private final CustomOAuth2UserService customOAuth2UserService;
 	private final Oauth2AuthenticationSuccessHandler oauth2AuthenticationSuccessHandler; 
-	
+	private final AdminAuthSuccessHandler adminSuccessHandler;
+	private final AdminAuthFailureHandler adminFailureHandler;
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -98,6 +100,15 @@ public class SecurityConfig {
                 .passwordParameter("userPwd") // 로그인 form의 userPwd 파라미터 이름
                 .successHandler(customSuccessHandler)
                 .failureHandler(customFailureHandler)
+                .permitAll()
+        )
+        .formLogin(formLogin -> formLogin
+                .loginPage("/admin-login") // 관리자 로그인 페이지 URL
+                .loginProcessingUrl("/admin-perform-login") // 관리자 로그인 form action URL
+                .usernameParameter("userId") // 로그인 form의 userId 파라미터 이름
+                .passwordParameter("userPwd") // 로그인 form의 userPwd 파라미터 이름
+                .successHandler(adminSuccessHandler)
+                .failureHandler(adminFailureHandler)
                 .permitAll()
         )
         .oauth2Login((auth) -> auth.loginPage("/oauth-login/login")
