@@ -3,7 +3,7 @@ package com.korea.project.service.user;
 import org.springframework.stereotype.Service;
 
 import com.korea.project.dto.board.BoardListRequest;
-import com.korea.project.dto.board.BoardListResponse;
+import com.korea.project.dto.board.BoardResponse;
 import com.korea.project.dto.board.PagingResponse;
 import com.korea.project.dto.user.FindRequestDTO;
 import com.korea.project.dto.user.RegisterRequestDTO;
@@ -74,7 +74,7 @@ public interface UserService {
 	 * @return PaginResponse<BoardVO>
 	 */
 	
-	public PagingResponse<BoardListResponse> myPost(BoardListRequest params, SessionUserDTO user);
+	public PagingResponse<BoardResponse> myPost(BoardListRequest params, SessionUserDTO user);
 	
 	/**
 	 * 닉네임 등록(변경)

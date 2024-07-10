@@ -94,3 +94,15 @@ INSERT INTO `user` (user_id, user_nickname, user_pwd, user_name, user_email, reg
 			VALUES ("mod459", "성남베어", "$2a$10$UZZ7XTN0gwHZBm2ASdYpxeyeyjMC9AsaI2aDFy5aPh4ca8.C3JO5e", "정상필", "mod459@naver.com", NOW(), 1, 0);
 INSERT INTO board (user_idx, board_sectors, board_big_area, board_small_area, board_title, board_category, board_content, board_write_date)
 VALUES (1,1, '서울', '강남구', '첫 번째 게시글', 0, '첫 번째 게시글 내용입니다.', CURRENT_TIMESTAMP);
+
+SELECT
+			B.BOARD_TITLE,
+			B.BOARD_SECTORS,
+			B.BOARD_BIG_AREA,
+			B.BOARD_SMALL_AREA,
+			B.USER_IDX,
+			B.BOARD_WRITE_DATE,
+			B.BOARD_CONTENT
+		FROM BOARD B
+		JOIN `USER` U ON B.USER_IDX = U.user_idx
+		WHERE B.BOARD_IDX = 1

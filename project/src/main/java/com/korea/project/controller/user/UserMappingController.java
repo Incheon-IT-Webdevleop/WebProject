@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.korea.project.dto.board.BoardListRequest;
-import com.korea.project.dto.board.BoardListResponse;
+import com.korea.project.dto.board.BoardResponse;
 import com.korea.project.dto.board.PagingResponse;
 import com.korea.project.dto.user.SessionUserDTO;
 import com.korea.project.service.board.BoardServiceImpl;
@@ -121,7 +121,7 @@ public class UserMappingController {
     		return "redirect:/access-denied";
     	}
   		
-  		PagingResponse<BoardListResponse> res = userService.myPost(params, user);
+  		PagingResponse<BoardResponse> res = userService.myPost(params, user);
   		
 
   		model.addAttribute("response",res);

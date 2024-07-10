@@ -5,14 +5,14 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.korea.project.dto.board.BoardListRequest;
-import com.korea.project.dto.board.BoardListResponse;
+import com.korea.project.dto.board.BoardResponse;
 import com.korea.project.vo.board.BoardVO;
 
 @Mapper
 public interface BoardMapper {
 
 	//게시판 조회
-	public List<BoardListResponse> findAll(BoardListRequest params);
+	public List<BoardResponse> findAll(BoardListRequest params);
 //    List<BoardVO> selectAll();
 
 	
@@ -32,7 +32,7 @@ public interface BoardMapper {
 	public int count(BoardListRequest boardListRequest);
 	
 	//게시글 조회
-	public BoardVO findById(int boardIdx);
+	public BoardResponse findById(int boardIdx);
 
 
 }
