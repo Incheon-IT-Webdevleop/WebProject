@@ -13,6 +13,8 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
@@ -78,7 +80,10 @@ public class SecurityConfig {
     
     @Bean
     public ClientRegistrationRepository clientRegistrationRepository() {
-        return new InMemoryClientRegistrationRepository(this.naverClientRegistration());
+    	return new InMemoryClientRegistrationRepository(
+//    	        this.googleClientRegistration(),
+    	        this.naverClientRegistration()
+    	    );
     }
     
     @Bean
@@ -120,9 +125,9 @@ public class SecurityConfig {
                 .permitAll()
         )
         .oauth2Login((auth) -> auth.loginPage("/oauth-login/login")
+        		.userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
+                        .userService(customOAuth2UserService))
         		.successHandler(customSuccessHandler)
-//        		.userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
-//                        .userService(customOAuth2UserService))
                 .failureUrl("/login")
                 .permitAll())
         .logout(logout -> logout
@@ -163,6 +168,24 @@ public class SecurityConfig {
                 .build();
     }
     
+//    private ClientRegistration googleClientRegistration() {
+//        return ClientRegistration.withRegistrationId("google")
+//            .clientId("")
+//            .clientSecret("")
+//            .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+//            .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+//            .redirectUri("http://localhost:8080/login/oauth2/code/google")
+//            .scope("profile", "email")
+//            .authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
+//            .tokenUri("https://www.googleapis.com/oauth2/v4/token")
+//            .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
+//            .userNameAttributeName(IdTokenClaimNames.SUB)
+//            .jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
+//            .clientName("Google")
+//            .build();
+//    }
+    
+
 
     
 }

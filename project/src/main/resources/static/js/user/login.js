@@ -44,7 +44,7 @@ $(document).ready(function() {
             success: function(response) {
 				alert("환영합니다");
 				// 로그인 성공 시 이전 페이지로 이동
-				var url = '/user/index'; // 기본적인 리디렉션 URL
+				var url = '/'; // 기본적인 리디렉션 URL
 				var savedRequest = localStorage.getItem('spring-security-redirect');
 				/* alert(savedRequest); */
 				if (savedRequest) {

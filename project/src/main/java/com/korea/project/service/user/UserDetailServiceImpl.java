@@ -28,16 +28,19 @@ public class UserDetailServiceImpl implements UserDetailsService{
 	// 아이디 비번을 가지고 로그인 하기
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+		
+		
 		UserVO user = userDAO.selectById(userId);
+		
 		if(user == null) {
 			log.warn("User not found with userId: {}", userId);
 			throw new UsernameNotFoundException("User not found with userId: " + userId);
 		}
 //		System.out.println("유저 디테일 서비스 임플");
 		if(user.getUserRole() == 1) {
-			user.setRoles("ADMIN");
+			user.setRoles("ROLE_ADMIN");
 		}else {
-			user.setRoles("USER");
+			user.setRoles("ROLE_USER");
 		}
 		return new UserDetail(user);
 	}
@@ -46,6 +49,7 @@ public class UserDetailServiceImpl implements UserDetailsService{
 	public SessionUserDTO selectNicknameById(String id) {
 		return userDAO.selectNicknameById(id);
 	}
+	
 	
 	
 }

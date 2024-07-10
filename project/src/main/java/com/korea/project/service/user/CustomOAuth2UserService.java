@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.korea.project.dao.user.UserDAO;
 import com.korea.project.dto.user.UserDetail;
+import com.korea.project.dto.user.oauth2.GoogleUserDetails;
 import com.korea.project.dto.user.oauth2.NaverUserDetails;
 import com.korea.project.dto.user.oauth2.Oauth2UserInfo;
 import com.korea.project.vo.user.UserVO;
@@ -25,10 +26,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 	
 	private final UserDAO userDAO;
 
-	 @Override
+	 	@Override
 	    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 	        OAuth2User oAuth2User = super.loadUser(userRequest);
-	        log.info("getAttributes : {}",oAuth2User.getAttributes());
+//	        log.info("getAttributes : {}",oAuth2User.getAttributes());
 
 	        // 어느 소셜미디에어세 접근했는지 
 	        String provider = userRequest.getClientRegistration().getRegistrationId();
@@ -41,12 +42,14 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 	        if(provider.equals("naver")){
 //	            log.info("네이버로그인");
 	            oAuth2UserInfo = new NaverUserDetails(oAuth2User.getAttributes());
+	        }else if(provider.equals("google")) {
+	        	oAuth2UserInfo = new GoogleUserDetails(oAuth2User.getAttributes());
 	        }
 	        
 
 
 	        String providerId = oAuth2UserInfo.getProviderId();
-	        log.info("providerId : " + providerId);
+//	        log.info("providerId : " + providerId);
 	        
 	        String email = oAuth2UserInfo.getEmail();
 //	        log.info("로그인 이메일 : " + email);
@@ -58,12 +61,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 	        
 	        // 유저정보 불러오기
 	        UserVO findUser = userDAO.findByOAuth2UserInfo(oAuth2UserInfo);
-//	        log.info("로그인 유저 정보" + findUser);
+	        log.info("로그인 유저 정보" + findUser);
 
 	        
 	        UserVO user = new UserVO();
 	        // 디비에서 유저정보가 없으면 회원가입 시키기
 	        if (findUser == null) {
+	        	
 	        	user.setProvider(provider);
 	        	user.setProviderId(providerId);
 	        	user.setUserName(name);
@@ -79,10 +83,25 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 		        }
 		        
 		        userDAO.signUp(user);
+
+	    		
 		        
 	        } else{
 	            user = findUser;
+	        	if(user.getUserRole() == 1) {
+	    			user.setRoles("ROLE_ADMIN");
+	    		}else {
+	    			user.setRoles("ROLE_USER");
+	    		}
+	    		
 	        }
+	        
+	        if(user.getUserRole() == 1) {
+    			user.setRoles("ROLE_ADMIN");
+    		}else {
+    			user.setRoles("ROLE_USER");
+    		}
+	        log.info("룰 : " + user.getRoles());
 
 	        return new UserDetail(user, oAuth2User.getAttributes());
 	    }
