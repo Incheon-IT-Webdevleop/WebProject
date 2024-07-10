@@ -59,6 +59,12 @@ public interface UserMapper {
 	 * @return UserVO
 	 */
 	public UserVO findByOAuth2UserInfo(Oauth2UserInfo oAuth2UserInfo);
+	
+	/**
+	 * 닉네임 등록(변경)
+	 * @parma SessionUserDTO
+	 */
+	public void resetNickname(SessionUserDTO sessionUserDTO);
 }
 
 

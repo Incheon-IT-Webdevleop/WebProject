@@ -7,15 +7,18 @@
 </head>
 <body>
     <h2>닉네임 설정</h2>
-    <form action="#" th:action="@{/saveNickname}" th:object="${nicknameForm}" method="post">
+    <form th:action="@{/user/saveNickname}" method="post">
         <div>
             <label for="nickname">Nickname:</label>
-            <input type="text" id="nickname" name="nickname" th:field="*{nickname}" required>
+            <input type="text" id="nickname" name="nickname">
         </div>
-         <div class="error-message"></div>
+         <div class="error-message" ></div>
         <div>
             <button type="submit">확인</button>
         </div>
     </form>
+    
+   	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/user/setNickname.js}"></script>
 </body>
 </html>

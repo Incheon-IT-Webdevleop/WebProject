@@ -97,10 +97,16 @@ public class UserDAO implements UserMapper{
 	public UserVO findByOAuth2UserInfo(Oauth2UserInfo oAuth2UserInfo) {
 		return userMapper.findByOAuth2UserInfo(oAuth2UserInfo);
 	}
- 	
-	/**
-	 * 소셜미디어 정보로 로그인
-	 * @param UserVO 
-	 */
 	
+	/**
+	 * 닉네임 등록(변경)
+	 * @parma SessionUserDTO
+	 */
+	@Override
+	public void resetNickname(SessionUserDTO sessionUserDTO) {
+		userMapper.resetNickname(sessionUserDTO);
+	}
+	
+ 	
+
 }

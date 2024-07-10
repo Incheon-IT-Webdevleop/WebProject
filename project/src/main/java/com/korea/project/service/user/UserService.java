@@ -75,4 +75,9 @@ public interface UserService {
 	
 	public PagingResponse<BoardVO> myPost(BoardListRequest params, SessionUserDTO user);
 	
+	/**
+	 * 닉네임 등록(변경)
+	 * @parma String nickname, SessionUserDTO sessionUserDTO
+	 */
+	public void resetNickname(String nickname, SessionUserDTO sessionUserDTO);
 }

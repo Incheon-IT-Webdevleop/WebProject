@@ -28,10 +28,10 @@ public class UserMappingController {
 	private final BoardServiceImpl boardService;
 	private final HttpSession session;
 	
-	@GetMapping("/user/index")
-	public String index() {
-		return "index";
-	}
+//	@GetMapping("/user/index")
+//	public String index() {
+//		return "index";
+//	}
 	
 	// 로그인 페이지에 점근하면 view 보여주기
     @GetMapping("/login")
