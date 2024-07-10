@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.korea.project.mapper.admin.AdminUserMapper">
+    <select id="selectUser" resultType="com.korea.project.vo.user.UserVO">
+        SELECT 
+            user_nickname,
+            user_email,
+            user_name,
+            user_id,
+            user_idx,
+            user_del
+        FROM 
+            user
+    </select>
+    <!-- 유저 삭제 처리 -->
+    <update id="updateUser" parameterType="int">
+        UPDATE user
+        SET
+           user_del = -1
+        WHERE user_idx = #{userIdx}
+    </update>
+</mapper>

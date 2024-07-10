@@ -8,7 +8,6 @@ import java.util.List;
 
 @Mapper
 public interface FranchiseMapper {
-
     List<FranchiseVO> selectAllFranchisesPaged(@Param("offset") int offset, @Param("limit") int limit);
 
     List<FranchiseVO> selectFranchisesBySectorPaged(@Param("sector") int sector, @Param("offset") int offset, @Param("limit") int limit);
@@ -27,5 +26,12 @@ public interface FranchiseMapper {
     int countFranchisesByName(@Param("name") String name);
     
     // 상세창 받아오기
-    FranchiseVO selectFranchiseById(@Param("id") Long id);
-    }
+    FranchiseVO selectFranchiseById(@Param("id") int id);
+    
+    //프렌차이즈 생성
+    void insertFranchise(FranchiseVO franchise);
+    // 프렌차이즈 수정
+    void updateFranchise(FranchiseVO franchise);
+    // 프렌차이즈 삭제
+    void deleteFranchise(int id);
+}
