@@ -49,6 +49,11 @@
 	opacity: 1.5;
 }
 
+.areaCategory:hover {
+	fill: royalblue;
+	color: white;
+	font-weight: 600;
+}
 
 .industry-dropdown-btn {
 	border-radius: 0px 0px 10px 10px;
@@ -68,12 +73,17 @@
 
 	background-color: #ffffff;
 	width: 100%;
-	height: 250px;
+	height: fit-content;
 	
 	text-align: center;
 	padding: 3px 0px;
 	border: 1.5px solid #ccc;
 	transition: all 0.5s ease;
+}
+
+.industryDropdown-section {
+	border-top: none;
+	border-radius: 0px 0px 10px 10px;
 }
 
 .dropdown-animation {
@@ -86,6 +96,10 @@
 	background-color: #ffffff;
 	font-size: 13px;
     margin: 0;
+}
+
+#sido-code > li, #sigoon-code > li, #dong-code > li {
+	border: 1px solid dodgerblue;
 }
 
 .dropdown-content ul li {
@@ -101,9 +115,11 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 3열 그리드 */
     list-style-type: none; /* 기본 리스트 스타일 제거 */
-    padding: 0;
+    height: fit-content;
+	
+	padding: 0;
     margin: 0;
-	height: 0;
+	
 }
 
 .gridrow-3 li {

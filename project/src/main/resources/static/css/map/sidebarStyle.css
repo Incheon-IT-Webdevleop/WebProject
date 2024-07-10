@@ -167,3 +167,13 @@
 	background-color: #007BFF;
 	}
 	
+.selectedSido, .selectedSig, .selectedEmd {
+	color: #007BFF;
+}
+.locationText {
+	font-weight: 600;
+	font-size: 16px;
+}
+.blue-font {
+	color: #007BFF;
+}
