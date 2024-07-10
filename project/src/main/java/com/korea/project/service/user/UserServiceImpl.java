@@ -131,7 +131,6 @@ public class UserServiceImpl implements UserService{
 		 */
 		
 		@Override
-		@ResponseBody
 		public String updatePwd(SessionUserDTO user, ResetPasswordRequestDTO dto) {
 			
 			// 세션에 정보가 없으면
@@ -210,5 +209,15 @@ public class UserServiceImpl implements UserService{
 			return  new PagingResponse<>(list, pagination);
 		}
 		
+		/**
+		 * 닉네임 등록(변경)
+		 * @parma String nickname, SessionUserDTO user
+		 */
+		@Override
+		public void resetNickname(String nickname, SessionUserDTO user) {
+			user.setUserNickname(nickname);
+			userDAO.resetNickname(user);
+			
+		}
 		
 }

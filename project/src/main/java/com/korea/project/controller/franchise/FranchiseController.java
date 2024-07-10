@@ -51,7 +51,7 @@ public class FranchiseController {
         return "franchise/franchiseList";
     }
     @GetMapping("/franchiseboard")
-    public String showFranchiseDetail(@RequestParam("id") Long id, Model model) {
+    public String showFranchiseDetail(@RequestParam("id") int id, Model model) {
         FranchiseVO franchise = franchiseService.getFranchiseById(id);
         model.addAttribute("franchise", franchise);
         return "franchise/franchiseboard";

@@ -88,6 +88,8 @@ $(document).ready(function() {
 			$('pwd').focus();
 			registerFlag["passwordCheck"] = false;
 			return;
+		}else{
+			$('#check_pwd').hide();
 		};
 		registerFlag["passwordCheck"] = true;
 	});
@@ -101,6 +103,8 @@ $(document).ready(function() {
 			$(this).focus();
 			registerFlag["nameCheck"] = false;
 			return;
+		}else{
+			$('#check-name').hide();
 		}
 		registerFlag["nameCheck"] = true;
 	})

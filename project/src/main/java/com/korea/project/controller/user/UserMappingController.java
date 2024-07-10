@@ -29,6 +29,7 @@ public class UserMappingController {
 	private final BoardServiceImpl boardService;
 	private final HttpSession session;
 	
+	
 //	@GetMapping("/user/index")
 //	public String index() {
 //		return "index";
@@ -57,8 +58,15 @@ public class UserMappingController {
     // 마이페이지 들어가기 전 비밀번호 확인 페이지
     @GetMapping("user/pwd-check")
     public String pwdCheckPage(	) {
-    	if(session.getAttribute("user") == null ) {
+    	
+    	SessionUserDTO user = (SessionUserDTO)session.getAttribute("user");
+    	
+    	if(user == null ) {
     		return "redirect:/access-denied";
+    	}
+    	if(!userService.selectBySession(user).getProvider().isEmpty() || 
+    			userService.selectBySession(user).getProvider().equals("전체")) {
+    		return "redirect:/user/mypage";
     	}
     	
     	return "user/pwdCheckPage";
@@ -66,8 +74,9 @@ public class UserMappingController {
     
     // 마이페이지의 메인
     @GetMapping("/user/mypage")
-	public String myPageMain(@SessionAttribute(value = "user", required = false) SessionUserDTO user,
-    							 Model model) {
+	public String myPageMain(Model model) {
+    	SessionUserDTO user = (SessionUserDTO)session.getAttribute("user");
+    	
 		if(user == null) {
 			return "redirect:/access-denied"; 
 		}
@@ -80,6 +89,7 @@ public class UserMappingController {
     // 마이페이지의 비밀번호 변경 페이지
     @GetMapping("/user/mypage/change-pwd")
     public String myPageResetPwd() {
+    	
     	if(session.getAttribute("user") == null ) {
     		return "redirect:/access-denied";
     	}

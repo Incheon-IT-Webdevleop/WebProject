@@ -106,4 +106,10 @@
 		and provider_id = #{providerId}
 	</select>
 	
+	<update id="resetNickname">
+		update user
+		set user_nickname = #{userNickname}
+		where user_idx = #{userIdx}
+	</update>
+	
 </mapper>

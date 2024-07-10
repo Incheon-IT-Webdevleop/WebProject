@@ -21,13 +21,16 @@ import com.korea.project.vo.user.UserVO;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class UserAuthController {
 	
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	private final UserServiceImpl userService;
+	private final HttpSession session;
 	
 
 	// 회원가입 페이지에서 회원가입 버튼을 눌렀을 때 작동하는 컨트롤러
@@ -103,6 +106,7 @@ public class UserAuthController {
 	 */
 	@PostMapping("/api/check-duplicate")
 	public HashMap<String, Boolean> checkDuplicate( String type, String value) {
+//		log.info("중복검사 실행");
 		HashMap<String, Boolean> map = new HashMap<>();	
 		String key = "isDuplicate";
 		// true = 중복되었다
@@ -133,6 +137,7 @@ public class UserAuthController {
 			}else {
 				map.put(key, !isDuplicate);
 			}
+//			log.info("결과 :" + isDuplicate);
 			return map;
 		}else {
 			if(userService.checkDuplicateById(value) < 1) {
@@ -310,6 +315,29 @@ public class UserAuthController {
     	result = userService.withdraw(user);
     	
     	return map;
+    }
+    
+    // 닉네임 설정(변경)
+    @PostMapping("/user/setNickname")
+    public String setNickname(String nickname) {
+    	
+    	SessionUserDTO loginedUser = (SessionUserDTO) session.getAttribute("user");
+    	if(loginedUser == null) {
+    		return "redirect:/access-denied";
+    	}
+    	
+    	if(userService.checkDuplicateByNickname(nickname) == 1) {
+    		return "Exist";
+    	}
+    	
+    	if(isValid("nickanem", nickname)) {
+    		return "Not Valid";
+    	}
+    	
+    	userService.resetNickname(nickname, loginedUser);
+    	log.info("닉네임 변경 결과 : ");
+    	
+    	return "success";
     }
 
 }	

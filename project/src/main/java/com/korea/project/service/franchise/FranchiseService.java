@@ -72,7 +72,7 @@ public class FranchiseService {
     public int countFranchisesByName(String name) {
         return franchiseMapper.countFranchisesByName(name);
     }
-    public FranchiseVO getFranchiseById(Long id) {
+    public FranchiseVO getFranchiseById(int id) {
         try {
             return franchiseMapper.selectFranchiseById(id);
         } catch (DataAccessException e) {
