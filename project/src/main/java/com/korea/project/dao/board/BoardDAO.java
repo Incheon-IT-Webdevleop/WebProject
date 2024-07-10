@@ -18,7 +18,7 @@ public class BoardDAO {
 	private final BoardMapper boardMapper;
 	
 	//게시판 리스트 목록 
-	public List<BoardVO> findBoardList(BoardListRequest params){
+	public List<BoardListResponse> findBoardList(BoardListRequest params){
 		return boardMapper.findAll(params);
 	}
 	
@@ -27,10 +27,10 @@ public class BoardDAO {
 		return boardMapper.count(params);
 	}
 	
-	// 게시글 수 카운팅
-//	public int boardCount(BoardListRequest params) {
-//		return boardMapper.boardCount(params);
-//	}
+	//게시글 조회수 카운트
+	public int viewCount(int boardIdx) {
+		return boardMapper.viewCount(boardIdx);
+	}
 	
 	//게시글 목록 추가
 	public void save(BoardVO boardVO) {

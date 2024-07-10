@@ -209,6 +209,7 @@
 			   LAST_INSERT_ID())
 	</insert>
 	
+	<!-- 게시글 상세보기 -->
 	<select id="findById" parameterType="int" resultType="com.korea.project.vo.board.BoardVO">
 		SELECT
 			B.BOARD_TITLE,
@@ -222,6 +223,17 @@
 		JOIN `USER` U ON B.USER_IDX = U.user_idx
 		WHERE B.BOARD_IDX = #{boardIdx}
 	</select>
+	
+	<!-- 조회수 카운팅해서 올리기 -->
+	<update id="viewCount" parameterType="int">
+		UPDATE BOARD SET BOARD_VIEW = BOARD_VIEW +1 WHERE BOARD_IDX =#{board_idx}
+	</update>
+	
+	<update id="boardUpdate" parameterType="int">
+		UPDATE BOARD SET
+		REDHIT = READHIT _1
+		WHERE BOARD_IDX = #{boardIdx}
+	</update>
 	
 	
 	

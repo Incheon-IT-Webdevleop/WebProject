@@ -37,9 +37,11 @@ public class BoardController {
 			nowPage = params.getNowpage();
 		}
 		params.setNowpage(nowPage);
-		PagingResponse<BoardVO> response = boardService.findBoardList(params);
+		PagingResponse<BoardListResponse> response = boardService.findBoardList(params);
 		System.out.println("짜잔: " + response.getList().size());
 		model.addAttribute("response",response);
+		
+		
 		return "board/boardList";
  	}
 	
@@ -59,12 +61,26 @@ public class BoardController {
 		return new RedirectView("list");
 	}
 	
+	//게시글 삭제하기
+//	@PostMapping("del")
+//	public String delPost(@RequestParam int boardIdx) {
+//		boardService.delPost(boardIdx);
+//		if(type == 0) {
+//			
+//		}
+//		return "redirect:/board/list";
+//	}
+//	
 	//게시글 상세 페이지
 	@GetMapping("view")
 	public String openBoardView(@RequestParam int boardIdx, Model model) {
 		//id는  findBoardById 쿼리의 WHERER조건으로 사용되는 게시글 번호임
 		BoardVO vo = boardService.findById(boardIdx);
 		model.addAttribute("vo",vo);
+		
+		//조회수 올려주기
+		boardService.viewCount(boardIdx);
+		
 		return "board/boardView";
 	}
 	

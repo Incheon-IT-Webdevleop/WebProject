@@ -48,9 +48,11 @@
 		
 		
 		<!-- 게시글 작성하기 버튼 -->
-		<div>
-			<button type="button" onclick="location.href='/board/register'"> 글쓰기 </button>
-		</div>
+		<!-- 로그인이 되어있을 때 버튼이 보임 -->
+		<div id="writeButtonContainer" style="display: none;">
+                <button type="button" onclick="location.href='/board/register'">글쓰기</button>
+        </div>
+		
 		
 		
 		
@@ -115,13 +117,12 @@
 	/*<![CDATA[*/
 	/* document.addEventListener("DOMContentLoaded", (event) =>{ */
 		
+		//페이지가 로드 되었을 때, 한 번만 함수를 실행
 		window.onload = () => {
-			//페이지가 로드 되었을 때, 한 번만 함수를 실행
 			findBoardList();
 		}
 		
-		
-		
+
 
 		//대분류(업종) 요소 가져오기
 		const sectorCategoryOption = document.getElementById("sectorCategory").value;
@@ -250,7 +251,7 @@
 					<tr>
 						<td>${row.boardIdx}</td>
 						<td><a href="/board/view?boardIdx=${row.boardIdx}">${row.boardTitle}</a></td>
-						<td>${row.boardNickname}</td>
+						<td>${row.userNickname}</td>
 						<td>${row.boardWriteDate}</td>
 						<td>${row.boardView}</td>
 					</tr>

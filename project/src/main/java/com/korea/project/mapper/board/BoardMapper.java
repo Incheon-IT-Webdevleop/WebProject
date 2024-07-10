@@ -5,19 +5,22 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.korea.project.dto.board.BoardListRequest;
+import com.korea.project.dto.board.BoardListResponse;
 import com.korea.project.vo.board.BoardVO;
 
 @Mapper
 public interface BoardMapper {
 
 	//게시판 조회
-	public List<BoardVO> findAll(BoardListRequest params);
+	public List<BoardListResponse> findAll(BoardListRequest params);
 //    List<BoardVO> selectAll();
 
 	
 	//게시글 수 카운팅
 	int boardCount(BoardListRequest params);
 	
+	//게시글 조회수 카운팅
+	public int viewCount(int boardIdx);
 
 	//게시글 목록 추가
     void insert(BoardVO boardVO);
