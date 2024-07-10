@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>유저 리스트</h1>
+ <table>
+       <thead>
+           <tr>
+               <th>아이디</th>
+               <th>닉네임</th>
+               <th>이름</th>
+               <th>이메일</th>
+               <th>상태</th>
+           </tr>
+       </thead>
+       <tbody>
+           <tr th:each="user : ${users}">
+               <td th:text="${user.userId}"></td>
+               <td th:text="${user.userNickname}"></td>
+               <td th:text="${user.userName}"></td>
+               <td th:text="${user.userEmail}"></td>
+               <td th:text="${user.userDel == 0 ? '현재 활동중' : '탈퇴한 회원'}"></td>
+               <td>
+               <a th:href="@{/admin/user/delete/{id}(id=${user.userIdx})}" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+               </td>
+           </tr>
+       </tbody>
+   </table>
+</body>
+</html>
