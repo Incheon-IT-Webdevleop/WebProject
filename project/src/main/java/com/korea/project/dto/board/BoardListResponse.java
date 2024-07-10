@@ -10,6 +10,7 @@ public class BoardListResponse {
 					   boardTitle,
 					   userNickname,
 					   boardWriteDate;
+						
 					   
 					
 }

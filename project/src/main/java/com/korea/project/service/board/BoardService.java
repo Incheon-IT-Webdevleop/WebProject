@@ -14,10 +14,11 @@ public interface BoardService {
 	
 	
 	//게시글 조회 
-	public PagingResponse<BoardVO> findBoardList(final BoardListRequest params);
+	public PagingResponse<BoardListResponse> findBoardList(final BoardListRequest params);
 	//public List<BoardVO> getList();
 	
-	
+	//게시글 조회수 증가
+	public int viewCount(int boardIdx);
 	
 	//게시글 추가
     public void register(BoardVO boardVO);
@@ -29,7 +30,7 @@ public interface BoardService {
     //특정 게시글의 상세점보를 담은 게시글의 응답 개체
     //params id = PK
     //@return = 게시글 상세정보
-	public PagingResponse<BoardVO> findBoardPost(final BoardListRequest params);
+//	public PagingResponse<BoardVO> findBoardPost(final BoardListRequest params);
 	
 	public BoardVO findById(int boardIdx);
 	
