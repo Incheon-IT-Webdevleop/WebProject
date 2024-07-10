@@ -3,11 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <title>상권분석 게시판</title>
+<link rel="stylesheet" href="/css/header.css" />
 <link rel="stylesheet" href="/css/board/list.css">	
 </head>
 <body>
 	
-	 <th:block layout:fragment="content">
+	<div th:replace="fragments/header :: header"></div>
+	<th:block layout:fragment="content">
 	<div class="board1">
 		<h1>상권분석 게시판</h1>
 		
