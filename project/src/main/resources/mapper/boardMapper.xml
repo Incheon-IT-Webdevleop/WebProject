@@ -14,7 +14,7 @@
 		ON U.USER_NICKNAME = B.USER_IDX
 		WHERE B.BOARD_DEL = 0-->
 	<!-- 게시글 목록 검색 필터 -->
-	<select id="findAll" parameterType="com.korea.project.dto.board.BoardListRequest" resultType="com.korea.project.dto.board.BoardListResponse">
+	<select id="findAll" parameterType="com.korea.project.dto.board.BoardListRequest" resultType="com.korea.project.dto.board.BoardResponse">
 		SELECT B.BOARD_IDX,
 			   B.BOARD_TITLE,
 			   U.USER_NICKNAME,
@@ -197,7 +197,7 @@
 					      board_write_date, 
 					      board_view,
 					      ref)
-		values(1,
+		values(#{userIdx},
 			   #{boardSectors},
 			   #{boardBigArea},
 			   #{boardSmallArea},
@@ -207,15 +207,17 @@
 			   CURRENT_TIMESTAMP,
 			   #{boardView},
 			   LAST_INSERT_ID())
+		
 	</insert>
 	
 	<!-- 게시글 상세보기 -->
-	<select id="findById" parameterType="int" resultType="com.korea.project.vo.board.BoardVO">
+	<select id="findById" parameterType="int" resultType="com.korea.project.dto.board.BoardResponse">
 		SELECT
 			B.BOARD_TITLE,
 			B.BOARD_SECTORS,
 			B.BOARD_BIG_AREA,
 			B.BOARD_SMALL_AREA,
+			B.USER_IDX, 
 			U.USER_NICKNAME,
 			B.BOARD_WRITE_DATE,
 			B.BOARD_CONTENT

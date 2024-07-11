@@ -49,8 +49,8 @@
 		
 		<!-- 게시글 작성하기 버튼 -->
 		<!-- 로그인이 되어있을 때 버튼이 보임 -->
-		<div id="writeButtonContainer" style="display: none;">
-                <button type="button" onclick="location.href='/board/register'">글쓰기</button>
+		<div th:if="${session.user}" id="writeButtonContainer">
+        	<button type="button" onclick="location.href='/board/register'">글쓰기</button>
         </div>
 		
 		

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.korea.project.dao.board.BoardDAO;
 import com.korea.project.dao.user.UserDAO;
 import com.korea.project.dto.board.BoardListRequest;
-import com.korea.project.dto.board.BoardListResponse;
+import com.korea.project.dto.board.BoardResponse;
 import com.korea.project.dto.board.Pagination;
 import com.korea.project.dto.board.PagingResponse;
 import com.korea.project.dto.user.FindRequestDTO;
@@ -186,7 +186,7 @@ public class UserServiceImpl implements UserService{
 		 * @return PaginResponse<BoardVO>
 		 */
 		@Override
-		public PagingResponse<BoardListResponse> myPost(BoardListRequest params, SessionUserDTO user) {
+		public PagingResponse<BoardResponse> myPost(BoardListRequest params, SessionUserDTO user) {
 	  		int nowPage = 1;
 	  		System.out.println("con nowPage : " + params.getNowpage());
 	  		if(params.getNowpage() != 0) {
@@ -205,7 +205,7 @@ public class UserServiceImpl implements UserService{
 			params.setPagination(pagination);
 
 			//계산된 페이지 정보의 일부(limitStart, recordSize)를 기준으로 리스트 데이터 조회 후 반환
-			List<BoardListResponse> list = boardDAO.findBoardList(params);
+			List<BoardResponse> list = boardDAO.findBoardList(params);
 			return  new PagingResponse<>(list, pagination);
 		}
 		

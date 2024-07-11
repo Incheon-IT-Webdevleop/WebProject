@@ -14,30 +14,40 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.korea.project.dto.board.BoardListRequest;
-import com.korea.project.dto.board.BoardListResponse;
+import com.korea.project.dto.board.BoardResponse;
 import com.korea.project.dto.board.PagingResponse;
 import com.korea.project.mapper.board.BoardMapper;
 import com.korea.project.service.board.BoardService;
 import com.korea.project.vo.board.BoardVO;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board/*")
+@Slf4j
 public class BoardController {
 	final BoardService boardService;
+	final private HttpSession session;
 	
 	//게시글 목록 보여주기
 	@GetMapping("list")
 	public String list(@ModelAttribute("params") final BoardListRequest params, Model model) {
+		//로그인 여부에따라 글쓰기 버튼
+		
+		
+		
+		
+		//페이지 수
 		int nowPage = 1;
 		System.out.println("con nowPage : " + params.getNowpage());
 		if(params.getNowpage() != 0) {
 			nowPage = params.getNowpage();
 		}
 		params.setNowpage(nowPage);
-		PagingResponse<BoardListResponse> response = boardService.findBoardList(params);
+		PagingResponse<BoardResponse> response = boardService.findBoardList(params);
 		System.out.println("짜잔: " + response.getList().size());
 		model.addAttribute("response",response);
 		
@@ -48,13 +58,21 @@ public class BoardController {
 	//게시글 추가하기
 	@GetMapping("register")
 	public String insert(Model model) {
+		
+		if(session.getAttribute("user")== null) {
+			return "redirect:/access-denied";
+		}
 		model.addAttribute("vo", new BoardVO());
 		
 		return "board/boardInsert";
 	}
+	
 	@PostMapping("register")
 	public RedirectView insert(BoardVO boardVO) {
 	System.out.println(boardVO.getBoardSectors());
+		
+		log.info("게시글 정보 :" + boardVO);
+		
 		boardService.register(boardVO);
 		
 		
@@ -75,7 +93,7 @@ public class BoardController {
 	@GetMapping("view")
 	public String openBoardView(@RequestParam int boardIdx, Model model) {
 		//id는  findBoardById 쿼리의 WHERER조건으로 사용되는 게시글 번호임
-		BoardVO vo = boardService.findById(boardIdx);
+		BoardResponse vo = boardService.findById(boardIdx);
 		model.addAttribute("vo",vo);
 		
 		//조회수 올려주기
