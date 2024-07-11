@@ -12,22 +12,22 @@ spring:
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
       jdbc-url: jdbc:mysql://localhost:3306/project?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
-      username: my_user
-      password: 1111
+      username: ${db_userName}
+      password: ${db_userPwd}
 
   security:
     oauth2:
       client:
         registration:
-#          google:
-#            client-id: 
-#            client-secret: 
-#            scope:
-#              - email
-#              - profile
+          google:
+            client-id: ${google_id}
+            client-secret: ${google_pwd}
+            scope:
+              - email
+              - profile
           naver:
-            client-id: W8OYQZbT5uuydUIobDWQ
-            client-secret: EitqxVfGX1
+            client-id: ${naver_id}
+            client-secret: ${naver_pwd}
             scope:
               - name
               - email
