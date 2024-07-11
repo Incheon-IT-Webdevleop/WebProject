@@ -64,8 +64,7 @@ public class UserMappingController {
     	if(user == null ) {
     		return "redirect:/access-denied";
     	}
-    	if(!userService.selectBySession(user).getProvider().isEmpty() || 
-    			userService.selectBySession(user).getProvider().equals("전체")) {
+    	if(userService.selectBySession(user).getProvider() != null) {
     		return "redirect:/user/mypage";
     	}
     	
@@ -83,25 +82,32 @@ public class UserMappingController {
     		
     	UserVO vo = userService.selectBySession(user);
     	model.addAttribute("user", vo);
+    	
 		return "user/mypage/myPageMain";
     }
     
     // 마이페이지의 비밀번호 변경 페이지
     @GetMapping("/user/mypage/change-pwd")
-    public String myPageResetPwd() {
+    public String myPageResetPwd(Model model) {
+    	
+    	SessionUserDTO user = (SessionUserDTO)session.getAttribute("user");
     	
     	if(session.getAttribute("user") == null ) {
     		return "redirect:/access-denied";
     	}
+    	UserVO vo = userService.selectBySession(user);
+    	model.addAttribute("user", vo);
+    	
     	return "user/mypage/changePwdPage";
     }
     
     // 마이페이지의 탈퇴 페이지
     @GetMapping("/user/mypage/withdrawal")
-    public String myPageCacel(
-    		@SessionAttribute(value = "user", required = false) SessionUserDTO user
-    		,Model model) {
-    	if(session.getAttribute("user") == null ) {
+    public String myPageCacel(Model model) {
+    	
+    	SessionUserDTO user = (SessionUserDTO)session.getAttribute("user");
+    	
+    	if(user == null ) {
     		return "redirect:/access-denied";
     	}
     	UserVO vo = userService.selectBySession(user);
@@ -114,10 +120,10 @@ public class UserMappingController {
   	@GetMapping("/user/mypage/my-post")
   	public String list(
   			@ModelAttribute("params") final BoardListRequest params,
-  			@SessionAttribute(value = "user", required = false) SessionUserDTO user,
   			Model model) {
-  		
-  		if(session.getAttribute("user") == null ) {
+  		SessionUserDTO user = (SessionUserDTO)session.getAttribute("user");
+  		UserVO vo = userService.selectBySession(user);
+  		if(user == null ) {
     		return "redirect:/access-denied";
     	}
   		
@@ -125,6 +131,7 @@ public class UserMappingController {
   		
 
   		model.addAttribute("response",res);
+  		model.addAttribute("user", vo);
   		return "user/mypage/myPost";
    	}
 

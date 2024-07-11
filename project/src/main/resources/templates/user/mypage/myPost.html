@@ -6,8 +6,9 @@
 	<link rel="stylesheet" th:href="@{/css/user/myPost.css}">	
 </head>
 <body>
-	<div th:replace="fragments/header :: header"></div>
-  	<div th:replace="/fragments/sidebar :: sidebar"></div>
+	<!-- boardList.html에서 사용된 fragment 호출 -->
+	<div th:replace="~{fragments/header :: header}"></div>
+  	<div th:replace="~{fragments/sidebar :: sidebar}"></div>
 	<div class="board1">
 		<h1>내 게시글 보기</h1>
 		
@@ -167,7 +168,7 @@
 					<tr>
 						<td>${row.boardIdx}</td>
 						<td>${row.boardTitle}</td>
-						<td>${row.boardNickname}</td>
+						<td>${row.userNickname}</td>
 						<td>${row.boardWriteDate}</td>
 						<td>${row.boardView}</td>
 					</tr>
