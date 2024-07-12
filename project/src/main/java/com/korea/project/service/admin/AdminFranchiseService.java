@@ -1,41 +1,25 @@
 package com.korea.project.service.admin;
 
-import com.korea.project.mapper.franchise.FranchiseMapper;
 import com.korea.project.vo.franchise.FranchiseVO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-@Transactional
-public class AdminFranchiseService {
+public interface AdminFranchiseService {
 
-    private final FranchiseMapper franchiseMapper;
+    FranchiseVO getFranchiseById(int id);
 
-    @Autowired
-    public AdminFranchiseService(FranchiseMapper franchiseMapper) {
-        this.franchiseMapper = franchiseMapper;
-    }
+    void addFranchise(FranchiseVO franchise);
 
-    public List<FranchiseVO> getAllFranchises() {
-        return franchiseMapper.selectAllFranchises();
-    }
+    void updateFranchise(FranchiseVO franchise);
 
-    public FranchiseVO getFranchiseById(int id) {
-        return franchiseMapper.selectFranchiseById(id);
-    }
+    void deleteFranchise(int id);
+    
+    List<FranchiseVO> searchFranchisesByName(String name,int offset, int limit);
 
-    public void addFranchise(FranchiseVO franchise) {
-        franchiseMapper.insertFranchise(franchise);
-    }
+    int countAllFranchises();
+    int countFranchisesByName(String name);
 
-    public void updateFranchise(FranchiseVO franchise) {
-        franchiseMapper.updateFranchise(franchise);
-    }
+	List<FranchiseVO> selectAllFranchisesPaged(int offset, int pageSize);
 
-    public void deleteFranchise(int id) {
-        franchiseMapper.deleteFranchise(id);
-    }
+
 }
