@@ -4,14 +4,14 @@
     <meta charset="UTF-8" />
     <title>Franchise List</title>
 
-    <link rel="stylesheet" href="/css/franchise.css" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/franchise/franchise.css}" />
     <link rel="stylesheet" href="/css/header.css" />
     <script>
         function handleSearch(event) {
             var searchInput = document.getElementById('searchInput');
             if (searchInput.value.trim() === '') {
-                event.preventDefault(); // 폼 제출을 막습니다
-                alert('검색어를 입력해주세요.'); // 예시로 경고창을 띄웁니다
+                event.preventDefault();
+                alert('검색어를 입력해주세요.');
             }
         }
     </script>

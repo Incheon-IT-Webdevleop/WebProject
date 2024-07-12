@@ -19,12 +19,14 @@ public class AdminUserController {
     private final AdminUserService adminUserService;
     //유저 리스트 불러오기
     @GetMapping("/admin/user/list")
+    @PreAuthorize("hasRole('ADMIN')")
     public String listUsers(Model model) {
         model.addAttribute("users", adminUserService.getAllUsers());
         return "admin/adminUser/userlist";
     }
     // 유저 삭제 처리
     @GetMapping("/admin/user/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteUser(@PathVariable("id") int userIdx, RedirectAttributes redirectAttributes) {
         boolean success = adminUserService.deleteUser(userIdx);
         if (success) {
