@@ -42,17 +42,15 @@
 			</section>
 		</div>
 		
-		      <!-- 수정하기 -->
+		<!-- 수정하기 -->
         <div th:if="${session.user != null && vo.userIdx == session.user.userIdx}">
-        <button type="button" th:onclick="'location.href=\'' + @{/board/update(boardIdx=${vo.boardIdx})} + '\''">수정</button>
-        	<!-- <input type="submit" value="수정하기"> -->
+        <button type="button" th:onclick="'location.href=\'' + @{/board/update(boardIdx=${vo.boardIdx},boardCategory=${vo.boardCategory})} + '\''">수정</button>
         </div>
         
         
         <!-- 삭제하기 -->
         <div th:if="${session.user != null && vo.userIdx == session.user.userIdx}">
         	<button type="button" onclick="delPost();">삭제하기</button>
-        	<!-- <input type="submit" value="삭제하기"> -->
         </div>
         
 	</th:block >

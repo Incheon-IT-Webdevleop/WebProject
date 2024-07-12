@@ -100,6 +100,7 @@
 		from board 
 		
 		WHERE board_del = 0
+		AND(BOARD_CATEGORY = #{boardCategory})
 		
 		<choose>
             <when test="boardBigArea == null">
@@ -219,6 +220,7 @@
 	<!-- 게시글 상세보기 -->
 	<select id="findById" parameterType="int" resultType="com.korea.project.dto.board.BoardResponse">
 		SELECT
+			B.BOARD_CATEGORY,
 			B.BOARD_IDX,
 			B.BOARD_TITLE,
 			B.BOARD_SECTORS,
@@ -243,7 +245,8 @@
 	<!-- 게시글 수정 -->
 	<update id="updateBoard" parameterType="com.korea.project.dto.board.BoardResponse">
 		UPDATE BOARD
-		SET BOARD_TITLE = #{boardTitle},
+		SET BOARD_CATEGORY = #{boardCategory},
+			BOARD_TITLE = #{boardTitle},
 			BOARD_SECTORS = #{boardSectors},
 			BOARD_BIG_AREA = #{boardBigArea},
 			BOARD_SMALL_AREA = #{boardSmallArea},
