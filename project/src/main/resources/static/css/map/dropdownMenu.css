@@ -1,10 +1,8 @@
 .dropdown {
     position: relative;
-    display: inline-block;
+    display: block;
     width: 100%;
-	overflow-wrap: normal;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-	border: 1.5px solid #dbdbdb;
 	border-radius: 10px;
 }
 
@@ -29,10 +27,8 @@
 
 .region-dropdown-btn {
 	border-radius: 10px 10px 0px 0px;
-	border-top: 1.5px solid #dbdbdb ;
-	border-left: 1.5px solid #dbdbdb ;
-	border-right: 1.5px solid #dbdbdb ;
 }
+
 
 .region-dropdown-btn:hover .locationPin,
 .region-dropdown-btn:hover .locationText, 
@@ -57,7 +53,7 @@
 
 .industry-dropdown-btn {
 	border-radius: 0px 0px 10px 10px;
-	border: 2px solid #dbdbdb ;
+	border-top: 1px solid #dbdbdb;
 }
 
 .dropdown-content {
@@ -65,6 +61,7 @@
     background-color: #ffffff;
 	width: 100%;
 	box-sizing: border-box;
+	
 }
 
 .regionDropdown-section, .industryDropdown-section {
@@ -98,9 +95,6 @@
     margin: 0;
 }
 
-#sido-code > li, #sigoon-code > li, #dong-code > li {
-	border: 1px solid dodgerblue;
-}
 
 .dropdown-content ul li {
     padding: 12px 12px;
@@ -123,12 +117,18 @@
 }
 
 .gridrow-3 li {
-    padding: 5px;
+    padding: 7px;
 	color: black; /* 폰트 컬러 */
     background-color: #ffffff; /* 항목 배경색 */
     border: 1px solid #ddd; /* 항목 테두리 */
     text-align: center; /* 텍스트 중앙 정렬 */
 }
+
+.industryList {
+	height: 400px;
+}
+
+
 
 .category-selector {
 	display: flex;
@@ -140,4 +140,24 @@
 	font-size: 12px;
 	font-weight: 700;
 	border-bottom: 1px solid #dddddd;
+}
+
+#sido_code, #sigoon_code, #dong_code {
+	max-height: 450px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+/* 스크롤바의 폭 너비 */
+.scrollbar::-webkit-scrollbar {
+    width: 10px;  
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background: #d72828; /* 스크롤바 색상 */
+    border-radius: 10px; /* 스크롤바 둥근 테두리 */
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    background: #d72828;  /*스크롤바 뒷 배경 색상*/
 }
