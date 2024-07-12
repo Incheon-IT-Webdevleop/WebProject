@@ -36,7 +36,7 @@ public class BoardServiceImpl implements BoardService{
 		System.out.println("count : " +count);
 		if(count < 1) {
 			System.out.println("얜가?");
-			return new PagingResponse<>(Collections.emptyList(), null);
+			return new PagingResponse<>(Collections.emptyList(), new Pagination());
 		}
 		
 		//Pagination 객체를 생성해서 페이지 정보 계산 후 params에 계산된 페이지 정보 

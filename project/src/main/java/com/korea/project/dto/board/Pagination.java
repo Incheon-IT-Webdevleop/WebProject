@@ -15,6 +15,9 @@ public class Pagination {
 	private boolean existPrevPage,//이전 페이지 존재 여부
 				    existNextPage;//다음 페이지 존재 여부
 	
+	public Pagination() {
+		
+	}
 	
 	//전체 데이터 수 계산하는 pagination
 	public Pagination(int totalRecordCount, BoardListRequest params) {
