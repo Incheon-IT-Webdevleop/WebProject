@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.korea.project.dto.board.BoardListRequest;
+import com.korea.project.dto.board.BoardResponse;
 import com.korea.project.dto.board.PagingResponse;
 import com.korea.project.dto.user.SessionUserDTO;
 import com.korea.project.service.board.BoardServiceImpl;
@@ -27,6 +28,7 @@ public class UserMappingController {
 	private final UserServiceImpl userService;
 	private final BoardServiceImpl boardService;
 	private final HttpSession session;
+	
 	
 //	@GetMapping("/user/index")
 //	public String index() {
@@ -56,8 +58,14 @@ public class UserMappingController {
     // 마이페이지 들어가기 전 비밀번호 확인 페이지
     @GetMapping("user/pwd-check")
     public String pwdCheckPage(	) {
-    	if(session.getAttribute("user") == null ) {
+    	
+    	SessionUserDTO user = (SessionUserDTO)session.getAttribute("user");
+    	
+    	if(user == null ) {
     		return "redirect:/access-denied";
+    	}
+    	if(userService.selectBySession(user).getProvider() != null) {
+    		return "redirect:/user/mypage";
     	}
     	
     	return "user/pwdCheckPage";
@@ -65,32 +73,41 @@ public class UserMappingController {
     
     // 마이페이지의 메인
     @GetMapping("/user/mypage")
-	public String myPageMain(@SessionAttribute(value = "user", required = false) SessionUserDTO user,
-    							 Model model) {
+	public String myPageMain(Model model) {
+    	SessionUserDTO user = (SessionUserDTO)session.getAttribute("user");
+    	
 		if(user == null) {
 			return "redirect:/access-denied"; 
 		}
     		
     	UserVO vo = userService.selectBySession(user);
     	model.addAttribute("user", vo);
+    	
 		return "user/mypage/myPageMain";
     }
     
     // 마이페이지의 비밀번호 변경 페이지
     @GetMapping("/user/mypage/change-pwd")
-    public String myPageResetPwd() {
+    public String myPageResetPwd(Model model) {
+    	
+    	SessionUserDTO user = (SessionUserDTO)session.getAttribute("user");
+    	
     	if(session.getAttribute("user") == null ) {
     		return "redirect:/access-denied";
     	}
+    	UserVO vo = userService.selectBySession(user);
+    	model.addAttribute("user", vo);
+    	
     	return "user/mypage/changePwdPage";
     }
     
     // 마이페이지의 탈퇴 페이지
     @GetMapping("/user/mypage/withdrawal")
-    public String myPageCacel(
-    		@SessionAttribute(value = "user", required = false) SessionUserDTO user
-    		,Model model) {
-    	if(session.getAttribute("user") == null ) {
+    public String myPageCacel(Model model) {
+    	
+    	SessionUserDTO user = (SessionUserDTO)session.getAttribute("user");
+    	
+    	if(user == null ) {
     		return "redirect:/access-denied";
     	}
     	UserVO vo = userService.selectBySession(user);
@@ -103,17 +120,18 @@ public class UserMappingController {
   	@GetMapping("/user/mypage/my-post")
   	public String list(
   			@ModelAttribute("params") final BoardListRequest params,
-  			@SessionAttribute(value = "user", required = false) SessionUserDTO user,
   			Model model) {
-  		
-  		if(session.getAttribute("user") == null ) {
+  		SessionUserDTO user = (SessionUserDTO)session.getAttribute("user");
+  		UserVO vo = userService.selectBySession(user);
+  		if(user == null ) {
     		return "redirect:/access-denied";
     	}
   		
-  		PagingResponse<BoardVO> res = userService.myPost(params, user);
+  		PagingResponse<BoardResponse> res = userService.myPost(params, user);
   		
 
   		model.addAttribute("response",res);
+  		model.addAttribute("user", vo);
   		return "user/mypage/myPost";
    	}
 

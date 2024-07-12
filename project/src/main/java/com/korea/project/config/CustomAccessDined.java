@@ -17,6 +17,6 @@ public class CustomAccessDined extends AccessDeniedHandlerImpl{
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
 		
 		
-		response.sendRedirect("/acces-denied");
+		response.sendRedirect("/access-denied");
 	}
 }

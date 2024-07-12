@@ -10,6 +10,7 @@ public class Pagination {
 				startPage,		  //첫 페이지 번호
 				endPage,		  //끝 페이지 번호
 				limitStart,		  //limit시작 위치 
+				boardCategory, //게시판 종류
 				nowPage;
 	private boolean existPrevPage,//이전 페이지 존재 여부
 				    existNextPage;//다음 페이지 존재 여부

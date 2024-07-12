@@ -14,16 +14,18 @@
 		ON U.USER_NICKNAME = B.USER_IDX
 		WHERE B.BOARD_DEL = 0-->
 	<!-- 게시글 목록 검색 필터 -->
-	<select id="findAll" parameterType="com.korea.project.dto.board.BoardListRequest" resultType="com.korea.project.dto.board.BoardListResponse">
+	<select id="findAll" parameterType="com.korea.project.dto.board.BoardListRequest" resultType="com.korea.project.dto.board.BoardResponse">
 		SELECT B.BOARD_IDX,
 			   B.BOARD_TITLE,
 			   U.USER_NICKNAME,
 			   B.BOARD_WRITE_DATE,
-			   B.BOARD_VIEW
+			   B.BOARD_VIEW,
+			   B.BOARD_CATEGORY
 		FROM BOARD B
 		JOIN `USER` U ON B.USER_IDX = U.user_idx
 		<!-- JOIN "USER" U ON B.USER_IDX = U.USER_IDX -->
 		WHERE B.board_del = 0
+		AND(B.BOARD_CATEGORY = #{boardCategory})
 		
 <!-- 		<if test="boardBigArea != null">
 		    AND (B.BOARD_BIG_AREA = #{boardBigArea} OR B.BOARD_BIG_AREA = '전체')
@@ -39,6 +41,10 @@
 		    AND (B.BOARD_SECTORS = #{boardSectors} OR B.BOARD_SECTORS = 6)
 		</if> 
 		 -->
+
+				
+
+		 
 		
 		<choose>
             <when test="boardBigArea == null">
@@ -197,24 +203,28 @@
 					      board_write_date, 
 					      board_view,
 					      ref)
-		values(1,
+		values(#{userIdx},
 			   #{boardSectors},
 			   #{boardBigArea},
 			   #{boardSmallArea},
 			   #{boardTitle},
-			   0,
+			   #{boardCategory},
 			   #{boardContent},
 			   CURRENT_TIMESTAMP,
 			   #{boardView},
 			   LAST_INSERT_ID())
+		
 	</insert>
 	
-	<select id="findById" parameterType="int" resultType="com.korea.project.vo.board.BoardVO">
+	<!-- 게시글 상세보기 -->
+	<select id="findById" parameterType="int" resultType="com.korea.project.dto.board.BoardResponse">
 		SELECT
+			B.BOARD_IDX,
 			B.BOARD_TITLE,
 			B.BOARD_SECTORS,
 			B.BOARD_BIG_AREA,
 			B.BOARD_SMALL_AREA,
+			B.USER_IDX, 
 			U.USER_NICKNAME,
 			B.BOARD_WRITE_DATE,
 			B.BOARD_CONTENT
@@ -222,6 +232,36 @@
 		JOIN `USER` U ON B.USER_IDX = U.user_idx
 		WHERE B.BOARD_IDX = #{boardIdx}
 	</select>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="delPost" parameterType="int">
+		UPDATE BOARD
+		SET BOARD_DEL = -1
+		WHERE BOARD_IDX = #{boardIdx}
+	</delete>
+	
+	<!-- 게시글 수정 -->
+	<update id="updateBoard" parameterType="com.korea.project.dto.board.BoardResponse">
+		UPDATE BOARD
+		SET BOARD_TITLE = #{boardTitle},
+			BOARD_SECTORS = #{boardSectors},
+			BOARD_BIG_AREA = #{boardBigArea},
+			BOARD_SMALL_AREA = #{boardSmallArea},
+			BOARD_CONTENT = #{boardContent}
+		WHERE BOARD_IDX = #{boardIdx}
+	</update>
+	
+	
+	<!-- 조회수 카운팅해서 올리기 -->
+	<update id="viewCount" parameterType="int">
+		UPDATE BOARD SET BOARD_VIEW = BOARD_VIEW +1 WHERE BOARD_IDX =#{board_idx}
+	</update>
+	
+	<update id="boardUpdate" parameterType="int">
+		UPDATE BOARD SET
+		REDHIT = READHIT _1
+		WHERE BOARD_IDX = #{boardIdx}
+	</update>
 	
 	
 	

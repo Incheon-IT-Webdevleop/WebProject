@@ -26,7 +26,6 @@
             <span class="category-btn-text">카페 · 디저트</span>
         </a>
     </div>
-
     <div class="category-btn">
         <a th:href="@{/franchises(sector=1)}">
             <span class="category-btn-text">음식점 · 주점</span>
@@ -58,24 +57,23 @@
     <div th:if="${not #lists.isEmpty(franchises)}">
         <div class="grid-container">
             <div th:each="franchise : ${franchises}" class="franchise-card">
-            
-                <div class="card-img">
-                    <a th:href="@{'/franchiseboard?id=' + ${franchise.franchiseIdx}}"></a>
-                
-                    <img th:src="${franchise.franchiseImg}" alt="Franchise Image">
-                </div>
-                <div class="text-box">
-                    <p th:text="${franchise.franchiseTitle}" class="card-title">Franchise Title</p>
-                    <p class="category-text"
-                       th:text="${franchise.franchiseSectors == 0 ? '카페 · 디저트' :
-                                    franchise.franchiseSectors == 1 ? '음식점 · 주점' :
-                                    franchise.franchiseSectors == 2 ? '치킨 · 피자' :
-                                    franchise.franchiseSectors == 3 ? '분식 · 패스트푸드' :
-                                    franchise.franchiseSectors == 4 ? '판매업' : '기타'} + ' ' + ${franchise.franchiseStores} + ' 개'">
-                        카테고리 및 매장 수
-                    </p>
-                </div>
-                
+                <!-- 전체 카드 링크로 변경 -->
+                <a th:href="@{/franchiseboard(id=${franchise.franchiseIdx})}" class="card-link">
+                    <div class="card-img">
+                        <img th:src="${franchise.franchiseImg}" alt="Franchise Image">
+                    </div>
+                    <div class="text-box">
+                        <p th:text="${franchise.franchiseTitle}" class="card-title">Franchise Title</p>
+                        <p class="category-text"
+                           th:text="${franchise.franchiseSectors == 0 ? '카페 · 디저트' :
+                                        franchise.franchiseSectors == 1 ? '음식점 · 주점' :
+                                        franchise.franchiseSectors == 2 ? '치킨 · 피자' :
+                                        franchise.franchiseSectors == 3 ? '분식 · 패스트푸드' :
+                                        franchise.franchiseSectors == 4 ? '판매업' : '기타'} + ' ' + ${franchise.franchiseStores} + ' 개'">
+                            카테고리 및 매장 수
+                        </p>
+                    </div>
+                </a>
             </div>
         </div>
 

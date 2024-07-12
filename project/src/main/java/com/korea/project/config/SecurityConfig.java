@@ -13,6 +13,8 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
@@ -76,10 +78,6 @@ public class SecurityConfig {
         return new Oauth2AuthenticationFailureHandler();
     }
     
-    @Bean
-    public ClientRegistrationRepository clientRegistrationRepository() {
-        return new InMemoryClientRegistrationRepository(this.naverClientRegistration());
-    }
     
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
@@ -120,9 +118,9 @@ public class SecurityConfig {
                 .permitAll()
         )
         .oauth2Login((auth) -> auth.loginPage("/oauth-login/login")
+        		.userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
+                        .userService(customOAuth2UserService))
         		.successHandler(customSuccessHandler)
-//        		.userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
-//                        .userService(customOAuth2UserService))
                 .failureUrl("/login")
                 .permitAll())
         .logout(logout -> logout
@@ -148,21 +146,10 @@ public class SecurityConfig {
     	return http.build();
     }
     
-    private ClientRegistration naverClientRegistration() {
-        return ClientRegistration.withRegistrationId("naver")
-                .clientId("W8OYQZbT5uuydUIobDWQ")
-                .clientSecret("EitqxVfGX1")
-                .scope("name", "email", "nickname")
-                .authorizationUri("https://nid.naver.com/oauth2.0/authorize")
-                .tokenUri("https://nid.naver.com/oauth2.0/token")
-                .userInfoUri("https://openapi.naver.com/v1/nid/me")
-                .userNameAttributeName("response")
-                .clientName("Naver")
-                .redirectUri("{baseUrl}/login/oauth2/code/{registrationId}")
-                .authorizationGrantType(new AuthorizationGrantType("authorization_code"))
-                .build();
-    }
+
     
+    
+
 
     
 }

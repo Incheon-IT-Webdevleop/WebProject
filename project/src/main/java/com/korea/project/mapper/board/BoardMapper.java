@@ -5,19 +5,22 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.korea.project.dto.board.BoardListRequest;
+import com.korea.project.dto.board.BoardResponse;
 import com.korea.project.vo.board.BoardVO;
 
 @Mapper
 public interface BoardMapper {
 
 	//게시판 조회
-	public List<BoardVO> findAll(BoardListRequest params);
+	public List<BoardResponse> findAll(BoardListRequest params);
 //    List<BoardVO> selectAll();
 
 	
 	//게시글 수 카운팅
 	int boardCount(BoardListRequest params);
 	
+	//게시글 조회수 카운팅
+	public int viewCount(int boardIdx);
 
 	//게시글 목록 추가
     void insert(BoardVO boardVO);
@@ -28,8 +31,14 @@ public interface BoardMapper {
 	//게시글 페이징
 	public int count(BoardListRequest boardListRequest);
 	
+	//게시글 삭제
+	public int delPost(int boardIdx);
+	
+	//게시글 수정
+	public int updateBoard(BoardResponse boardResponse);
+	
 	//게시글 조회
-	public BoardVO findById(int boardIdx);
+	public BoardResponse findById(int boardIdx);
 
 
 }

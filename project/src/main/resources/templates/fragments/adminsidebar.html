@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Sidebar</title>
+    <link rel="stylesheet" href="/css/admin/adminstyle.css" />
+</head>
+<body>
+    <div th:fragment="header">
+        <div class="sidebar">
+            <h2>관리 메뉴</h2>
+            <ul>
+                <li><a th:href="@{/admin/user/list}">유저 관리</a></li>
+                <li><a th:href="@{/admin/franchise/list}">프랜차이즈 관리</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

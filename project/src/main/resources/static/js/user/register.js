@@ -24,6 +24,10 @@ $(document).ready(function() {
 	            checkDuplicate('id', userId);
 	        };
 	    });
+		
+	$('#userEmailLocalPart').on('blur', function(){
+		$('#userEmailDomain').focus();
+	})
 
     // 이메일 중복 검사
     $('#userEmailDomain').on('blur', function() {
@@ -31,6 +35,7 @@ $(document).ready(function() {
 		const domain = $('#userEmailDomain').val();
 		const fullEmail = localPart + domain;
 		let message = "이메일 형식이 아닙니다.";
+		$('#certification-number-container').hide();
 		
         if (fullEmail) {
 			if(!validateValue('email',fullEmail)){
@@ -41,6 +46,21 @@ $(document).ready(function() {
             checkDuplicate('email', fullEmail);
         };
     });
+	
+	// 인증번호 버튼을 눌렀을 때
+	$('#send-btn').on('click', function(){
+		if(!registerFlag['emailCheck']){
+			$('#duplication-email').text("이메일을 제대로 선택해주세요.").show();
+			return;
+		}
+		$('#duplication-email').hide();
+		$('#certification-number-container').show();
+	})
+	
+	// 인증 버튼을 눌렀을 때(이메일 인증번호 확인하기)
+	$('#confirm-btn').on('clikc', function(){
+		$.ajax
+	})
 	
 	// 닉네임 중복검사
 	$('#userNickname').on('blur', function() {
@@ -88,6 +108,8 @@ $(document).ready(function() {
 			$('pwd').focus();
 			registerFlag["passwordCheck"] = false;
 			return;
+		}else{
+			$('#check_pwd').hide();
 		};
 		registerFlag["passwordCheck"] = true;
 	});
@@ -101,6 +123,8 @@ $(document).ready(function() {
 			$(this).focus();
 			registerFlag["nameCheck"] = false;
 			return;
+		}else{
+			$('#check-name').hide();
 		}
 		registerFlag["nameCheck"] = true;
 	})

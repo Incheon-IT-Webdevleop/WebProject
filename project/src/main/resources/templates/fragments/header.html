@@ -37,13 +37,13 @@
             <a th:href="@{/franchises(sector=0)}">프랜차이즈</a>
         </li>
         <li class="mouse">
-            <a th:href="@{/board/list}" >창업후기 게시판</a>
+            <a th:href="@{/board/list?boardCategory=1}" >창업후기 게시판</a>
         </li>
         <li class="mouse">
-            <a th:href="@{/board/list}">상권분석 게시판</a>
+            <a th:href="@{/board/list?boardCategory=0}">상권분석 게시판</a>
         </li>
         <li class="mouse">
-            <a th:href="@{/map/MapViewr}">상권분석</a>
+            <a th:href="@{/map}">상권분석</a>
         </li>
     </ul>
 </header>

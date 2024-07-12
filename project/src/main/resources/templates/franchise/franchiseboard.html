@@ -1,11 +1,10 @@
-<!-- franchiseboard.html -->
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Franchise Detail</title>
     <link rel="stylesheet" href="/css/franchiseboard.css">
+    <script type="text/javascript" src="/js/franchise/franchise.js" defer></script>
 </head>
 <body>
     <div class="franchise-detail">
@@ -14,7 +13,8 @@
             <img th:src="${franchise.franchiseImg}" alt="Franchise Image">
         </div>
         <div class="franchise-description">
-            <p th:text="${franchise.franchiseAvgSales}">Franchise Description</p>
+            <p class="avg-sales" th:text="${franchise.franchiseAvgSales}">Franchise Average Sales</p>
+            <p class="startup-cost" th:text="${franchise.franchiseStartupCost}+원">Franchise Startup Cost</p>
         </div>
     </div>
 </body>

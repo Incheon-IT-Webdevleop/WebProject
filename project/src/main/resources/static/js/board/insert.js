@@ -67,5 +67,24 @@ document.addEventListener("DOMContentLoaded", (event) =>{
 		}
 	});
 	
+	
+		
+				//화면이 로드 될 때 소분류 실행시키기
+				const bigAreaCategory = document.getElementById("bigAreaCategory").value;
+				const smallAreaCategory = document.getElementById("smallAreaCategory");
+				console.log(smallAreaCategory);
+				smallAreaCategory.innerHTML = "<option value='전체' selected> 전체 </option>";  // 초기화 
+			 	
+			 	
+			    if(bigAreaCategory) {
+			        smallCategoryOption[bigAreaCategory].forEach(item => {
+			            let option = document.createElement("option");
+			            option.value = item;
+			            option.text = item;
+			            smallAreaCategory.appendChild(option);
+			        });
+			    }
+			
+	
 
 })
