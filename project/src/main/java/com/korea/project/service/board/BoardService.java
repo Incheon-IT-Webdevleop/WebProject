@@ -3,6 +3,8 @@ package com.korea.project.service.board;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.korea.project.dto.board.BoardListRequest;
 import com.korea.project.dto.board.BoardResponse;
 import com.korea.project.dto.board.PagingResponse;
@@ -33,6 +35,14 @@ public interface BoardService {
     //@return = 게시글 상세정보
 //	public PagingResponse<BoardVO> findBoardPost(final BoardListRequest params);
 	
+    
+    //게시글 삭제하기
+    public int delPost(int boardIdx);
+    
+    
+    //게시글 수정하기
+    public int updateBoard(final BoardResponse boardResponse);
+    
     //게시글 상세조회
 	public BoardResponse findById(int boardIdx);
 	

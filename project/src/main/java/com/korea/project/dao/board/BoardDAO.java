@@ -42,6 +42,16 @@ public class BoardDAO {
 //		return boardMapper.filter(boardCR);
 //	}
 	
+	//게시글 삭제하기
+	public int delPost(int boardIdx) {
+		return boardMapper.delPost(boardIdx);
+	}
+	
+	//게시글 수정하기
+	public int update(BoardResponse boardResponse) {
+		return boardMapper.updateBoard(boardResponse);
+	}
+	
 	//게시글 상세 조회하기
 	public BoardResponse findById(int boardIdx) {
 		return boardMapper.findById(boardIdx);

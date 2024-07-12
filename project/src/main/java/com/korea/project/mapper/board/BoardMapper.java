@@ -31,6 +31,12 @@ public interface BoardMapper {
 	//게시글 페이징
 	public int count(BoardListRequest boardListRequest);
 	
+	//게시글 삭제
+	public int delPost(int boardIdx);
+	
+	//게시글 수정
+	public int updateBoard(BoardResponse boardResponse);
+	
 	//게시글 조회
 	public BoardResponse findById(int boardIdx);
 

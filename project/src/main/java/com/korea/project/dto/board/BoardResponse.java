@@ -6,7 +6,8 @@ import lombok.Data;
 public class BoardResponse {
 
 		private int boardView,
-		 			userIdx;
+		 			userIdx,
+					boardCategory;
 		private String boardIdx,
 					   boardTitle,
 					   userNickname,

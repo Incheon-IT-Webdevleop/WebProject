@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.korea.project.dao.board.BoardDAO;
 import com.korea.project.dto.board.BoardListRequest;
@@ -80,6 +81,18 @@ public class BoardServiceImpl implements BoardService{
 //		return boardDAO.filter(boardListRequest);
 //	}
 	
+	//게시글 삭제
+	@Override
+	public int delPost(int boardIdx) {
+		return boardDAO.delPost(boardIdx);
+	}
+	
+	//게시글 수정
+	@Override
+	public int updateBoard(BoardResponse boardResponse) {
+		boardDAO.update(boardResponse);
+		return boardResponse.getUserIdx();
+	}
 	
 	//게시글 상세 조회
 	@Override

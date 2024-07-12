@@ -10,20 +10,25 @@
 <body>
     
     <div th:replace="fragments/header :: header"></div>
-    <h1>게시글 작성하기</h1>
+     <h3 th:text="${vo.boardIdx == 0 ? '게시글 작성' : '게시글 수정'}"></h3>
     
-    <form id="postForm" th:action="@{/board/register}" th:object="${vo}" method="post">
     
+      <form id="postForm" th:action="@{${vo.boardIdx == 0 ? '/board/register' : '/board/update'}}" th:object="${vo}" method="post">
+  	  
+     <input id="boardTitle" th:field="*{boardTitle}" placeholder="제목을 입력해주세요.">
+    	
     <!-- 제목, 카테고리 대 중 소분류, 게시글내용, 작성하기버튼, 취소하기 버튼  -->
+        
+       	<!-- boardIdx를 보내주기 위한 코드 (숨김) -->
         <div>
-            <input id="boardTitle" th:field="*{boardTitle}" placeholder="제목을 입력해주세요.">
+            <input id="boardIdx" th:field="*{boardIdx}" type="hidden">
         </div>
         <!-- 카테고리 저장해서 보내주기 -->
 
             <div id="categoryContainer">
                 <div id="sectorCategory">대분류
-                    <select name="boardSectors" id="sectorCategorySelect">
-                        <option value="6" selected> 전체 </option>
+                    <select name="boardSectors" id="sectorCategorySelect" th:field="*{boardSectors}">
+                        <option value="6"> 전체 </option>
                         <option value="1">카페/디저트</option>
                         <option value="2">음식점/주점</option>
                         <option value="3">치킨/피자</option>
@@ -33,8 +38,8 @@
                 </div><!-- 대분류 -->
                 <div>
                     <label for="bigAreaCategory">중분류</label>
-                    <select name="boardBigArea" id="bigAreaCategory">
-                        <option value="전체" selected> 전체 </option>
+                    <select name="boardBigArea" id="bigAreaCategory" th:field="*{boardBigArea}">
+                        <option value="전체"> 전체 </option>
                         <option value="서울특별시">서울특별시</option>
                         <option value="경기도">경기도</option>
                         <option value="충청북도">충청북도</option>
@@ -55,8 +60,8 @@
                 </div><!-- 중분류 -->
                 <div>
                     <label for="smallAreaCategory">소분류</label>
-                    <select name="boardSmallArea" id="smallAreaCategory">
-                        <option value="전체" selected> 전체 </option>
+                    <select name="boardSmallArea" id="smallAreaCategory" th:field="*{boardSmallArea}">
+                        <option value="전체"> 전체 </option>
                     </select>
                 </div> <!-- 소분류 -->       
             </div><!-- categoryContainer -->
@@ -66,9 +71,9 @@
         
   
         
-       	<!-- 등록하기 -->
+       	<!-- 등록하기 / 수정하기-->
         <div> 
-            <input type="submit" value="등록하기">
+             <button type="submit" th:text="${vo.boardIdx == 0 ? '작성하기' : '수정하기'}"></button>
         </div>
         
         
