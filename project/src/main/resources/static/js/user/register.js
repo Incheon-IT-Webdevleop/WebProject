@@ -4,6 +4,7 @@ $(document).ready(function() {
 	let registerFlag = {
 		"idCheck" : false,
 		"emailCheck" : false,
+		"certificationEMail" : false,
 		"nicknameCheck" : false,
 		"passwordCheck" : false,
 		"nameCheck" : false
@@ -54,14 +55,63 @@ $(document).ready(function() {
 			return;
 		}
 		$('#duplication-email').hide();
-		$('#certification-number-container').show();
+		$('.certification-number-container').show();
+		const localPart = $('#userEmailLocalPart').val();
+		const domain = $('#userEmailDomain').val();
+		const userEmail = localPart + domain;
+		$.ajax({
+           type: 'POST',
+           url: '/send-certification-email', // 서버 측 API 엔드포인트
+           contentType: 'application/json',
+           data: JSON.stringify({
+               userEmail: userEmail
+           }),
+           success: function(response) {
+               if (response.result === 'success') {
+                   $('#email-send-info').text(response.message).show()
+                   // 인증 번호 입력을 위한 UI 등을 활성화할 수 있습니다.
+               } else {
+                   alert('인증 메일 발송에 실패하였습니다.');
+               }
+           },
+           error: function(xhr, status, error) {
+               alert('서버 오류: ' + error); // 오류 발생 시 처리
+           }
+       });
 	})
 	
-	// 인증 버튼을 눌렀을 때(이메일 인증번호 확인하기)
-	$('#confirm-btn').on('clikc', function(){
-		$.ajax
-	})
 	
+	// 이메일 인증을 눌렀을 때
+	$('#confirm-btn').on('click', function() {
+			const localPart = $('#userEmailLocalPart').val();
+			const domain = $('#userEmailDomain').val();
+	        var userEmail = localPart + domain; // 사용자의 이메일 주소를 여기에 설정
+	        var certificationNumber = $('#certification-number').val(); // 사용자가 입력한 인증 번호를 여기에 설정
+			registerFlag["certificationEMail"] = false;
+			$('#duplication-email').hide();
+			$('#email-send-info').hide();
+			
+	        $.ajax({
+	            type: 'POST',
+	            url: '/verify-email', // 서버 측 API 엔드포인트
+	            contentType: 'application/json',
+	            data: JSON.stringify({
+	                userEmail: userEmail,
+	                certificationNumber: certificationNumber
+	            }),
+	            success: function(response) {
+	                if (response.result === 'success') {
+	                    registerFlag["certificationEMail"] = true;
+	                } else {
+						$('#duplication-email').html("인증번호가 다릅니다.<br>다시입력해주세요.").show();
+	                    // 인증 실패 시 할 작업
+	                }
+	            },
+	            error: function(xhr, status, error) {
+					$('#duplication-email').html("서버에 문제가 생겼습니다<br>잠시 후 시도해주세요.").show();
+	            }
+	        });
+	    });	
 	// 닉네임 중복검사
 	$('#userNickname').on('blur', function() {
 	    var userNickname = $(this).val();
@@ -225,6 +275,10 @@ $(document).ready(function() {
 	                case 'nameCheck':
 	                    $('#check-name').text('이름을 확인해 주세요.').show();
 						$('input[name="userName"]').focus();
+	                    break;
+					case 'certificationEMail':
+	                    $('#duplication-email').text('이메일 인증을 진행해주세요.').show();
+						$('#userEmailLocalPart').focus();
 	                    break;
 					
 	            }

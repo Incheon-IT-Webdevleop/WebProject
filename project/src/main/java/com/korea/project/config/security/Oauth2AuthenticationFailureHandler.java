@@ -1,4 +1,4 @@
-package com.korea.project.config;
+package com.korea.project.config.security;
 
 import java.io.IOException;
 

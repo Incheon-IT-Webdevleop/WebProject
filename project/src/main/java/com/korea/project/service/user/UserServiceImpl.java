@@ -1,12 +1,17 @@
 package com.korea.project.service.user;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.korea.project.config.mail.CertificationGenerator;
 import com.korea.project.dao.board.BoardDAO;
 import com.korea.project.dao.user.UserDAO;
 import com.korea.project.dto.board.BoardListRequest;
@@ -17,7 +22,6 @@ import com.korea.project.dto.user.FindRequestDTO;
 import com.korea.project.dto.user.RegisterRequestDTO;
 import com.korea.project.dto.user.ResetPasswordRequestDTO;
 import com.korea.project.dto.user.SessionUserDTO;
-import com.korea.project.vo.board.BoardVO;
 import com.korea.project.vo.user.UserVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -32,6 +36,9 @@ public class UserServiceImpl implements UserService{
 	private final UserDAO userDAO;
 	private final BoardDAO boardDAO;
 	private final HttpSession session;
+	private final StringRedisTemplate redisTemplate;
+	private final CertificationGenerator certificationGenerator;
+	private final JavaMailSender mailSender;
 	
 	// 세션에 등록하기 위한 아이디, 이름 조회
 		@Override
@@ -61,13 +68,15 @@ public class UserServiceImpl implements UserService{
 		
 		// 회원가입
 		@Override
-		public void register(RegisterRequestDTO vo) {
+		public void register(RegisterRequestDTO vo)  {
 			UserVO user = new UserVO();
 			user.setUserId(vo.getUserId());
 			user.setUserPwd(vo.getUserPwd());
 			user.setUserEmail(vo.getUserEmail());
 			user.setUserName(vo.getUserName());
 			user.setUserNickname(vo.getUserNickname());
+
+			
 		   
 		   userDAO.signUp(user);
 			
@@ -219,5 +228,57 @@ public class UserServiceImpl implements UserService{
 			userDAO.resetNickname(user);
 			
 		}
+		/**
+		 * 인증번호 보내기
+		 * @param userEmail
+		 */
+		@Override
+		public boolean sendCertificationEmail(String userEmail) {
+			try {
+	            String certificationNumber = certificationGenerator.createCertificationNumber();
+	            sendEmail(userEmail, certificationNumber);
+	            
+	            // Redis에 인증 번호 저장 (5분 후 만료)
+	            redisTemplate.opsForValue().set(
+	                "certification:" + userEmail,
+	                certificationNumber,
+	                5,
+	                TimeUnit.MINUTES
+	            );
+	            
+	            return true;
+	        } catch (Exception e) {
+	            log.error("Failed to send certification email", e);
+	            return false;
+	        }
+		}
+		
+		/**
+		 * 인증번호 확인
+		 * @paran userEmail, 입력한 인증번호
+		 */
+		@Override
+		public boolean verifyEmail(String userEmail, String certificationNumber) {
+			String key = "certification:" + userEmail;
+	        String storedCertificationNumber = redisTemplate.opsForValue().get(key);
+	        log.info("저장된 인증번호값: {}", storedCertificationNumber);
+	        
+	        if (storedCertificationNumber != null && storedCertificationNumber.equals(certificationNumber)) {
+	            // 인증 번호 일치 시 Redis에서 인증 번호 삭제
+	            redisTemplate.delete(key);
+	            return true;
+	        }
+	        return false;
+		}
+		
+		// 이메일 보내는 함수
+		private void sendEmail(String userEmail, String certificationNumber) {
+	        SimpleMailMessage message = new SimpleMailMessage();
+	        message.setTo(userEmail);
+	        message.setSubject("회원가입 인증 메일");
+	        message.setText("인증 번호: " + certificationNumber);
+	        mailSender.send(message);
+    	}
+		
 		
 }

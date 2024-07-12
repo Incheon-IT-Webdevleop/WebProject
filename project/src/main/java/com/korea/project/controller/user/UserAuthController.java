@@ -1,5 +1,6 @@
 package com.korea.project.controller.user;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public class UserAuthController {
 
 	// 회원가입 페이지에서 회원가입 버튼을 눌렀을 때 작동하는 컨트롤러
     @PostMapping("/register")
-    public HashMap<String, String> postRegister(RegisterRequestDTO vo) {
+    public HashMap<String, String> postRegister(RegisterRequestDTO vo) throws NoSuchAlgorithmException {
         HashMap<String, String> map = new HashMap<>();	
         vo.setUserEmail(vo.getLocalEmail()+vo.getDomainEmail());
         String reKey = "result";
@@ -338,6 +339,30 @@ public class UserAuthController {
     	log.info("닉네임 변경 결과 : ");
     	
     	return "success";
+    }
+    
+    // 이용 동의에 따른 에러메세지를 주기위한 컨트롤러
+    @PostMapping("/agree")
+    public HashMap<String, String> agree(@RequestParam boolean agreeTerms, @RequestParam boolean agreePrivacy){
+    	HashMap<String, String> map = new HashMap<>();
+    	
+    	log.info("agreeTerms : " + agreeTerms);
+    	
+    	if(!agreeTerms) {
+    		map.put("result", "Not AgreeTerms");
+    		map.put("message", "이용약관에 동의해주세요.");
+    		return map;
+    	}
+    	
+    	if(!agreePrivacy) {
+    		map.put("result", "Not AgreePrivacy");
+    		map.put("message", "개인정보 처리방침에 동의해주세요.");
+    		return map;
+    	}
+    	
+    	map.put("result", "success");
+    	return map;
+    	
     }
 
 }	

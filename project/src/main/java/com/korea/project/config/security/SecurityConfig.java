@@ -1,4 +1,4 @@
-package com.korea.project.config;
+package com.korea.project.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -90,7 +90,7 @@ public class SecurityConfig {
 //                sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 //        )
         .authorizeHttpRequests(authorize -> authorize
-        		.requestMatchers("/css/**", "/js/**", "/categoryImages/**", "/data/**").permitAll() // CSS, JS, 이미지 폴더에 대해 접근 허용
+        		.requestMatchers("/css/**", "/js/**", "/categoryImages/**", "/data/**", "/img/**").permitAll() // CSS, JS, 이미지 폴더에 대해 접근 허용
         		.requestMatchers("/user/*").hasAnyRole("USER", "ADMIN")
                 // /user : 인증만 되면 들어갈 수 있는 주소
                 .requestMatchers("/admin/**").hasAnyRole("ADMIN")
