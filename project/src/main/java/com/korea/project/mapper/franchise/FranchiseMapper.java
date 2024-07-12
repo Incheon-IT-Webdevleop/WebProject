@@ -22,7 +22,7 @@ public interface FranchiseMapper {
     
     // 검색창
     List<FranchiseVO> searchFranchisesByName(@Param("name") String name, @Param("offset") int offset, @Param("limit") int limit);
-
+    
     int countFranchisesByName(@Param("name") String name);
     
     // 상세창 받아오기

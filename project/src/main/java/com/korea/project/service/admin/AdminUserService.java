@@ -1,25 +1,16 @@
 package com.korea.project.service.admin;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
-import com.korea.project.mapper.admin.AdminUserMapper;
+import com.korea.project.vo.franchise.FranchiseVO;
 import com.korea.project.vo.user.UserVO;
 
-@Service
-public class AdminUserService {
-	private final AdminUserMapper adminUserMapper;
-	
-    public AdminUserService(AdminUserMapper adminUserMapper) {
-        this.adminUserMapper = adminUserMapper;
-    }
+import java.util.List;
 
-    public List<UserVO> getAllUsers() {
-        return adminUserMapper.selectUser();
-    }
-    public boolean deleteUser(int userIdx) {
-        int rowsAffected = adminUserMapper.updateUser(userIdx);
-        return rowsAffected > 0;
-    }
+public interface AdminUserService {
+	//유저삭제
+    boolean deleteUser(int userIdx);
+    // 페이징 관련
+    int countAllUsers();
+    List<UserVO> selectUserByName(String name,int offset, int limit);
+	List<UserVO> selectUserByPage(int offset, int limit);
+    int countUserByName(String name);
 }
