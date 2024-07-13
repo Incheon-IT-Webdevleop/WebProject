@@ -144,5 +144,12 @@ public class UserMappingController {
   			return "user/setNickname";
   		}
   	}
+  	
+  	// 개인정보 이용 동의 체크 페이지
+  	@GetMapping("/agreement")
+  	public String getMethodName() {
+  		return "user/agreement";
+  	}
+  	
 	
 }

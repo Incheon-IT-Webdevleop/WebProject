@@ -45,6 +45,7 @@ public class BoardController {
 		}
 		params.setNowpage(nowPage);
 		PagingResponse<BoardResponse> response = boardService.findBoardList(params);
+		response.getPagination().setBoardCategory(params.getBoardCategory());
 		
 		System.out.println("짜잔: " + response);
 		model.addAttribute("response",response);
@@ -56,12 +57,14 @@ public class BoardController {
 	
 	//게시글 추가하기
 	@GetMapping("register")
-	public String insert(Model model) {
+	public String insert(int boardCategory,Model model) {
 		
 		if(session.getAttribute("user")== null) {
 			return "redirect:/access-denied";
 		}
-		model.addAttribute("vo", new BoardVO());
+		BoardVO boardVO = new BoardVO();
+		boardVO.setBoardCategory(boardCategory);
+		model.addAttribute("vo", boardVO);
 		
 		return "board/boardInsert";
 	}
@@ -73,9 +76,8 @@ public class BoardController {
 		log.info("게시글 정보 :" + boardVO);
 		
 		boardService.register(boardVO);
-		
-		
-		return new RedirectView("list");
+
+		return new RedirectView("list?boardCategory="+boardVO.getBoardCategory());
 	}
 	
 	//게시글 삭제하기
@@ -105,6 +107,7 @@ public class BoardController {
 	@GetMapping("update")
 	public String boardUpdate(int boardIdx, Model model) {
 		BoardResponse boardResponse = boardService.findById(boardIdx);
+		System.out.println(boardResponse);
 		model.addAttribute("vo", boardResponse);
 		return "board/boardInsert";
 	}

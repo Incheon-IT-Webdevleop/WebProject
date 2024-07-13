@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded", (event) =>{
 	
-
+	//게시글 카테고리 가져오기
+	//const categoryType = document.getElementById("boardCategory").value();
+	
+	
+	
 	//대분류(업종) 요소 가져오기
 	const sectorCategoryOption = document.getElementById("sectorCategory").value;
 	//console.log(sectorCategoryOption);
@@ -10,6 +14,7 @@ document.addEventListener("DOMContentLoaded", (event) =>{
 	
 	//중분류별 소분류(지역-시,군,구 카테고리) 종류
 	const smallCategoryOption = {
+		"전체" : ["전체"],
 		"서울특별시": ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"],
 		  "경기도": ["가평군", "고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시", "남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시", "안양시", "양주시", "양평군", "여주시", "연천군", "오산시", "용인시", "의왕시", "의정부시", "이천시", "파주시", "평택시", "포천시", "하남시", "화성시"],
 		  "충청북도": ["괴산군", "단양군", "보은군", "영동군", "옥천군", "음성군", "제천시", "증평군", "진천군", "청주시", "충주시"],
@@ -38,7 +43,7 @@ document.addEventListener("DOMContentLoaded", (event) =>{
 			smallAreaCategory.innerHTML = "<option value='전체' selected> 전체 </option>";  // 초기화 
 		 	
 		 	
-		    if(bigAreaCategory) {
+		    if(bigAreaCategory!= "전체") {
 		        smallCategoryOption[bigAreaCategory].forEach(item => {
 		            let option = document.createElement("option");
 		            option.value = item;
@@ -69,21 +74,21 @@ document.addEventListener("DOMContentLoaded", (event) =>{
 	
 	
 		
-				//화면이 로드 될 때 소분류 실행시키기
-				const bigAreaCategory = document.getElementById("bigAreaCategory").value;
-				const smallAreaCategory = document.getElementById("smallAreaCategory");
-				console.log(smallAreaCategory);
-				smallAreaCategory.innerHTML = "<option value='전체' selected> 전체 </option>";  // 초기화 
-			 	
-			 	
-			    if(bigAreaCategory) {
-			        smallCategoryOption[bigAreaCategory].forEach(item => {
-			            let option = document.createElement("option");
-			            option.value = item;
-			            option.text = item;
-			            smallAreaCategory.appendChild(option);
-			        });
-			    }
+		//수정하기에서 넘어올 때 소분류 실행시키기
+		const bigAreaCategory = document.getElementById("bigAreaCategory").value;
+		const smallAreaCategory = document.getElementById("smallAreaCategory");
+		console.log(smallAreaCategory);
+		smallAreaCategory.innerHTML = "<option value='전체' selected> 전체 </option>";  // 초기화 
+	 	
+	 	
+	    if(bigAreaCategory != "전체") {
+	        smallCategoryOption[bigAreaCategory].forEach(item => {
+	            let option = document.createElement("option");
+	            option.value = item;
+	            option.text = item;
+	            smallAreaCategory.appendChild(option);
+	        });
+	    }
 			
 	
 

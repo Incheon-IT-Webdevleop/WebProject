@@ -108,3 +108,9 @@ button[type="submit"]:hover {
     display: none;
     margin-bottom: 1rem;
 }
+
+.info {
+	text-align:left;
+    display: none;
+    margin-bottom: 1rem;
+}

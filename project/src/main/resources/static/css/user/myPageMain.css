@@ -1,33 +1,43 @@
 @charset "UTF-8";
 
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
+body{
+	padding:0;
+	margin:0;
+    min-width: 640px; /* 페이지 최소 너비 고정 */
+    min-height: 500px; /* 페이지 최소 높이 고정 */
 }
 
-.container {
-    display: flex;
-    height: 100vh;
+.mypage-content {
+ 	position:relative;
+    margin-left: 250px;
+    height: 80vh;
+    padding: 0;
+    width: 70vw;
+
 }
+
 
 .content {
     flex-grow: 1;
     padding: 20px;
+    width: 100%;
 }
 
 h1 {
     margin-bottom: 20px;
+    border-bottom: 1px solid;
 }
 
 .profile-form {
-    background-color: #ffebb5;
+    background-color: #fff;
+    width:100%;
     padding: 20px;
     border-radius: 5px;
+
 }
 
 .form-group {
+    margin: auto;
     margin-bottom: 15px;
 }
 
@@ -58,3 +68,4 @@ input[type="email"] {
 .edit-btn:hover {
     background-color: #d32f2f;
 }
+

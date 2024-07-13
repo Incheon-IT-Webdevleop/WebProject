@@ -1,6 +1,8 @@
 $(document).ready(function() {
 	
-	
+	$('#logo').on('click', function(){
+		location.href='/';
+	})
 	
     $('#loginForm').on('submit', function(event) {
         event.preventDefault();

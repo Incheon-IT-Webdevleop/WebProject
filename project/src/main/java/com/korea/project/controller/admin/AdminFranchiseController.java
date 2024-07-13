@@ -2,7 +2,11 @@ package com.korea.project.controller.admin;
 
 import com.korea.project.service.admin.AdminFranchiseService;
 import com.korea.project.vo.franchise.FranchiseVO;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,31 +23,58 @@ public class AdminFranchiseController {
     }
 
     @GetMapping("/list")
-    public String listFranchises(Model model) {
-        model.addAttribute("franchises", adminFranchiseService.getAllFranchises());
+    @PreAuthorize("hasRole('ADMIN')")
+    public String listFranchises(@RequestParam(name = "page", defaultValue = "1") int page,
+                                 @RequestParam(name = "searchName", required = false) String searchName,
+                                 Model model) {
+        int pageSize = 20;
+        int offset = (page - 1) * pageSize;
+
+        List<FranchiseVO> franchises;
+        int totalFranchises;
+
+        if (searchName != null && !searchName.isEmpty()) {
+            franchises = adminFranchiseService.searchFranchisesByName(searchName, offset, pageSize);
+            totalFranchises = adminFranchiseService.countFranchisesByName(searchName);
+        } else {
+            franchises = adminFranchiseService.selectAllFranchisesPaged(offset, pageSize);
+            totalFranchises = adminFranchiseService.countAllFranchises();
+        }
+
+        int totalPages = (totalFranchises + pageSize - 1) / pageSize;
+
+        model.addAttribute("franchises", franchises);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("searchName", searchName);
+
         return "admin/adminFranchise/franchiselist";
     }
 
     @GetMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public String showAddForm(Model model) {
         model.addAttribute("franchise", new FranchiseVO());
         return "admin/adminFranchise/franchiseadd";
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public String addFranchise(@ModelAttribute FranchiseVO franchise) {
         adminFranchiseService.addFranchise(franchise);
         return "redirect:/admin/franchise/list";
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable("id") int id, Model model) { 
+    @PreAuthorize("hasRole('ADMIN')")
+    public String showEditForm(@PathVariable("id") int id, Model model) {
         FranchiseVO franchise = adminFranchiseService.getFranchiseById(id);
         model.addAttribute("franchise", franchise);
         return "admin/adminFranchise/franchiseedit";
     }
 
     @PostMapping("/edit/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String updateFranchise(@PathVariable("id") int id, @ModelAttribute FranchiseVO franchise) {
         franchise.setFranchiseIdx(id);
         adminFranchiseService.updateFranchise(franchise);
@@ -51,7 +82,8 @@ public class AdminFranchiseController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteFranchise(@PathVariable("id") int id) { 
+    @PreAuthorize("hasRole('ADMIN')")
+    public String deleteFranchise(@PathVariable("id") int id) {
         adminFranchiseService.deleteFranchise(id);
         return "redirect:/admin/franchise/list";
     }
