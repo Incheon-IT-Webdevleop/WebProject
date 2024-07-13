@@ -1,3 +1,6 @@
+.form-group {
+	box-sizing: border-box;
+}
 .dropdown {
     position: relative;
     display: block;
@@ -79,7 +82,12 @@
 }
 
 .industryDropdown-section {
+	padding: 12px;
+	top: -5px;
+	height: fit-content;
+	width: 100%;
 	border-top: none;
+	border: 1px solid #ccc;
 	border-radius: 0px 0px 10px 10px;
 }
 
@@ -91,13 +99,13 @@
 .dropdown-content ul {
     list-style-type: none;
 	background-color: #ffffff;
-	font-size: 13px;
+	font-size: 12px;
     margin: 0;
 }
 
 
 .dropdown-content ul li {
-    padding: 12px 12px;
+    padding: 8px 8px;
     cursor: pointer;
 }
 
@@ -124,10 +132,33 @@
     text-align: center; /* 텍스트 중앙 정렬 */
 }
 
-.industryList {
-	height: 400px;
+#industryList {
+	width: 100%;
+	height: fit-content;
+}
+#industryList li{
+	border: none;
+	width: 100%;
+	font-weight: 700;
+	font-size: 18px;
+	
+	padding: 10px 0px;
 }
 
+.industry-selector {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	
+	font-size: 13px;
+	font-weight: 700;
+}
+.industryText {
+	width: 100%;
+	font-size: 13px;
+	font-weight: 700;
+	padding-bottom: 10px;
+}
 
 
 .category-selector {
@@ -141,6 +172,8 @@
 	font-weight: 700;
 	border-bottom: 1px solid #dddddd;
 }
+
+
 
 #sido_code, #sigoon_code, #dong_code {
 	max-height: 450px;
