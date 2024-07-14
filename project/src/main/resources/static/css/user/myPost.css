@@ -118,3 +118,23 @@ button:hover {
 #categoryContainer input[type="button"]:hover {
     background-color: #555;
 }
+.paging {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.paging a, .paging span {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 0 4px;
+    border: 1px solid #ddd;
+    color: #333;
+    text-decoration: none;
+    cursor:pointer;
+}
+.paging .on {
+    background-color: #d72828;
+    color: white;
+    border-color: #d72828;
+    
+}

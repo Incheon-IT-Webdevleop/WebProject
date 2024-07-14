@@ -15,9 +15,12 @@ spring:
   datasource:
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://localhost:3306/project?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
-      username: ${db_userName}
-      password: ${db_userPwd}
+      ## 로컬에서 디비연결
+      ## jdbc-url: jdbc:mysql://localhost:3306/project?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+      ## 배포시 디비
+      jdbc-url: jdbc:mysql://mydb.c7q00g68gi0v.us-east-1.rds.amazonaws.com:3306/project?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+      username: my_user
+      password: "!Eun960323"
 
   security:
     oauth2:

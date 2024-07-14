@@ -93,7 +93,7 @@
 				html += `
 					<tr>
 						<td>${row.boardIdx}</td>
-						<td>${row.boardTitle}</td>
+						<td><a href="/board/view?boardIdx=${row.boardIdx}">${row.boardTitle}</a></td>
 						<td>${row.userNickname}</td>
 						<td>${row.boardWriteDate}</td>
 						<td>${row.boardView}</td>
@@ -104,7 +104,6 @@
 			//3. id가 'list'인 요소를 찾아 HTML렌더링
 			document.getElementById('list').innerHTML = html;
 		}
-		
 		
 		
 		//검색 버튼 누르면 카테고리별로 필터링되어서 목록을 수정해주는 함수
@@ -134,8 +133,8 @@
 		//페이지 수 그려주기
 		function drawPage(pagination, params){
 			//1. 필수 파라미터가 없는 경우, 페이지네이션 HTML을 초기화
-			if( !pagination || !params){
-				document.querySelector(".paging").innerHTML = '';
+			if( pagination.totalRecordCount <= 9 || !params){
+				document.querySelector(".paging").innerHTML = `<span class="on">1</span>`;
 				throw new Error('Missing required parameters...');
 			}
 			
@@ -155,7 +154,7 @@
 			html += '<p>';
 			for (let i = pagination.startPage; i <= pagination.endPage; i++){
 				html += (i !== params.nowpage)
-					? `<a href="javascript:void(0);" onclick="movePage(${i})");> ${i}</a>`
+					? `<a href="javascript:void(0);" onclick="movePage(${pagination.boardCategory},${i})");> ${i}</a>`
 					: `<span class="on">${i}</span>`
 			}
 			

@@ -128,6 +128,8 @@ public class UserMappingController {
     		return "redirect:/access-denied";
     	}
   		
+
+  		
   		PagingResponse<BoardResponse> res = userService.myPost(params, user);
   		
 
