@@ -202,8 +202,8 @@
 					      board_category, 
 					      board_content, 
 					      board_write_date, 
-					      board_view,
-					      ref)
+					      board_view
+					     )
 		values(#{userIdx},
 			   #{boardSectors},
 			   #{boardBigArea},
@@ -212,8 +212,8 @@
 			   #{boardCategory},
 			   #{boardContent},
 			   CURRENT_TIMESTAMP,
-			   #{boardView},
-			   LAST_INSERT_ID())
+			   #{boardView}
+			  )
 		
 	</insert>
 	

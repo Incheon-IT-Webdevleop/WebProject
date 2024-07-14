@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <title>게시글 상세 페이지</title>
 <link rel="stylesheet" href="/css/header.css" />
-<link rel="stylesheet" href="/css/board/view.css">	
+<link rel="stylesheet" href="/css/board/view.css">
+
 </head>
 <body>
 	<div th:replace="fragments/header :: header"></div>
@@ -16,11 +17,11 @@
 		<div class="content">
 			<section>
 				<table class="tb tbRow">
-					<tr>
+					<tr class="tbTitle">
 						<th scope="row">제목</th>
-						<td th:text=${vo.boardTitle}></td>
+						<td  colspan="5" th:text=${vo.boardTitle}></td>
 					</tr>
-					<tr>
+					<tr class="tbCategory">
 						<th scope="row">대분류</th>
 						<td th:text=${vo.boardSectors}></td>
 						<th scope="row">중분류</th>
@@ -28,13 +29,13 @@
 						<th scope="row">소분류</th>
 						<td th:text=${vo.boardSmallArea}></td>
 					</tr>
-					<tr>
+					<tr class="tbWriterNDate">
 						<th scope="row">작성자</th>
 						<td th:text=${vo.userNickname}></td>
 						<th scope="row">작성날짜</th>
 						<td th:text=${vo.boardWriteDate}></td>
 					</tr>
-					<tr>
+					<tr class="tbContetnt">
 						<th scope="row">내용</th>
 						<td th:text=${vo.boardContent}></td>
 					</tr>
@@ -56,28 +57,223 @@
 	</th:block >
 	
 	
+	<!-- 댓글 렌더링 영역 -->
+	<div class="commentList">
+	
+	</div><!-- commentList -->
+	
+	<!-- 댓글 작성 container  -->
+	<div class="commentWrite">
+		<fieldset>
+			<legend class="skipInfo"> 댓글 입력 </legend>
+			<div class="commentInput">
+				<p><textarea id="commentContent" name="content" cols="90" placeholder="댓글을 입력해 주세요."></textarea></p>
+				<span><button id="saveComment" type="button" class="btns" >등록</button></span>
+			</div>
+		</fieldset>
+	</div><!-- commentWrite -->
+	
+	<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.4/dayjs.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script th:inline="javascript">
-		//게시글 삭제		
-		function delPost() {
-		 	const boardIdx =   [[ ${vo.boardIdx} ]]  ;
+	
+	 function findAllComment(){
+		//세션에서 받아와
+		 const currentUserIdx = [[${session.user?.userIdx}]];
+		 const boardIdx = [[ ${vo.boardIdx} ]];
+
+	        $.ajax({
+	            url : `/board/${boardIdx}/comments`,
+	            type : 'get',
+	            dataType : 'json',
+	            success : function (response) {
+	                //1. 조회된 데이터가 없는 경우 
+	                if(!response.length){
+	                	document.querySelector('.commentList').innerHTML = '<div class="commentNone"><p>등록된 댓글이 없습니다.</p></div>';
+	                	return false;
+	                }
+	                
+	                //2. 렌더링 할 HTML을 저장할 변수
+	                let commentHtml = '';
+	                
+	                //3. 댓글 HTML 추가
+	                response.forEach(row =>{
+	                	const isAuthor = currentUserIdx === row.userIdx;
+	                	const actionButtons = isAuthor ? `
+	                            <button type="button" class="btns" onclick="drawCommentUpdateForm('${row.commentContent}', '${row.commentIdx}')"><span class="icons iconUpdate">수정</span></button>
+	                            <button type="button" class="btns" onclick="deleteComment('${row.commentIdx}')"><span class="icons iconDel">삭제</span></button>
+	                            <div class="comment-${row.commentIdx}"></div>
+	                        ` : '';
+	                	commentHtml += `
+		                	<div id="comment-${row.commentIdx}" >
+		                		<p class="writer">
+		                			<em>${row.userNickname}</em>
+		                			<span class="date">${dayjs(row.commentWriteDate).format('YYYY-MM-DD HH:mm')}</span>
+		                		</p>
+		                		<div class="cont"><div class="txtCom">${row.commentContent}</div></div>
+		                		<p class="funcBtns">
+		                		 	${actionButtons}
+		                		</p>
+		                	</div>
+	                	`;
+	                })
+	                //4. class가 "commentList"인 요소를 찾아 HTML를 렌더링
+	                document.querySelector('.commentList').innerHTML = commentHtml;
+	            },
+	            error : function (request, status, error) {
+	                console.log(error)
+	            }
+	        })
+	}  
+	 document.addEventListener('DOMContentLoaded', function() {
+			findAllComment();
+		
+		
+		
 			
-			if( !confirm('해당 게시글을 삭제하시겠습니까?')){
-				return false;
+			//게시글 삭제		
+			function delPost() {
+			 	const boardIdx =   [[ ${vo.boardIdx} ]]  ;
+				
+				if( !confirm('해당 게시글을 삭제하시겠습니까?')){
+					return false;
+				}
+				
+				const formHtml =`
+					<form id="delPost" action="/board/del" method="post">
+						<input type="hidden" id="boardIdx" name="boardIdx" value="${boardIdx}" />
+					</form>
+				`;
+				
+				const doc = new DOMParser().parseFromString(formHtml, 'text/html');
+				const form = doc.body.firstChild;
+				document.body.append(form);
+				document.getElementById('delPost').submit();
+			} 
+		
+		//댓글 입력값 검증
+		function isValid(element, name) {
+	        if (!element.value.trim()) {
+	            alert(name + '을(를) 입력해 주세요.');
+	            element.focus();
+	            return false;
+	        }
+	        return true;
+	    }
+		
+		//댓글 저장
+		
+		document.getElementById('saveComment').addEventListener('click',saveComment);
+		
+		function saveComment(){
+			const commentContent = document.getElementById('commentContent');
+			if (!isValid(commentContent, '댓글')) { //입력 값 검증
+	            return;
+	        }
+			
+			const boardIdx = [[ ${vo.boardIdx} ]];
+			
+			const params = {
+					commentIdx : 0, // 새로운 댓글이므로 0으로 초기화
+					boardIdx : boardIdx,
+					commentDepth : 0, //댓글 깊이 기본값 0
+					commentContent : commentContent.value, //위에 content변수를 통해 사용자가 입력한 실제 텍스트 값을 가져옴
+					
 			}
 			
-			const formHtml =`
-				<form id="delPost" action="/board/del" method="post">
-					<input type="hidden" id="boardIdx" name="boardIdx" value="${boardIdx}" />
-				</form>
-			`;
-			
-			const doc = new DOMParser().parseFromString(formHtml, 'text/html');
-			const form = doc.body.firstChild;
-			document.body.append(form);
-			document.getElementById('delPost').submit();
-		} 
-		
+			$.ajax({
+				url : `/board/${boardIdx}/comments`,
+				type : 'post',
+				contentType : 'application/json; charset=utf-8',
+				data : JSON.stringify(params),
+		        success : function (response) {
+		        	alert('댓글이 등록되었습니다.');
+		        	commentContent.value = '';
+		        	findAllComment();
+		        },
+		        error : function (request, status, error) {
+		            console.log(error)
+		        }
+		    });
+		}
+	 })
 	
+// 댓글 수정 버튼을 눌렀을 때 수정 폼 나오게
+function drawCommentUpdateForm(content, commentIdx) {
+		 
+ 	cancelUpdate(commentIdx);
+    
+    let updateFormHtml = `
+        <div class="commentWrite">
+            <fieldset>
+                <legend class="skipInfo">댓글 수정</legend>
+                <div class="commentInput">
+                    <p><textarea id="updateContent" name="content" cols="90">${content}</textarea></p>
+                    <span><button type="button" class="btns" onclick="commentUpdate('${commentIdx}')">수정</button></span>
+                    <span><button type="button" class="btns" onclick="cancelUpdate(${commentIdx})">취소</button></span>
+                </div>
+            </fieldset>
+        </div>
+    `;
+    
+    document.getElementById(`comment-${commentIdx}`).insertAdjacentHTML('afterend', updateFormHtml);
+}
+	// 수정 버튼 클릭 시 AJAX로 댓글 업데이트
+	 function commentUpdate(commentIdx) {
+			const boardIdx =   [[ ${vo.boardIdx} ]]  ;
+	     const updatedContent = document.getElementById('updateContent').value;
+	     
+	     const params = {
+	         commentIdx: commentIdx,
+	         commentContent: updatedContent
+	     };
+
+	     $.ajax({
+	         url: `/board/${boardIdx}/comments/${commentIdx}`,
+	         type: 'PATCH',
+	         contentType: 'application/json; charset=utf-8',
+	         data: JSON.stringify(params),
+	         success: function(response) {
+	             console.log('댓글 수정 성공:', response);
+	             cancelUpdate(commentIdx);
+	             findAllComment();
+	         },
+	         error: function(request, status, error) {
+	        	 console.error('댓글 수정 실패:', status, error);
+	         }
+	     });
+	 }
+
+	// 취소 버튼 클릭 시 수정 폼 사라지게
+	 function cancelUpdate(idx) {
+		 const updateForm = document.getElementById(`comment-${idx}`).nextElementSibling;
+		    if (updateForm && updateForm.classList.contains('commentWrite')) {
+		        updateForm.remove();
+		    }
+	 }
+	
+	// 댓글 삭제 함수 
+	function deleteComment(commentIdx){
+		if( !confirm('선택하신 댓글을 삭제할까요?')){
+			return false; 
+		}
+		
+		const boardIdx = [[ ${vo.boardIdx} ]];
+		
+		$.ajax({
+			 url: `/board/${boardIdx}/comments/${commentIdx}`,
+	         type: 'DELETE',
+	         contentType: 'application/json',
+	         async : false,
+	         success: function(response) {
+	             alert('댓글이 삭제되었습니다.');
+	             findAllComment();
+	         },
+	         error: function(request, status, error) {
+	        	 console.error('댓글 삭제 실패:', status, error);
+	         }
+		})
+	}
 
 	</script>
 	
