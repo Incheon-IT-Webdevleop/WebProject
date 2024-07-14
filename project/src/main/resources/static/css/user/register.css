@@ -46,10 +46,19 @@ input, button {
     height: 80%;
 }
 h1 {
-    margin: 2rem auto;
-   	font-size: 2rem;
-     text-align: center;
+    margin: 1rem auto 2.5rem auto;
+    font-size: 2rem;
+    width: 240px;
+	height: 98px;
 }
+
+img{
+	margin:auto;	
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}
+
 
 
 form {
@@ -85,6 +94,16 @@ form {
 .email-container button {
     padding: 0 15px;
     white-space: nowrap;
+}
+
+.certification-number-container input,
+.certification-number-container button,
+.certification-number-container .timer {
+    display: inline-block;
+    vertical-align: middle;
+}
+.certification-number-container .timer {
+    margin-left: 10px;
 }
  
 button[type="submit"] {

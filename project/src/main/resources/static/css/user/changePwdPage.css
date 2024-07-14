@@ -7,9 +7,13 @@ body {
     background-color: #f0f0f0;
 }
 
-.container {
-    display: flex;
-    height: 100vh;
+.mypage-content {
+ 	position:relative;
+    margin-left: 250px;
+    height: 80vh;
+    padding: 0;
+    width: 70vw;
+
 }
 
 .content {

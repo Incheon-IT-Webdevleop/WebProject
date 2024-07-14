@@ -4,15 +4,17 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.korea.project.dto.user.AgreeRequest;
+import com.korea.project.dto.user.AgreeResponse;
 import com.korea.project.dto.user.FindRequestDTO;
 import com.korea.project.dto.user.RegisterRequestDTO;
 import com.korea.project.dto.user.ResetPasswordRequestDTO;
@@ -341,29 +343,7 @@ public class UserAuthController {
     	return "success";
     }
     
-    // 이용 동의에 따른 에러메세지를 주기위한 컨트롤러
-    @PostMapping("/agree")
-    public HashMap<String, String> agree(@RequestParam boolean agreeTerms, @RequestParam boolean agreePrivacy){
-    	HashMap<String, String> map = new HashMap<>();
-    	
-    	log.info("agreeTerms : " + agreeTerms);
-    	
-    	if(!agreeTerms) {
-    		map.put("result", "Not AgreeTerms");
-    		map.put("message", "이용약관에 동의해주세요.");
-    		return map;
-    	}
-    	
-    	if(!agreePrivacy) {
-    		map.put("result", "Not AgreePrivacy");
-    		map.put("message", "개인정보 처리방침에 동의해주세요.");
-    		return map;
-    	}
-    	
-    	map.put("result", "success");
-    	return map;
-    	
-    }
+
 
 }	
 

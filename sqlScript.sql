@@ -41,15 +41,13 @@ CREATE TABLE `board` (
     `board_sectors` TINYINT NOT NULL COMMENT '업종 0: 카페디저트 1: 음식점주점 2: 치킨피자 3: 분식패스트푸드 4: 판매업',
     `board_big_area` VARCHAR(20) NOT NULL COMMENT '시, 도',
     `board_small_area` VARCHAR(20) NOT NULL COMMENT '시, 군, 구',
-    `board_title` VARCHAR(255) NOT NULL DEFAULT 'comment' COMMENT '댓글일 경우 제목이 빈칸으로 넘어오기 때문에 디폴트 값인 comment가 들어갈 수 있게 하기 위해',
+    `board_title` VARCHAR(255) NOT NULL  COMMENT '댓글일 경우 제목이 빈칸으로 넘어오기 때문에 디폴트 값인 comment가 들어갈 수 있게 하기 위해',
     `board_category` TINYINT NOT NULL COMMENT '0: 상권 분석 게시글, 1: 창업 후기 게시글',
     `board_content` TEXT NOT NULL,
     `board_view` INT NOT NULL DEFAULT 0,
     `board_write_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `board_del` TINYINT NOT NULL DEFAULT 0 COMMENT '0: 삭제 안함, -1: 삭제 완료',
-    `step` INT NULL DEFAULT 0 COMMENT '댓글의 순번',
-    `depth` TINYINT NULL DEFAULT 0 COMMENT '0이면 게시글, 1이면 댓글, 2면 대댓글 3이면 대대댓글...',
-    `ref` INT NULL DEFAULT NULL COMMENT '댓글의 부모가 되는 게시글의 번호',
+  
     PRIMARY KEY (`board_idx`),
     FOREIGN KEY (`user_idx`) REFERENCES `user` (`user_idx`)
 );
@@ -90,8 +88,8 @@ CREATE TABLE `favorite` (
 );
 
 
-INSERT INTO `user` (user_id, user_nickname, user_pwd, user_name, user_email, regdate, user_role, user_del)
-			VALUES ("mod459", "성남베어", "$2a$10$UZZ7XTN0gwHZBm2ASdYpxeyeyjMC9AsaI2aDFy5aPh4ca8.C3JO5e", "정상필", "mod459@naver.com", NOW(), 1, 0);
+INSERT INTO `user` (user_id, user_nickname, user_pwd, user_name, user_email, regdate, user_role, user_del,provider)
+			VALUES ("mod459", "성남", "$2a$10$UZZ7XTN0gwHZBm2ASdYpxeyeyjMC9AsaI2aDFy5aPh4ca8.C3JO5e", "정상필", "mod459@naver.com", NOW(), 1, 0,"전체");
 INSERT INTO board (user_idx, board_sectors, board_big_area, board_small_area, board_title, board_category, board_content, board_write_date)
 VALUES (1,1, '서울', '강남구', '첫 번째 게시글', 0, '첫 번째 게시글 내용입니다.', CURRENT_TIMESTAMP);
 

@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService{
 			user.setUserEmail(vo.getUserEmail());
 			user.setUserName(vo.getUserName());
 			user.setUserNickname(vo.getUserNickname());
-
+			user.setProvider("전체");
 			
 		   
 		   userDAO.signUp(user);

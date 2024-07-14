@@ -1,5 +1,10 @@
 @charset "UTF-8";
+body{
+	font-family: Arial, sans-serif;
+}
+
 .container  {
+	
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -24,7 +29,7 @@
 }
 
 .pwd-inner {
-    margin: 0 auto 20px;
+    margin: 0 auto;
     width: 80%;
 }
 
@@ -44,7 +49,16 @@ input[type="password"] {
 }
 
 button {
-    padding: 10px 20px;
+    padding: 0.75rem 1rem;
     font-size: 1rem;
     cursor: pointer;
+    background-color: #d72828;
+    color:#fff; 
+    border: none;
+    border-radius: 10px;
+    width: 100px;
+}
+
+button:hover {
+	background-color:#bbb;
 }
