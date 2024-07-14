@@ -16,13 +16,13 @@ spring:
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
       ## 로컬에서 디비연결
-      ## jdbc-url: jdbc:mysql://localhost:3306/project?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
-      ## username: my_user
-      ## password: "!Eun960323"
+      jdbc-url: jdbc:mysql://localhost:3306/project?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+      username: my_user
+      password: 1111
       ## 배포시 디비
-      jdbc-url: jdbc:mysql://mydb.c72ss0somxra.ap-northeast-2.rds.amazonaws.com:3306/project?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
-      username: ${MYSQL_ID}
-      password: ${MYSQL_PWD}
+      ##jdbc-url: jdbc:mysql://mydb.c72ss0somxra.ap-northeast-2.rds.amazonaws.com:3306/project?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+      ##username: ${MYSQL_ID}
+      ##password: ${MYSQL_PWD}
 
   security:
     oauth2:
@@ -43,6 +43,8 @@ spring:
               - nickname
             client-name: Naver
             authorization-grant-type: authorization_code
+            #redirect-uri: http://localhost:8080/login/oauth2/code/naver
+            #배포용 네이버 리다이레렉트
             redirect-uri: http://ec2-43-201-82-12.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/naver
         provider:
           naver:
