@@ -16,13 +16,13 @@ spring:
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
       ## 로컬에서 디비연결
-      jdbc-url: jdbc:mysql://localhost:3306/project?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
-      username: my_user
-      password: 1111
-      ## 배포시 디비
-      ##jdbc-url: jdbc:mysql://mydb.c72ss0somxra.ap-northeast-2.rds.amazonaws.com:3306/project?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
-      ##username: ${MYSQL_ID}
-      ##password: ${MYSQL_PWD}
+      #jdbc-url: jdbc:mysql://localhost:3306/project?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+      #username: my_user
+      #password: 1111
+      # 배포시 디비
+      jdbc-url: jdbc:mysql://mydb.c72ss0somxra.ap-northeast-2.rds.amazonaws.com:3306/project?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+      username: ${MYSQL_ID}
+      password: ${MYSQL_PWD}
 
   security:
     oauth2:
