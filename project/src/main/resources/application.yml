@@ -20,23 +20,23 @@ spring:
       ## username: my_user
       ## password: "!Eun960323"
       ## 배포시 디비
-      jdbc-url: jdbc:mysql://mydb.c7q00g68gi0v.us-east-1.rds.amazonaws.com:3306/project?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
-      username: ${mysql_id}
-      password: ${mysql_pwd}
+      jdbc-url: jdbc:mysql://mydb.c72ss0somxra.ap-northeast-2.rds.amazonaws.com:3306/project?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+      username: ${MYSQL_ID}
+      password: ${MYSQL_PWD}
 
   security:
     oauth2:
       client:
         registration:
           google:
-            client-id: ${google_id}
-            client-secret: ${google_pwd}
+            client-id: ${GOOGLE_ID}
+            client-secret: ${GOOGLE_PWD}
             scope:
               - email
               - profile
           naver:
-            client-id: ${naver_id}
-            client-secret: ${naver_pwd}
+            client-id: ${NAVER_ID}
+            client-secret: ${NAVER_PWD}
             scope:
               - name
               - email
@@ -54,8 +54,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${gmail_id}
-    password: ${gmail_pwd}
+    username: ${GMAIL_ID}
+    password: ${GMAIL_PWD}
     properties:
       mail:
         debug: true
