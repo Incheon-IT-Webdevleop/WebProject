@@ -1,74 +1,110 @@
-/* insert.css */
-
-body {
-    font-family: 'Arial', sans-serif;
+body, h3, table, th, td, button {
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f9f9f9;
+    border: 0;
+    font-size: 100%;
+    vertical-align: baseline;
 }
 
-h1 {
-    text-align: center;
+/* Page Title Styling */
+.pageTitle {
     margin: 20px 0;
+    text-align: center;
 }
 
-form {
-    background-color: #ffffff;
+.pageTitle h3 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* Content Section Styling */
+.content {
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 600px;
-    max-width: 100%;
-    margin-top: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-input[type="text"],
-select,
-textarea {
-    width: calc(100% - 20px);
+section {
+    margin-bottom: 20px;
+}
+
+/* Table Styling */
+.tb {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.tb th, .tb td {
     padding: 10px;
-    margin: 10px 0;
     border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
+    text-align: left;
 }
 
-textarea {
-    height: 200px;
-    resize: none;
+.tb th {
+    background-color: #f2f2f2;
 }
 
-input[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
+/* Specific styles for columns */
+.tbTitle td {
+    width: 100%;
+}
+
+.tbCategory th, .tbWriterNDate th {
+    width: 150px;
+}
+
+.tbCategory td, .tbWriterNDate td {
+    width: calc((100% - 300px) / 2); /* Adjust for 2 columns after headers */
+}
+
+.tbWriterNDate td {
+    width: 50%;
+}
+
+/* Specific styles for 작성자 and 작성날짜 */
+.tbWriterNDate th {
+    width: auto;
+}
+
+.tbWriterNDate td {
+    width: 100%;
+}
+
+/* Button Styling */
+button {
+    display: inline-block;
     padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
+    margin: 10px 0;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border-radius: 5px;
     cursor: pointer;
-    float: right;
+    text-align: center;
+    text-decoration: none;
 }
 
-input[type="submit"]:hover {
-    background-color: #45a049;
+button:hover {
+    background-color: #0056b3;
 }
 
-#categoryContainer {
-    display: flex;
-    justify-content: space-between;
+button:focus {
+    outline: none;
 }
 
-#categoryContainer div {
-    flex: 1;
-    margin: 0 5px;
+button[onclick="delPost();"] {
+    background-color: #dc3545;
 }
 
-#categoryContainer div:first-child {
-    margin-left: 0;
+button[onclick="delPost();"]:hover {
+    background-color: #c82333;
 }
 
-#categoryContainer div:last-child {
-    margin-right: 0;
-}
+/* Conditional Button Display */
+/* div[th\\:if] {
+    text-align: right;
+} */

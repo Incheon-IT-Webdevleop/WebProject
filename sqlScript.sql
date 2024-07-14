@@ -52,6 +52,36 @@ CREATE TABLE `board` (
     FOREIGN KEY (`user_idx`) REFERENCES `user` (`user_idx`)
 );
 
+
+CREATE TABLE `comment` (
+   `comment_idx`   int   NOT NULL AUTO_INCREMENT COMMENT 'auto_increment',
+   `user_idx`   int   NOT NULL   COMMENT 'autoincress',
+   `board_idx`   int   NOT NULL   COMMENT 'auto_increment',
+   `comment_content`   text   NOT NULL,
+   `comment_depth`   int   NOT NULL   DEFAULT 0   COMMENT '댓글, 대댓글',
+   `comment_write_date`   datetime   NOT NULL   DEFAULT CURRENT_TIMESTAMP,
+   `comment_del`   int   NOT NULL   DEFAULT 0   COMMENT '0: 삭제 안함 -1 : 삭제 완료',
+   PRIMARY KEY (`comment_idx`)
+);
+
+
+
+
+
+ALTER TABLE `comment` ADD CONSTRAINT `FK_user_TO_comment_1` FOREIGN KEY (
+   `user_idx`
+)
+REFERENCES `user` (
+   `user_idx`
+);
+
+ALTER TABLE `comment` ADD CONSTRAINT `FK_board_TO_comment_2` FOREIGN KEY (
+   `board_idx`
+)
+REFERENCES `board` (
+   `board_idx`
+);
+
 CREATE TABLE `recommend` (
     `like_idx` INT NOT NULL AUTO_INCREMENT COMMENT 'Auto Increment',
     `user_idx` INT NOT NULL COMMENT 'Auto Increment',
@@ -90,6 +120,8 @@ CREATE TABLE `favorite` (
 
 INSERT INTO `user` (user_id, user_nickname, user_pwd, user_name, user_email, regdate, user_role, user_del,provider)
 			VALUES ("mod459", "성남", "$2a$10$UZZ7XTN0gwHZBm2ASdYpxeyeyjMC9AsaI2aDFy5aPh4ca8.C3JO5e", "정상필", "mod459@naver.com", NOW(), 1, 0,"전체");
+INSERT INTO `user` (user_id, user_nickname, user_pwd, user_name, user_email, regdate, user_role, user_del)
+			VALUES ("mmmm", "rrrt", "$2a$10$UZZ7XTN0gwHZBm2ASdYpxeyeyjMC9AsaI2aDFy5aPh4ca8.C3JO5e", "정상필", "mod459@naver.com", NOW(), 1, 0);
 INSERT INTO board (user_idx, board_sectors, board_big_area, board_small_area, board_title, board_category, board_content, board_write_date)
 VALUES (1,1, '서울', '강남구', '첫 번째 게시글', 0, '첫 번째 게시글 내용입니다.', CURRENT_TIMESTAMP);
 
@@ -103,4 +135,19 @@ SELECT
 			B.BOARD_CONTENT
 		FROM BOARD B
 		JOIN `USER` U ON B.USER_IDX = U.user_idx
-		WHERE B.BOARD_IDX = 1
+		WHERE B.BOARD_IDX = 1;
+		
+	SELECT 
+	 	COMMENT_IDX,
+		USER_NICKNAME,
+		BOARD_IDX,
+		COMMENT_DEPTH,
+		COMMENT_DEL,
+		COMMENT_CONTENT,
+		COMMENT_WRITE_DATE
+	FROM COMMENT C
+	JOIN `USER` U ON C.USER_IDX = U.USER_IDX
+	WHERE COMMENT_DEL = 0
+		AND BOARD_IDX = 1
+		
+	OrDER BY COMMENT_IDx DESC
