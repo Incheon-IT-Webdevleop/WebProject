@@ -1,10 +1,11 @@
 body{
 	margin:0;
 	padding:0;
+    font-family: Arial, sans-serif;
 }
 
 board1 {
-    font-family: Arial, sans-serif;
+
     line-height: 1.6;
     color: #333;
     max-width: 1200px;
@@ -19,8 +20,9 @@ h1 {
 
 /* 테이블 스타일 */
 table {
-    width: 100%;
+    width: 80%;
     border-collapse: collapse;
+    margin:auto;
     margin-bottom: 20px;
 }
 
@@ -82,7 +84,9 @@ label{
 
 /* 검색 폼 스타일 */
 #searchForm {
+	margin:auto;
     margin-top: 20px;
+    
 }
 
 #categoryContainer {
