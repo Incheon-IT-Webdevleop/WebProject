@@ -90,7 +90,7 @@ label{
 }
 
 #categoryContainer {
-	width:100%;
+	width:80%;
     display: flex;
     justify-content:center ;
     margin:auto;  
@@ -111,6 +111,7 @@ label{
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    margin: auto;
 }
 
 #searchButton {
@@ -121,6 +122,7 @@ label{
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin: auto;
 }
 
 #searchButton:hover {
