@@ -98,7 +98,7 @@ public class SecurityConfig {
                 .anyRequest().permitAll()//다른 요청
         )
         .formLogin(formLogin -> formLogin
-                .loginPage("/admin-login") // 관리자 로그인 페이지 URL
+                .loginPage("/perform_login") // 관리자 로그인 페이지 URL
                 .loginProcessingUrl("/admin-perform-login") // 관리자 로그인 form action URL
                 .usernameParameter("userId") // 로그인 form의 userId 파라미터 이름
                 .passwordParameter("userPwd") // 로그인 form의 userPwd 파라미터 이름
