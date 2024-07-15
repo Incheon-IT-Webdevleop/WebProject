@@ -1,11 +1,13 @@
 @charset "UTF-8";
 
+@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
 body{
+	font-family: 'nanumsquare';
 	padding:0;
 	margin:0;
     min-width: 640px; /* 페이지 최소 너비 고정 */
     min-height: 500px; /* 페이지 최소 높이 고정 */
-    font-family: Arial, sans-serif;
 }
 
 .mypage-content {

@@ -1,4 +1,7 @@
+@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
 body {
+	font-family: 'nanumsquare';
 	padding:0;
 	margin:0;
     min-width: 640px; /* 페이지 최소 너비 고정 */

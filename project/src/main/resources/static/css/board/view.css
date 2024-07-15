@@ -1,4 +1,7 @@
+@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
 body, h3, table, th, td, button {
+	font-family: 'nanumsquare';
     margin: 0;
     padding: 0;
     border: 0;
