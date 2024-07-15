@@ -107,11 +107,16 @@ label{
 }
 
 #categoryContainer select, #categoryContainer input {
+	box-sizing:border-box;
     width: 60%;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
     margin: auto;
+}
+
+#categoryContainer input{
+	width: 100%;
 }
 
 #searchButton {
@@ -126,5 +131,5 @@ label{
 }
 
 #searchButton:hover {
-    background-color: #d72828;
+    background-color: #d72828;	
 }
