@@ -16,62 +16,78 @@
 		
 		<div class="content">
 			<section>
-				<table class="tb tbRow">
+				<table class="tb">
 					<tr class="tbTitle">
-						<th scope="row">제목</th>
+						<th class="thTitle" scope="row">제목</th>
 						<td  colspan="5" th:text=${vo.boardTitle}></td>
 					</tr>
 					<tr class="tbCategory">
-						<th scope="row">대분류</th>
-						<td th:text=${vo.boardSectors}></td>
+						<th class="thBigCate" scope="row">대분류</th>
+						<td th:switch="${vo.boardSectors}">
+						    <span th:case="6">전체</span>
+						    <span th:case="'1'">카페/디저트</span>
+						    <span th:case="'2'">음식점/주점</span>
+						    <span th:case="'3'">치킨/피자</span>
+						    <span th:case="'4'">분식/패스트푸드</span>
+						    <span th:case="'5'">판매업</span>
+						</td>
+						<!-- <td th:text=${vo.boardSectors}></td> -->
 						<th scope="row">중분류</th>
 						<td th:text=${vo.boardBigArea}></td>
 						<th scope="row">소분류</th>
 						<td th:text=${vo.boardSmallArea}></td>
 					</tr>
 					<tr class="tbWriterNDate">
-						<th scope="row">작성자</th>
-						<td th:text=${vo.userNickname}></td>
-						<th scope="row">작성날짜</th>
-						<td th:text=${vo.boardWriteDate}></td>
+						<th class="thWirter" scope="row">작성자</th>
+						<td colspan="1" th:text=${vo.userNickname}></td>
+						<th colspan="1" scope="row">작성날짜</th>
+						<td colspan="3" th:text=${vo.boardWriteDate}></td>
 					</tr>
 					<tr class="tbContetnt">
-						<th scope="row">내용</th>
-						<td th:text=${vo.boardContent}></td>
+						<th class="thContent" scope="row">내용</th>
+						<td colspan="5" th:text=${vo.boardContent}></td>
 					</tr>
 				</table>
 			</section>
+			<!-- 수정하기 삭제하기-->
+			<div class="modifyDelBtn">
+		        <div th:if="${session.user != null && vo.userIdx == session.user.userIdx}">
+		        	<button class="deleteBtn" type="button" th:onclick="'location.href=\'' + @{/board/update(boardIdx=${vo.boardIdx},boardCategory=${vo.boardCategory})} + '\''">수정</button>
+		        	<button type="button" th:onclick="delPost();">삭제</button>
+		        </div>
+			</div>
 		</div>
 		
-		<!-- 수정하기 -->
-        <div th:if="${session.user != null && vo.userIdx == session.user.userIdx}">
-        <button type="button" th:onclick="'location.href=\'' + @{/board/update(boardIdx=${vo.boardIdx},boardCategory=${vo.boardCategory})} + '\''">수정</button>
-        </div>
-        
-        
-        <!-- 삭제하기 -->
-        <div th:if="${session.user != null && vo.userIdx == session.user.userIdx}">
-        	<button type="button" onclick="delPost();">삭제하기</button>
-        </div>
+
         
 	</th:block >
 	
 	
-	<!-- 댓글 렌더링 영역 -->
-	<div class="commentList">
+	<p></p>
+	<p></p>
+	<p></p>
 	
-	</div><!-- commentList -->
 	
-	<!-- 댓글 작성 container  -->
-	<div class="commentWrite">
-		<fieldset>
-			<legend class="skipInfo"> 댓글 입력 </legend>
-			<div class="commentInput">
-				<p><textarea id="commentContent" name="content" cols="90" placeholder="댓글을 입력해 주세요."></textarea></p>
-				<span><button id="saveComment" type="button" class="btns" >등록</button></span>
-			</div>
-		</fieldset>
-	</div><!-- commentWrite -->
+	<!-- 댓글 -->
+	<div class="commentContainer">
+		<p>댓글</p>
+		<!-- 댓글 렌더링 영역 -->
+		<div class="commentList">
+		
+		</div><!-- commentList -->
+		
+		<!-- 댓글 작성 container  -->
+		<div class="commentWrite">
+			<fieldset>
+				<legend class="skipInfo"> 댓글 입력 </legend>
+				<div class="commentInput">
+					<textarea id="commentContent" name="content" cols="90" placeholder="댓글을 입력해 주세요."></textarea>
+					<span><button id="saveComment" type="button" class="btns" >등록</button></span>
+				</div><!-- commentInput -->
+			</fieldset>
+		</div><!-- commentWrite -->
+	</div><!-- commentContainer -->
+	
 	
 	<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.4/dayjs.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -100,20 +116,23 @@
 	                response.forEach(row =>{
 	                	const isAuthor = currentUserIdx === row.userIdx;
 	                	const actionButtons = isAuthor ? `
-	                            <button type="button" class="btns" onclick="drawCommentUpdateForm('${row.commentContent}', '${row.commentIdx}')"><span class="icons iconUpdate">수정</span></button>
-	                            <button type="button" class="btns" onclick="deleteComment('${row.commentIdx}')"><span class="icons iconDel">삭제</span></button>
-	                            <div class="comment-${row.commentIdx}"></div>
+	                			<div class="commentUpdateContainer">
+		                            <button type="button" class="btns" onclick="drawCommentUpdateForm('${row.commentContent}', '${row.commentIdx}')"><span class="icons iconUpdate">수정</span></button>
+		                            <button type="button" class="btns" onclick="deleteComment('${row.commentIdx}')"><span class="icons iconDel">삭제</span></button>
+		                            <div class="comment-${row.commentIdx}"></div>
+	                            </div>
 	                        ` : '';
 	                	commentHtml += `
-		                	<div id="comment-${row.commentIdx}" >
-		                		<p class="writer">
-		                			<em>${row.userNickname}</em>
-		                			<span class="date">${dayjs(row.commentWriteDate).format('YYYY-MM-DD HH:mm')}</span>
-		                		</p>
+		                	<div class="commentIdxView" id="comment-${row.commentIdx}" >
+		                		<div class="writer">
+		                			<p>${row.userNickname}</p>
+		                			<p class="date">${dayjs(row.commentWriteDate).format('YYYY-MM-DD HH:mm')}</p>
+		                		</div>
 		                		<div class="cont"><div class="txtCom">${row.commentContent}</div></div>
-		                		<p class="funcBtns">
+		                		<div class="funcBtns">
 		                		 	${actionButtons}
-		                		</p>
+		                		 	
+		                		</div>
 		                	</div>
 	                	`;
 	                })
@@ -131,25 +150,7 @@
 		
 		
 			
-			//게시글 삭제		
-			function delPost() {
-			 	const boardIdx =   [[ ${vo.boardIdx} ]]  ;
-				
-				if( !confirm('해당 게시글을 삭제하시겠습니까?')){
-					return false;
-				}
-				
-				const formHtml =`
-					<form id="delPost" action="/board/del" method="post">
-						<input type="hidden" id="boardIdx" name="boardIdx" value="${boardIdx}" />
-					</form>
-				`;
-				
-				const doc = new DOMParser().parseFromString(formHtml, 'text/html');
-				const form = doc.body.firstChild;
-				document.body.append(form);
-				document.getElementById('delPost').submit();
-			} 
+		
 		
 		//댓글 입력값 검증
 		function isValid(element, name) {
@@ -197,6 +198,26 @@
 		    });
 		}
 	 })
+	 
+	 	//게시글 삭제		
+			function delPost() {
+			 	const boardIdx =   [[ ${vo.boardIdx} ]]  ;
+				
+				if( !confirm('해당 게시글을 삭제하시겠습니까?')){
+					return false;
+				}
+				
+				const formHtml =`
+					<form id="delPost" action="/board/del" method="post">
+						<input type="hidden" id="boardIdx" name="boardIdx" value="${boardIdx}" />
+					</form>
+				`;
+				
+				const doc = new DOMParser().parseFromString(formHtml, 'text/html');
+				const form = doc.body.firstChild;
+				document.body.append(form);
+				document.getElementById('delPost').submit();
+			} 
 	
 // 댓글 수정 버튼을 눌렀을 때 수정 폼 나오게
 function drawCommentUpdateForm(content, commentIdx) {
@@ -214,6 +235,10 @@ function drawCommentUpdateForm(content, commentIdx) {
                 </div>
             </fieldset>
         </div>
+        
+        
+        
+        
     `;
     
     document.getElementById(`comment-${commentIdx}`).insertAdjacentHTML('afterend', updateFormHtml);

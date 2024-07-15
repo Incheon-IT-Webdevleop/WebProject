@@ -92,7 +92,7 @@ public class BoardController {
 		
 		//조회수 올려주기
 		boardService.viewCount(boardIdx);
-		
+		System.out.println(vo);
 		return "board/boardView";
 	}
 	
