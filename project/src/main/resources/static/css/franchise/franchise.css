@@ -1,3 +1,8 @@
+body{
+	padding:0;
+	margin:0;
+}
+
 /* 프랜차이즈 제목에 대한 일반적인 스타일 */
 .franchise-title {
   font-size: 20px;  /* 글꼴 크기 설정 */
