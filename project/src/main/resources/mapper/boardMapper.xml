@@ -25,7 +25,7 @@
 		FROM board b
 		JOIN `user` u ON b.user_idx = u.user_idx
 		<!-- JOIN "USER" U ON B.USER_IDX = U.USER_IDX -->
-		WHERE B.board_del = 0
+		WHERE b.board_del = 0
 		AND(b.board_category = #{boardCategory})
 		
 <!-- 		<if test="boardBigArea != null">
