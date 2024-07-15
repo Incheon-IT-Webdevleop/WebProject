@@ -1,5 +1,9 @@
 /* sidebar.css */
+@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
 
+body{
+	font-family: 'nanumsquare';
+}
 /* 사이드바 스타일링 */
 .sidebar {
     position: fixed; /* 고정 위치 */
