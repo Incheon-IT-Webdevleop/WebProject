@@ -18,4 +18,34 @@
 	overflow: hidden;
 	z-index: 0;
 }
+/*
+#pinModal {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	background-color: black;
+	opacity: 0.4;
+}
 
+#pinDescContainer {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 450px;
+	height: fit-content;
+	padding: 20px;
+	margin: 0 auto;
+	box-shadow: 2px 0 5px rgba(0,0,0,0.4);
+}
+
+#pinInnerText {
+	font-size: 16px;
+	font-weight: 600;
+}
+*/
