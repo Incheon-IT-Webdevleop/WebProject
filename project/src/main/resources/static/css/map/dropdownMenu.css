@@ -1,6 +1,7 @@
 .form-group {
 	box-sizing: border-box;
 }
+/*드랍다운 버튼 컨테이너 스타일*/
 .dropdown {
     position: relative;
     display: block;
@@ -14,6 +15,7 @@
 	width: 100%;
 }
 
+/*드랍다운 버튼 스타일*/
 .region-dropdown-btn, .industry-dropdown-btn {
 	background-color: #ffffff;
 	color: black;
@@ -32,7 +34,7 @@
 	border-radius: 10px 10px 0px 0px;
 }
 
-
+/*드랍다운 카테고리 child 태그들 일괄 적용*/
 .region-dropdown-btn:hover .locationPin,
 .region-dropdown-btn:hover .locationText, 
 .region-dropdown-btn:hover .regionDropdownArrow,
