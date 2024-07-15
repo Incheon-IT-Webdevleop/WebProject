@@ -90,9 +90,12 @@ label{
 }
 
 #categoryContainer {
+	width:80%;
     display: flex;
-    justify-content:center ;  
+    justify-content:center ;
+    margin:auto;  
     margin-bottom: 20px;
+    
 }
 
 #categoryContainer div {
