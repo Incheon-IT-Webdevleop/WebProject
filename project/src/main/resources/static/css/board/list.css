@@ -99,10 +99,11 @@ label{
 }
 
 #categoryContainer div {
-	width:100%;
+	width:80%;
 	padding:0;
     /* flex: 1; */
    /*  margin-right: 10px; */
+   margin: auto;
 }
 
 #categoryContainer select, #categoryContainer input {
