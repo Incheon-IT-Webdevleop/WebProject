@@ -9,25 +9,12 @@ body {
 
 
 .board1 {
-    margin-left: 250px;
+    margin-left: 350px;
     padding: 20px;
     width: 70vw;
 }
 
-/* 미디어 쿼리 */
-@media (max-width: 1240px) {
-    .board1{
-    	width: 70vw;
-    }
-}
 
-/* 미디어 쿼리 */
-@media (max-width: 1100px) {
-    .board1{
-    
-	    left:25%;
-    }
-}
 
 .mouse {
     cursor: pointer;

@@ -20,7 +20,6 @@
 				<tr>
 					<td>번호</td>
 					<td>제목</td>
-					<td>작성자</td>
 					<td>작성날짜/시간</td>
 					<td>조회수</td>
 				</tr>
@@ -94,7 +93,6 @@
 					<tr>
 						<td>${row.boardIdx}</td>
 						<td><a href="/board/view?boardIdx=${row.boardIdx}">${row.boardTitle}</a></td>
-						<td>${row.userNickname}</td>
 						<td>${row.boardWriteDate}</td>
 						<td>${row.boardView}</td>
 					</tr>
@@ -106,29 +104,7 @@
 		}
 		
 		
-		//검색 버튼 누르면 카테고리별로 필터링되어서 목록을 수정해주는 함수
-		function updateBoardList(data){
-			const tbody = document.querySelector("#boardTable tbody");
-			//const boardFirst = document.querySelector(".boardFirst");
-			tbody.innerHTML = "";//기존 목록 삭제
-		/*
-			if(boardFirst){
-			boardFirst.innerHTML = ""; //기존 목록 삭제
-		}
-		*/
-			
-			
-			data.forEach(board=>{
-				const row = tbody.insertRow();
-				row.insertCell(0).innerText = board.boardIdx;
-				row.insertCell(1).innerText = board.boardTitle;
-				row.insertCell(2).innerText = board.usesrNickname;
-				row.insertCell(3).innerText = board.boardWriteDate;
-				row.insertCell(4).innerText = board.boardView;
-				row.insertCell(5).innerText = board.boardView; //추천수 
-			})
-		}
-		
+
 		
 		//페이지 수 그려주기
 		function drawPage(pagination, params){
@@ -154,7 +130,7 @@
 			html += '<p>';
 			for (let i = pagination.startPage; i <= pagination.endPage; i++){
 				html += (i !== params.nowpage)
-					? `<a href="javascript:void(0);" onclick="movePage(${pagination.boardCategory},${i})");> ${i}</a>`
+					? `<a href="javascript:void(0);" onclick="movePage(${i})");> ${i}</a>`
 					: `<span class="on">${i}</span>`
 			}
 			
