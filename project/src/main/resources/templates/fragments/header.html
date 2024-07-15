@@ -21,7 +21,7 @@
 				        <a class="mouse" th:href="@{/register}" th:text="회원가입">회원가입</a>
 				    </li>
 				    <li th:if="${session.user != null}" class="header-login">
-				        <a class="mouse" th:href="@{/logout}" th:text="로그아웃">로그아웃</a>
+				        <a class="mouse" th:href="@{/logout}" th:text="로그아웃">로그아웃</a>|
 				        <a class="mouse" th:href="@{/user/pwd-check}">마이 페이지</a>
 				    </li>
 		

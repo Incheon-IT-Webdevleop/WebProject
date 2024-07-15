@@ -53,6 +53,8 @@ img{
   display: flex;
   gap: 10px;
   font-size:1rem;
+  align-items: center;
+  justify-content: center;
   
 }
 
@@ -101,7 +103,7 @@ img{
 .mouse {
   cursor: pointer;
 }
-a{
-	  text-decoration: none;
+header a{
+  text-decoration: none;
 	
 }

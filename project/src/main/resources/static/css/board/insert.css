@@ -87,6 +87,7 @@ form {
 	height: 400px;
 	margin : auto;
 	box-sizing: border-box;
+	resize: none;
 }
 
 .submitBtn{
@@ -104,7 +105,12 @@ form {
     border-radius: 5px;
     cursor: pointer;
     text-align: center;
+    border:none;
     text-decoration: none;
+}
+
+button:hover {
+    background-color: #ac3131;
 }
 
 

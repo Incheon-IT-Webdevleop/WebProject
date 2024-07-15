@@ -50,6 +50,14 @@ body, html {
     color: #4ECDC4;
     margin-bottom: 15px;
 }
+
+.features a{
+	text-decoration: none;
+	color: #000;
+}
+
+
+
 .stats {
     background-color: #4ECDC4;
     color: white;

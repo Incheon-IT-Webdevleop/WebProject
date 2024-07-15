@@ -58,6 +58,10 @@ button {
     border-radius: 4px;
 }
 
+button:hover {
+    background-color: #ac3131;
+}
+
 label{
 	display: inline;
 	
@@ -94,7 +98,7 @@ label{
 #categoryContainer {
 	width:80%;
     display: flex;
-    justify-content:center ;
+    justify-content:space-around ;
     margin:auto;  
     margin-bottom: 20px;
     
@@ -110,6 +114,9 @@ label{
 }
 
 #categoryContainer div {
+	display:flex;
+/* 	justify-content:center; */
+	align-items:center;
 	width:80%;
 	padding:0;
     /* flex: 1; */
@@ -119,28 +126,46 @@ label{
 
 #categoryContainer select, #categoryContainer input {
 	box-sizing:border-box;
-    width: 60%;
+    width: 70%;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    margin: auto;
+    /* margin: auto; */
+}
+#categoryContainer select{
+	border-radius: 4px;
 }
 
 #categoryContainer input{
-	width: 100%;
+	width: 70%;
 }
 
+
+
 #searchButton {
-    width: 100%;
+	width: 88px;
     padding: 10px;
     background-color: #d72828;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin: auto;
 }
 
+#writeButtonContainer{
+	margin:auto;
+	display: flex;
+	width: 80%;
+	justify-content: flex-end;
+}
+
+
+.textfield{
+	display: flex;
+	justify-content: flex-end;
+}
+
+
 #searchButton:hover {
-    background-color: #d72828;	
+    background-color: #ac3131;	
 }
