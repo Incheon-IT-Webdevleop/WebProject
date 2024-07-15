@@ -9,12 +9,10 @@ body, html {
        background-color: #f8f9fa;
        height: 80vh;
        display: flex;
-       align-items: center;
-       justify-content: center;
        position: relative; /* 상대 위치 지정 */
   	   overflow: hidden; /* 내부 요소의 넘치는 부분 숨기기 */
 }
-img {
+.hero img {
     width: 1680px;
     height: 100%;
     margin-bottom: 30px;
