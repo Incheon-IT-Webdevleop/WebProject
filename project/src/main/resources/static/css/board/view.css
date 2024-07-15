@@ -3,10 +3,11 @@ body, h3, table, th, td, button {
     padding: 0;
     border: 0;
     font-size: 100%;
-    vertical-align: baseline;
+   
 }
 
-/* Page Title Styling */
+
+/* 페이지 타이틀 영역*/
 .pageTitle {
     margin: 20px 0;
     text-align: center;
@@ -17,9 +18,9 @@ body, h3, table, th, td, button {
     font-weight: bold;
 }
 
-/* Content Section Styling */
+/* content-sector영역 */
 .content {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
     background-color: #f9f9f9;
@@ -28,51 +29,42 @@ body, h3, table, th, td, button {
 }
 
 section {
-    margin-bottom: 20px;
+    margin: auto;
 }
 
-/* Table Styling */
-.tb {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+/* 테이블 영역  */
+.tb{
+	width:100%;
+	height: 100%;
+	/* border: 1px solid #000; */
+	border-collapse: collapse;
+	background-color: white;
+	
+}
+th, td{
+	border: 1px solid #e2e2e2;
+	text-align: center;
+}
+th{
+	width:10%;
+	height: 40px;
+	background-color:  #eeeeee;
 }
 
-.tb th, .tb td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
+.thContent{
+	height: 400px;
+	
 }
 
-.tb th {
-    background-color: #f2f2f2;
+.tbCategory td{
+	width : 140px;
 }
 
-/* Specific styles for columns */
-.tbTitle td {
-    width: 100%;
+.tbTitle td, .tbContetnt td{
+	text-align: left;
 }
 
-.tbCategory th, .tbWriterNDate th {
-    width: 150px;
-}
 
-.tbCategory td, .tbWriterNDate td {
-    width: calc((100% - 300px) / 2); /* Adjust for 2 columns after headers */
-}
-
-.tbWriterNDate td {
-    width: 50%;
-}
-
-/* Specific styles for 작성자 and 작성날짜 */
-.tbWriterNDate th {
-    width: auto;
-}
-
-.tbWriterNDate td {
-    width: 100%;
-}
 
 /* Button Styling */
 button {
@@ -81,7 +73,7 @@ button {
     margin: 10px 0;
     font-size: 1rem;
     color: #fff;
-    background-color: #007bff;
+    background-color: #d72828;
     border-radius: 5px;
     cursor: pointer;
     text-align: center;
@@ -89,7 +81,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #ac3131;
 }
 
 button:focus {
@@ -97,14 +89,91 @@ button:focus {
 }
 
 button[onclick="delPost();"] {
-    background-color: #dc3545;
+    background-color: #d72828;
 }
 
 button[onclick="delPost();"]:hover {
-    background-color: #c82333;
+    background-color: #d72828;
 }
 
-/* Conditional Button Display */
-/* div[th\\:if] {
-    text-align: right;
-} */
+
+
+
+.modifyDelBtn{
+	display: flex;
+	margin-right: 20px;
+	justify-content: flex-end; 
+} 
+
+
+/* 왜 안돼 시바러ㅗ 
+.commentUpdateContainer .btns{
+	padding: 5px 10px;
+    font-size: 0.9rem;
+    margin-right: 5px;
+}
+ */
+
+.commentWrite{
+	 max-width: 1000px;
+	 margin: auto;
+	 
+}
+
+textarea{
+	max-width : 90%;
+	height: 200px;
+	resize : none;
+}
+
+.commentNone{
+	 max-width: 1000px;
+}
+
+.commentInput{
+	 max-width: 850px;
+	height: 220px;	
+	 margin: auto;
+	display: flex;
+}
+
+.commentInput button{
+	padding: 5px 10px;
+    font-size: 0.9rem;
+    margin-right: 5px;
+	 justify-content: flex-end;
+}
+
+.commentContainer{
+	padding : 20px;
+	 max-width: 1000px;
+	 background-color: #f9f9f9;
+	 margin: auto;
+	 
+}
+
+.commentIdxView{
+	padding :5px;
+	display: flex;
+	background-color: white;
+	margin: 5px;
+}
+
+.writer{
+	text-align: center;
+	width: 20%;
+}
+.cont{
+	margin-left: 0px;
+	margin-bottom: auto;
+	margin-top: auto;
+	width: 80%;
+}
+
+.funcBtns{
+	margin-bottom: auto;
+	margin-top: auto;
+	width: 20%;
+	  justify-content: flex-end;
+}
+
