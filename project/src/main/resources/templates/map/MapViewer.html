@@ -45,7 +45,7 @@
             <div class="dropdown">
                 <button id="regionDropBtn" onclick="toggleDropdown('regionDropdown')" class="region-dropdown-btn">
                     <i class="fa-solid fa-location-dot locationPin"></i>
-                    <span class="locationText">분석 지역을 선택해 주세요</span>
+                    <span class="locationText" id="areaMutationTarget">분석 지역을 선택해 주세요</span>
                     <i class="fa-solid fa-chevron-down regionDropdownArrow"></i>
                     <i class="fa-solid fa-chevron-up regionDropupArrow invisible"></i>
                 </button>
@@ -68,7 +68,7 @@
                 </div>
                 <button id="industryDropBtn" onclick="toggleDropdown('industryDropdown')" class="industry-dropdown-btn">
                     <i class="fa-solid fa-building industryIcon"></i>
-                    <span class="categorySelector"> 분석 업종을 선택해 주세요 </span>
+                    <span class="categorySelector" id="industryMutationTarget"> 분석 업종을 선택해 주세요 </span>
                     <i class="fa-solid fa-chevron-down industryDropdownArrow"></i>
                     <i class="fa-solid fa-chevron-up industryDropupArrow invisible"></i>
                 </button>
@@ -79,17 +79,17 @@
 						</div>
                         <ul id="industryList" class="gridrow-3">
                             <!-- 업종 드롭다운 리스트 목록 -->
-							<li id="FD6" data-order="0" class="food">
+							<li id="FD6" data-order="0" class="food" style="background-color: transparent;">
 								<span class="categorySpan">음식점</span>
-								<img src="/img/Icons/restaurant.png"/>
+								<img class="categoryIcon" src="/img/Icons/restaurant.png"/>
 							</li>
-							<li id="CE7" data-order="1" class="cafe">
-								<span class>카페</span>
-								<img src="/img/Icons/cafe.png"/>
+							<li id="CE7" data-order="1" class="cafe" style="background-color: transparent;">
+								<span class="categorySpan">카페</span>
+								<img class="categoryIcon" src="/img/Icons/cafe.png"/>
 							</li>
-							<li id="CS2" data-order="2" class="store">
-								<span class>편의점</span>
-								<img src="/img/Icons/convenienceStore.png"/>
+							<li id="CS2" data-order="2" class="store" style="background-color: transparent;">
+								<span class="categorySpan">편의점</span>
+								<img class="categoryIcon" src="/img/Icons/convenienceStore.png"/>
 							</li>
                         </ul>
                     </div>
@@ -121,25 +121,15 @@
 	};
 	// 맵 객체 저장용
 	let map;
-	
 
 	// 카테고리 선택 상태 저장용
-	let sidoSelected = false;
-	let sigSelected = false;
-	let emdSelected = false;
-	let industrySelected = false;
-	let polygonSelected = false;
-
-	let selectedRegionText = ""; // 상권분석 버튼 클릭이벤트 참조용 카테고리텍스트 저장변수
-	let selectedCategory = ""; // 상권분석 버튼 클릭이벤트 참조용 업종 저장변수
-	
-	let locationInnerText = ""; // 현재 위치 텍스트 저장변수
-	let areaName = ""; // 마우스가 위치한 지역명 저장변수
-	let setLocationText = ""; // 사이드바 토글이벤트 참조용 지역명변수
+	let sidoSelected, sigSelected, emdSelected, industrySelected, polygonSelected = false;
+	let selectedRegionText, selectedCategory  = ""; // 상권분석 버튼 클릭이벤트 참조용 카테고리텍스트, 업종 저장변수
+	let locationInnerText, areaName, setLocationText = ""; // 현재 위치 텍스트 저장변수, 마우스가 위치한 지역명 저장변수,  사이드바 토글이벤트 참조용 지역명변수
 	
 	// api key 상수화
 	const REST_API_KEY = 'a4d8b66c8d9ca3874f07a17519f828dc';
-	
+			
 	// 마커를 클릭했을 때 해당 장소의 상세정보를 보여줄 커스텀오버레이입니다
 	var placeOverlay = new kakao.maps.CustomOverlay({zIndex:1}), 
 	

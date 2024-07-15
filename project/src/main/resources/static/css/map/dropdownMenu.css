@@ -16,7 +16,7 @@
 
 .region-dropdown-btn, .industry-dropdown-btn {
 	background-color: #ffffff;
-	color: gray;
+	color: black;
 	padding: 18px 10px;
 	font-size: 16px;
 	font-weight: 700;
@@ -187,6 +187,7 @@
 .scrollbar::-webkit-scrollbar {
     width: 12px;  
 	border: 2px solid black;
+	cursor:pointer
 }
 
 /* 스크롤바 트랙 */
@@ -198,7 +199,7 @@
 .scrollbar::-webkit-scrollbar-thumb {
   background-color: #d71717;
   border-radius: 10px;
-  border: 1px thin #f1f1f1;
+  border: 2px solid lightcyan;
 }
 
 /* 스크롤바 thumb를 hover했을 때 */
