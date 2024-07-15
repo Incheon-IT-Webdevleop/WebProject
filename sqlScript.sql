@@ -122,6 +122,8 @@ INSERT INTO `user` (user_id, user_nickname, user_pwd, user_name, user_email, reg
 			VALUES ("mmmm", "rrrt", "$2a$10$UZZ7XTN0gwHZBm2ASdYpxeyeyjMC9AsaI2aDFy5aPh4ca8.C3JO5e", "정상필", "mod459@naver.com", NOW(), 1, 0);
 INSERT INTO board (user_idx, board_sectors, board_big_area, board_small_area, board_title, board_category, board_content, board_write_date)
 VALUES (1,1, '서울', '강남구', '첫 번째 게시글', 0, '첫 번째 게시글 내용입니다.', CURRENT_TIMESTAMP);
+INSERT INTO `user` (user_id, user_nickname, user_pwd, user_name, user_email, regdate, user_role, user_del)
+			VALUES ("wlaud1", "지명", "$2a$10$UZZ7XTN0gwHZBm2ASdYpxeyeyjMC9AsaI2aDFy5aPh4ca8.C3JO5e", "유지명", "jm75162042@gmail.com", NOW(), 1, 0);
 
 SELECT
 			B.BOARD_TITLE,
