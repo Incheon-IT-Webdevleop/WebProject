@@ -15,18 +15,18 @@
 		WHERE B.BOARD_DEL = 0-->
 	<!-- 게시글 목록 검색 필터 -->
 	<select id="findAll" parameterType="com.korea.project.dto.board.BoardListRequest" resultType="com.korea.project.dto.board.BoardResponse">
-		SELECT B.BOARD_IDX,
-			   B.BOARD_TITLE,
-			   U.USER_NICKNAME,
-			   U.USER_IDX,
-			   B.BOARD_WRITE_DATE,
-			   B.BOARD_VIEW,
-			   B.BOARD_CATEGORY
-		FROM BOARD B
-		JOIN `USER` U ON B.USER_IDX = U.user_idx
+		SELECT b.board_idx,
+			   b.board_title,
+			   u.user_nickname,
+			   u.user_idx,
+			   b.board_write_date,
+			   b.board_view,
+			   b.board_category
+		FROM board b
+		JOIN `user` u ON b.user_idx = u.user_idx
 		<!-- JOIN "USER" U ON B.USER_IDX = U.USER_IDX -->
 		WHERE B.board_del = 0
-		AND(B.BOARD_CATEGORY = #{boardCategory})
+		AND(b.board_category = #{boardCategory})
 		
 <!-- 		<if test="boardBigArea != null">
 		    AND (B.BOARD_BIG_AREA = #{boardBigArea} OR B.BOARD_BIG_AREA = '전체')
@@ -47,7 +47,7 @@
 
 		 
 		<if test="isMypage != 0">
-			AND B.USER_IDX = #{userIdx}
+			AND b.user_idx = #{userIdx}
 		</if>
 		<choose>
             <when test="boardBigArea == null">
@@ -57,7 +57,7 @@
             <!--비워둬서 그냥 나옴  -->
             </when>
             <otherwise>
-            	 AND (B.BOARD_BIG_AREA = #{boardBigArea})
+            	 AND (b.board_big_area = #{boardBigArea})
             </otherwise>
         </choose>
 		<choose>
@@ -68,7 +68,7 @@
             <!--비워둬서 그냥 나옴  -->
             </when>
             <otherwise>
-            	 AND (B.BOARD_SMALL_AREA = #{boardSmallArea})
+            	 AND (b.board_small_area = #{boardSmallArea})
             </otherwise>
         </choose>
 		<choose>
@@ -79,17 +79,17 @@
             <!--비워둬서 그냥 나옴  -->
             </when> 
             <otherwise>
-            	 AND (B.BOARD_SECTORS = #{boardSectors} OR B.BOARD_SECTORS = 6)
+            	 AND (b.board_sectors = #{boardSectors} OR B.BOARD_SECTORS = 6)
             </otherwise>
         </choose>
         <choose>
         <when test="searchKeyword != null and searchKeyword != ''">
-		    AND (B.BOARD_TITLE LIKE CONCAT('%', #{searchKeyword}, '%') 
-		         OR B.BOARD_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%'))
+		    AND (b.board_title LIKE CONCAT('%', #{searchKeyword}, '%') 
+		         OR b.board_content LIKE CONCAT('%', #{searchKeyword}, '%'))
          </when>
 		</choose>
         
-		ORDER BY B.BOARD_IDX DESC
+		ORDER BY b.board_idx DESC
 		LIMIT #{pagination.limitStart}, #{recordSize} 
 	</select>
 	
@@ -105,10 +105,10 @@
 		WHERE board_del = 0
 		<if test="boardCategory != 3">
 		
-			AND(BOARD_CATEGORY = #{boardCategory})
+			AND(board_catogory = #{boardCategory})
 		</if>
 		<if test="isMypage != 0">
-			AND USER_IDX = #{userIdx}
+			AND user_idx = #{userIdx}
 		</if>
 		<choose>
             <when test="boardBigArea == null">
@@ -118,7 +118,7 @@
             <!--비워둬서 그냥 나옴  -->
             </when>
             <otherwise>
-            	 AND (BOARD_BIG_AREA = #{boardBigArea})
+            	 AND (board_big_area = #{boardBigArea})
             </otherwise>
         </choose>
 		<choose>
@@ -129,7 +129,7 @@
             <!--비워둬서 그냥 나옴  -->
             </when>
             <otherwise>
-            	 AND (BOARD_SMALL_AREA = #{boardSmallArea})
+            	 AND (board_small_area = #{boardSmallArea})
             </otherwise>
         </choose>
 		<choose>
@@ -140,13 +140,13 @@
             <!--비워둬서 그냥 나옴  -->
             </when> 
             <otherwise>
-            	 AND (BOARD_SECTORS = #{boardSectors} OR BOARD_SECTORS = 6)
+            	 AND (board_sectors = #{boardSectors} OR BOARD_SECTORS = 6)
             </otherwise>
         </choose>
         <choose>
         <when test="searchKeyword != null and searchKeyword != ''">
-		    AND (BOARD_TITLE LIKE CONCAT('%', #{searchKeyword}, '%') 
-		         OR BOARD_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%'))
+		    AND (board_title LIKE CONCAT('%', #{searchKeyword}, '%') 
+		         OR board_content LIKE CONCAT('%', #{searchKeyword}, '%'))
          </when>
 		</choose>
 		
@@ -228,51 +228,53 @@
 	<!-- 게시글 상세보기 -->
 	<select id="findById" parameterType="int" resultType="com.korea.project.dto.board.BoardResponse">
 		SELECT
-			B.BOARD_CATEGORY,
-			B.BOARD_IDX,
-			B.BOARD_TITLE,
-			B.BOARD_SECTORS,
-			B.BOARD_BIG_AREA,
-			B.BOARD_SMALL_AREA,
-			B.USER_IDX, 
-			U.USER_NICKNAME,
-			B.BOARD_WRITE_DATE,
-			B.BOARD_CONTENT
-		FROM BOARD B
-		JOIN `USER` U ON B.USER_IDX = U.user_idx
-		WHERE B.BOARD_IDX = #{boardIdx}
+			b.board_category,
+			b.board_idx,
+			b.board_title,
+			b.board_sectors,
+			b.board_big_area,
+			b.board_small_area,
+			b.user_idx, 
+			u.user_nickname,
+			b.board_write_date,
+			b.board_content
+		FROM board b
+		JOIN `user` u ON b.user_idx = u.user_idx
+		WHERE b.board_idx = #{boardIdx}
 	</select>
 	
 	<!-- 게시글 삭제 -->
 	<delete id="delPost" parameterType="int">
-		UPDATE BOARD
-		SET BOARD_DEL = -1
-		WHERE BOARD_IDX = #{boardIdx}
+		UPDATE board
+		SET board_del = -1
+		WHERE board_idx = #{boardIdx}
 	</delete>
 	
 	<!-- 게시글 수정 -->
 	<update id="updateBoard" parameterType="com.korea.project.dto.board.BoardResponse">
-		UPDATE BOARD
-		SET BOARD_CATEGORY = #{boardCategory},
-			BOARD_TITLE = #{boardTitle},
-			BOARD_SECTORS = #{boardSectors},
-			BOARD_BIG_AREA = #{boardBigArea},
-			BOARD_SMALL_AREA = #{boardSmallArea},
-			BOARD_CONTENT = #{boardContent}
-		WHERE BOARD_IDX = #{boardIdx}
+		UPDATE board
+		SET board_category = #{boardCategory},
+			board_title = #{boardTitle},
+			board_sectors = #{boardSectors},
+			board_big_area = #{boardBigArea},
+			board_small_area = #{boardSmallArea},
+			board_content = #{boardContent}
+		WHERE board_idx = #{boardIdx}
 	</update>
 	
 	
 	<!-- 조회수 카운팅해서 올리기 -->
 	<update id="viewCount" parameterType="int">
-		UPDATE BOARD SET BOARD_VIEW = BOARD_VIEW +1 WHERE BOARD_IDX =#{board_idx}
+		UPDATE board
+		SET board_view = board_view +1 
+		WHERE board_idx =#{board_idx}
 	</update>
 	
-	<update id="boardUpdate" parameterType="int">
-		UPDATE BOARD SET
+<!-- 	<update id="boardUpdate" parameterType="int">
+		UPDATE board SET
 		REDHIT = READHIT _1
 		WHERE BOARD_IDX = #{boardIdx}
-	</update>
+	</update> -->
 	
 	
 	

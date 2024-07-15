@@ -4,19 +4,19 @@
 
 <!-- commnet 테이블 전체 컬럼 -->
 <sql id="commentColumns">
-	COMMENT_IDX,
-	USER_IDX,
-	BOARD_IDX,
-	COMMENT_DEPTH,
-	COMMENT_DEL,
-	COMMENT_CONTENT,
-	COMMENT_WRITE_DATE
+	comment_idx,
+	user_idx,
+	board_idx,
+	comment_depth,
+	comment_del,
+	comment_content,
+	comment_write_date
 </sql>
 
 
 <!-- 댓글 저장  -->
 <insert id="save" parameterType="com.korea.project.vo.board.CommentVO"  useGeneratedKeys="true" keyProperty="commentIdx">
-	INSERT INTO COMMENT(
+	INSERT INTO comment(
 		 <include refid="commentColumns" />
 	) VALUES (
 		#{commentIdx},
@@ -34,42 +34,42 @@
 <select id="findById">
 	SELECT
 		<include refid="commentColumns" />
-	FROM COMMENT
-	WHERE COMMENT_IDX = #{commentIdx}
+	FROM comment
+	WHERE comment_idx = #{commentIdx}
 </select>
 
 
 <!-- 댓글 수정 -->
 <update id="update">
-	UPDATE COMMENT
-	SET COMMENT_CONTENT = #{commentContent}
-	WHERE COMMENT_IDX = #{commentIdx}
+	UPDATE comment
+	SET comment_content = #{commentContent}
+	WHERE comment_idx = #{commentIdx}
 </update>
 
 <!-- 댓글 삭제 -->
 <delete id="deleteById">
-	UPDATE COMMENT
-	SET COMMENT_DEL = -1
-	WHERE COMMENT_IDX = #{commentIdx}
+	UPDATE comment
+	SET comment_del = -1
+	WHERE comment_idx = #{commentIdx}
 </delete>
 
 <!-- 댓글 리스트 조회 -->
 <select id="findAll">
 	SELECT
-	 	COMMENT_IDX,
-	 	C.USER_IDX,
-		USER_NICKNAME,
-		BOARD_IDX,
-		COMMENT_DEPTH,
-		COMMENT_DEL,
-		COMMENT_CONTENT,
-		COMMENT_WRITE_DATE
-	FROM COMMENT C
-	JOIN `USER` U ON C.USER_IDX = U.USER_IDX
-	WHERE COMMENT_DEL = 0
-		AND BOARD_IDX = #{boardIdx}
+	 	comment_idx,
+	 	c.user_idx,
+		user_nickname,
+		board_idx,
+		comment_depth,
+		comment_del,
+		comment_content,
+		comment_write_date
+	FROM comment c
+	JOIN `user` u ON c.user_idx = u.user_idx
+	WHERE comment_del = 0
+		AND board_idx = #{boardIdx}
 		
-	ORDER BY COMMENT_IDX DESC
+	ORDER BY comment_idx DESC
 </select>
 
 
