@@ -18,6 +18,7 @@
 		SELECT B.BOARD_IDX,
 			   B.BOARD_TITLE,
 			   U.USER_NICKNAME,
+			   U.USER_IDX,
 			   B.BOARD_WRITE_DATE,
 			   B.BOARD_VIEW,
 			   B.BOARD_CATEGORY
@@ -45,7 +46,9 @@
 				
 
 		 
-		
+		<if test="isMypage != 0">
+			AND B.USER_IDX = #{userIdx}
+		</if>
 		<choose>
             <when test="boardBigArea == null">
                <!--  AND (B.BOARD_BIG_AREA = #{boardBigArea} OR B.BOARD_BIG_AREA = '전체') -->
@@ -100,8 +103,13 @@
 		from board 
 		
 		WHERE board_del = 0
-		AND(BOARD_CATEGORY = #{boardCategory})
+		<if test="boardCategory != 3">
 		
+			AND(BOARD_CATEGORY = #{boardCategory})
+		</if>
+		<if test="isMypage != 0">
+			AND USER_IDX = #{userIdx}
+		</if>
 		<choose>
             <when test="boardBigArea == null">
                <!--  AND (B.BOARD_BIG_AREA = #{boardBigArea} OR B.BOARD_BIG_AREA = '전체') -->

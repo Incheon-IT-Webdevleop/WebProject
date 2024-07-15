@@ -3,7 +3,6 @@ package com.korea.project.service.admin;
 import com.korea.project.mapper.franchise.FranchiseMapper;
 import com.korea.project.vo.franchise.FranchiseVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,20 +17,6 @@ public class AdminFranchiseServiceImpl implements AdminFranchiseService {
     @Autowired
     public AdminFranchiseServiceImpl(FranchiseMapper franchiseMapper) {
         this.franchiseMapper = franchiseMapper;
-    }
-
-    @Override
-    public List<FranchiseVO> searchFranchisesByName(String name,int offset, int limit) {
-        try {
-            return franchiseMapper.searchFranchisesByName(name,offset, limit);
-        } catch (DataAccessException e) {
-            System.err.println("Failed to retrieve franchises by name: " + e.getMessage());
-            throw e;
-        }
-    }
-    @Override
-    public int countFranchisesByName(String name) {
-        return franchiseMapper.countFranchisesByName(name);
     }
 
     @Override
@@ -55,11 +40,32 @@ public class AdminFranchiseServiceImpl implements AdminFranchiseService {
     }
 
     @Override
+    public List<FranchiseVO> searchFranchisesByName(String name, int offset, int limit) {
+        return franchiseMapper.searchFranchisesByName(name, offset, limit);
+    }
+
+    @Override
     public int countAllFranchises() {
         return franchiseMapper.countAllFranchises();
     }
+
+    @Override
+    public int countFranchisesByName(String name) {
+        return franchiseMapper.countFranchisesByName(name);
+    }
+
     @Override
     public List<FranchiseVO> selectAllFranchisesPaged(int offset, int pageSize) {
         return franchiseMapper.selectAllFranchisesPaged(offset, pageSize);
+    }
+
+    @Override
+    public List<FranchiseVO> getFranchisesBySectorPaged(int sector, int offset, int limit) {
+        return franchiseMapper.selectFranchisesBySectorPaged(sector, offset, limit);
+    }
+
+    @Override
+    public int countFranchisesBySector(int sector) {
+        return franchiseMapper.countFranchisesBySector(sector);
     }
 }

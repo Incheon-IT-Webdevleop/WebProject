@@ -49,104 +49,98 @@
   gap: 20px;  /* 그리드 내 요소 사이의 간격 설정 */
 }
 
-/* 카테고리 텍스트에 대한 스타일 */
-.category-text {
-  font-size: 14px;  /* 글꼴 크기 설정 */
-  font-weight: normal;  /* 글꼴 굵기 설정 */
-  line-height: 1.43;  /* 줄 높이 설정 */
-  color: #666;  /* 글꼴 색상 설정 */
-}
+
 
 /* 카테고리 상자에 대한 스타일 */
 .categoryBox {
-  max-width: 1200px;  /* 최대 너비 설정 */
-  margin: 20px auto;  /* 가운데 정렬 및 상하 여백 설정 */
-  display: flex;  /* 플렉스 박스 형식으로 표시 */
-  justify-content: space-between;  /* 요소들 사이의 간격을 균등하게 설정 */
+  max-width: 1200px;
+  margin: 20px auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; /* 필요시 줄바꿈 허용 */
 }
-
-/* 카테고리 버튼에 대한 스타일 */
-.category-btn {
-  width: 100%;  /* 버튼의 너비 */
-  max-width: 220px;  /* 최대 너비 설정 */
-  height: 122px;  /* 버튼의 높이 */
-  display: flex;  /* 플렉스 박스 형식으로 표시 */
-  align-items: center;  /* 요소를 수직으로 가운데 정렬 */
-  justify-content: center;  /* 요소를 수평으로 가운데 정렬 */
-  border: solid 2px #f5f7fa;  /* 테두리 스타일 및 색상 설정 */
-  background-color: #f5f7fa;  /* 배경색 설정 */
-  font-weight: 500;  /* 글꼴 굵기 설정 */
-  line-height: 1.87;  /* 줄 높이 설정 */
-  letter-spacing: -0.9px;  /* 글자 간격 설정 */
-  color: #222;  /* 글꼴 색상 설정 */
-  position: relative;  /* 상대 위치 설정 */
-  transition: all 0.3s ease;  /* 전환 효과 설정 */
-  border-radius: 5px;  /* 테두리 반경 설정 */
-}
-
-/* 카테고리 메인에 대한 스타일 */
 .category-main {
   max-width: 1200px;  /* 최대 너비 설정 */
   width: 100%;  /* 전체 너비 설정 */
   margin: 0 auto;  /* 가운데 정렬 및 좌우 여백 설정 */
 }
 
-/* 활성화된 카테고리 버튼에 대한 스타일 */
-.category-btn.active {
-  border-color: #125de6;  /* 테두리 색상 설정 */
-  background-color: #fff;  /* 배경색 설정 */
+/* 카테고리 버튼에 대한 스타일 */
+.category-btn {
+  width: calc(20% - 10px); /* 5개의 버튼을 균등하게 배치 */
+  height: 300px; /* 버튼의 높이 증가 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  overflow: hidden; /* 이미지가 버튼 밖으로 나가지 않도록 */
+  margin-bottom: 10px; /* 버튼 사이의 간격 */
 }
 
-/* 카테고리 버튼 내 링크에 대한 스타일 */
-.category-btn a {
-  text-decoration: none;  /* 텍스트에 대한 밑줄 제거 */
+.category-img {
+  width: 100%; /* 이미지 너비를 버튼 너비에 맞춤 */
+  height: 100%; /* 이미지 높이를 버튼 높이에 맞춤 */
+  object-fit: cover; /* 이미지가 버튼을 꽉 채우도록 설정 */
+  transition: transform 0.3s ease; /* 호버 효과를 위한 전환 설정 */
 }
 
-/* 카테고리 버튼 내 텍스트에 대한 스타일 */
-.category-btn .category-btn-text {
-  position: absolute;  /* 절대 위치 설정 */
-  bottom: 12px;  /* 하단 여백 설정 */
-  left: 0;  /* 왼쪽 여백 설정 */
-  width: 100%;  /* 요소의 너비 */
-  text-align: center;  /* 텍스트 가운데 정렬 */
-  color: black;
+/* 호버 효과 */
+.category-btn:hover .category-img {
+  transform: scale(1.1); /* 호버시 이미지를 약간 확대 */
+}
+
+/* 반응형 디자인을 위한 미디어 쿼리 */
+@media (max-width: 768px) {
+  .category-btn {
+    width: calc(33.33% - 10px); /* 3개씩 배치 */
+    height: 140px; /* 높이 조정 */
+  }
+}
+
+@media (max-width: 480px) {
+  .category-btn {
+    width: calc(50% - 10px); /* 2개씩 배치 */
+    height: 120px; /* 높이 조정 */
+  }
 }
 
 /* 페이지네이션 박스에 대한 스타일 */
 .pagingBox {
-  width: 100%;  /* 전체 너비 설정 */
-  max-width: 1200px;  /* 최대 너비 설정 */
-  margin: 0 auto;  /* 가운데 정렬 및 좌우 여백 설정 */
-  display: flex;  /* 플렉스 박스 형식으로 표시 */
-  justify-content: center;  /* 요소를 수평으로 가운데 정렬 */
-  padding: 20px;  /* 내부 여백 설정 */
-  gap: 20px;  /* 요소들 사이의 간격 설정 */
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
-/* 페이지네이션 링크 스타일 */
+
 .pagingBox a {
-  text-decoration: none;  /* 밑줄 제거 */
-  display: inline-block;  /* 인라인 블록 요소로 표시 */
-  width: 30px;  /* 링크의 너비 */
-  height: 30px;  /* 링크의 높이 */
-  line-height: 30px;  /* 링크 내 텍스트의 세로 정렬 */
-  text-align: center;  /* 텍스트 가운데 정렬 */
-  border-radius: 50%;  /* 동그라미 모양으로 테두리 반경 설정 */
-  margin: 0 5px;  /* 링크 간의 간격 설정 */
-  transition: background-color 0.3s;  /* 배경색 변경 효과 */
-  color: #999;  /* 글자 색상 설정 */
+  text-decoration: none;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 50%;
+  transition: background-color 0.3s, color 0.3s;
+  color: #666;
+  border: 1px solid #ccc;
 }
 
-/* 현재 페이지 링크 스타일 */
 .pagingBox a.active {
-  background-color: #569aff;  /* 활성화된 링크의 배경색 설정 */
-  color: #fff;  /* 활성화된 링크의 글자 색상 설정 */
+  background-color: #125de6;
+  color: #fff;
+  border-color: #125de6;
 }
 
-/* 링크에 마우스 호버 시 스타일 */
 .pagingBox a:hover {
-  background-color: #ddd;  /* 호버 시 배경색 변경 */
-  color: #000;  /* 호버 시 글자 색상 변경 */
+  background-color: #ddd;
+  color: #000;
 }
+
 
 /* 검색 폼에 대한 스타일 */
 .search-form {
@@ -189,4 +183,26 @@
   width: 40px;  /* 버튼의 너비 설정 */
   height: 46px;  /* 버튼의 높이 설정 */
   border: none;  /* 테두리 없음 */
-  cursor: pointer;  /* 커서 스타일 변경 */
+  cursor: pointer;  /* 커서 스타일 변경 */}
+  /* 카드 링크에 대한 스타일 */
+.card-link,
+.card-link:visited,
+.card-link:hover,
+.card-link:active {
+    text-decoration: none;
+    color: #000; /* 항상 검은색으로 설정 */
+}
+
+/* 카드 제목에 대한 스타일 */
+.card-title {
+    font-weight: bold;
+    line-height: 1.65;
+    color: #000; /* 항상 검은색으로 설정 */
+}
+
+/* 텍스트 상자 내의 모든 텍스트에 대한 스타일 */
+.text-box,
+.text-box * {
+    color: #000; /* 항상 검은색으로 설정 */
+}
+  

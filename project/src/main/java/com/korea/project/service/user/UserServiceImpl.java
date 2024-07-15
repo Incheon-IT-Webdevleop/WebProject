@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService{
 			user.setUserEmail(vo.getUserEmail());
 			user.setUserName(vo.getUserName());
 			user.setUserNickname(vo.getUserNickname());
-
+			user.setProvider("전체");
 			
 		   
 		   userDAO.signUp(user);
@@ -197,17 +197,19 @@ public class UserServiceImpl implements UserService{
 		@Override
 		public PagingResponse<BoardResponse> myPost(BoardListRequest params, SessionUserDTO user) {
 	  		int nowPage = 1;
-	  		System.out.println("con nowPage : " + params.getNowpage());
 	  		if(params.getNowpage() != 0) {
 	  			nowPage = params.getNowpage();
 	  		}
-	  	
+	  		// 마이페이지 임을 알려주기위한 isMypage 1로 세팅
+	  		params.setIsMypage(1);
 	  		params.setNowpage(nowPage);
+	  		params.setUserIdx(user.getUserIdx());
 	  		
 	  		int count = boardDAO.count(params);
 			if(count < 1) {
 				return new PagingResponse<>(Collections.emptyList(), null);
 			}
+			log.info("count : " + count);
 			
 			//Pagination 객체를 생성해서 페이지 정보 계산 후 params에 계산된 페이지 정보 
 			Pagination pagination = new Pagination(count, params);
