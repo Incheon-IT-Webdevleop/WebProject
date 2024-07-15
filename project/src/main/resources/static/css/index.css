@@ -12,12 +12,13 @@ body, html {
        align-items: center;
        justify-content: center;
        position: relative; /* 상대 위치 지정 */
-   overflow: hidden; /* 내부 요소의 넘치는 부분 숨기기 */
+  	   overflow: hidden; /* 내부 요소의 넘치는 부분 숨기기 */
 }
-image {
-
-   
+.hero image {
+    width: auto;
+    height: 100%;
     margin-bottom: 30px;
+    object-fit: cover; /* 이미지가 요소에 맞춰 자동으로 잘리도록 */
 }
 
 .cta-button {
