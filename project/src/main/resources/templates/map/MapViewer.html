@@ -45,7 +45,7 @@
             <div class="dropdown">
                 <button id="regionDropBtn" onclick="toggleDropdown('regionDropdown')" class="region-dropdown-btn">
                     <i class="fa-solid fa-location-dot locationPin"></i>
-                    <span class="locationText">분석 지역을 선택해 주세요</span>
+                    <span class="locationText" id="areaMutationTarget">분석 지역을 선택해 주세요</span>
                     <i class="fa-solid fa-chevron-down regionDropdownArrow"></i>
                     <i class="fa-solid fa-chevron-up regionDropupArrow invisible"></i>
                 </button>
@@ -68,7 +68,7 @@
                 </div>
                 <button id="industryDropBtn" onclick="toggleDropdown('industryDropdown')" class="industry-dropdown-btn">
                     <i class="fa-solid fa-building industryIcon"></i>
-                    <span class="categorySelector"> 분석 업종을 선택해 주세요 </span>
+                    <span class="categorySelector" id="industryMutationTarget"> 분석 업종을 선택해 주세요 </span>
                     <i class="fa-solid fa-chevron-down industryDropdownArrow"></i>
                     <i class="fa-solid fa-chevron-up industryDropupArrow invisible"></i>
                 </button>
@@ -79,17 +79,17 @@
 						</div>
                         <ul id="industryList" class="gridrow-3">
                             <!-- 업종 드롭다운 리스트 목록 -->
-							<li id="FD6" data-order="0" class="food">
+							<li id="FD6" data-order="0" class="food" style="background-color: transparent;">
 								<span class="categorySpan">음식점</span>
-								<img src="/img/Icons/restaurant.png"/>
+								<img class="categoryIcon" src="/img/Icons/restaurant.png"/>
 							</li>
-							<li id="CE7" data-order="1" class="cafe">
-								<span class>카페</span>
-								<img src="/img/Icons/cafe.png"/>
+							<li id="CE7" data-order="1" class="cafe" style="background-color: transparent;">
+								<span class="categorySpan">카페</span>
+								<img class="categoryIcon" src="/img/Icons/cafe.png"/>
 							</li>
-							<li id="CS2" data-order="2" class="store">
-								<span class>편의점</span>
-								<img src="/img/Icons/convenienceStore.png"/>
+							<li id="CS2" data-order="2" class="store" style="background-color: transparent;">
+								<span class="categorySpan">편의점</span>
+								<img class="categoryIcon" src="/img/Icons/convenienceStore.png"/>
 							</li>
                         </ul>
                     </div>
@@ -121,25 +121,15 @@
 	};
 	// 맵 객체 저장용
 	let map;
-	
 
 	// 카테고리 선택 상태 저장용
-	let sidoSelected = false;
-	let sigSelected = false;
-	let emdSelected = false;
-	let industrySelected = false;
-	let polygonSelected = false;
-
-	let selectedRegionText = ""; // 상권분석 버튼 클릭이벤트 참조용 카테고리텍스트 저장변수
-	let selectedCategory = ""; // 상권분석 버튼 클릭이벤트 참조용 업종 저장변수
-	
-	let locationInnerText = ""; // 현재 위치 텍스트 저장변수
-	let areaName = ""; // 마우스가 위치한 지역명 저장변수
-	let setLocationText = ""; // 사이드바 토글이벤트 참조용 지역명변수
+	let sidoSelected, sigSelected, emdSelected, industrySelected, polygonSelected = false;
+	let selectedRegionText, selectedCategory  = ""; // 상권분석 버튼 클릭이벤트 참조용 카테고리텍스트, 업종 저장변수
+	let locationInnerText, areaName, setLocationText = ""; // 현재 위치 텍스트 저장변수, 마우스가 위치한 지역명 저장변수,  사이드바 토글이벤트 참조용 지역명변수
 	
 	// api key 상수화
 	const REST_API_KEY = 'a4d8b66c8d9ca3874f07a17519f828dc';
-	
+			
 	// 마커를 클릭했을 때 해당 장소의 상세정보를 보여줄 커스텀오버레이입니다
 	var placeOverlay = new kakao.maps.CustomOverlay({zIndex:1}), 
 	
@@ -572,8 +562,9 @@ function getPolygonCenter(coordinates) {
 	    $(arrowDownSelector).toggleClass('invisible');
 	    $(arrowUpSelector).toggleClass('invisible');
 	}
-
-    $.support.cors = true;
+	
+	// JQuery 최신버전에서는 CORS를 자동으로 지원한다. 
+    $.support.cors = true; // CORS 설정
 
     // 행정구역 데이터를 HTML로 변환하는 함수
     function generateHtmlForFeatures(features, codeKey, nameKey) {
@@ -636,7 +627,6 @@ function getPolygonCenter(coordinates) {
     $(function() {
 		
 		let cityName = "";
-		
         // 시/도 정보를 가져오는 AJAX 요청
 		//						dataType, dataParams, targetElement, codeKey, nameKey
         fetchRegionData("LT_C_ADSIDO_INFO", null, "#sido_code", "ctprvn_cd", "ctp_kor_nm");
@@ -696,7 +686,6 @@ function getPolygonCenter(coordinates) {
              $('#dong_code').show();
 			 
              if(!emdSelected || !polygonSelected) {
-				
                 $('.emd').html(`<span class="selectedEmd">${thisCityName}</span>`);
 				
                 locationInnerText = locationInnerText + " " + thisCityName;
@@ -710,7 +699,6 @@ function getPolygonCenter(coordinates) {
              emdSelected = true;
 			 polygonSelected = true;
          });
-
     });
 
 	// 매칭된 폴리곤 저장용 변수
@@ -718,7 +706,6 @@ function getPolygonCenter(coordinates) {
 	
 	// 카테고리 선택 줌인 이벤트 함수
 	function zoomArea(regionName) {
-		
 		// 이전에 강조된 폴리곤을 다시 투명하게 만드는 함수
 		function resetPolygonHighlight() {
 			for (const type in polygons) {
@@ -795,8 +782,8 @@ function updateClassesAndVisibility(selectors, addClasses, removeClasses) {
 // 모든 카테고리 유효성 체크 이후, 상권분석기능 실행하는 함수
 function viewReport() {
 	if(sidoSelected && sigSelected && emdSelected && polygonSelected && industrySelected) {
-		console.log(selectedRegionText);
-		console.log(selectedCategory);
+		console.log("선택된 지역 정보 : " + selectedRegionText);
+		console.log("선택된 업종 정보 : " + selectedCategory);
 		window.alert("분석이 완료 되었습니다.");
 	} else if (!sidoSelected || !sigSelected || !emdSelected || !polygonSelected) {
 		window.alert('분석하고 싶은 지역과 업종을 모두 선택 후 실행해주세요.');
@@ -812,22 +799,20 @@ function viewReport() {
 // 다시선택 버튼 클릭이벤트 함수
 function resetSelection() {
 	// 배열 비우기
-	window.polygons.sido.length = 0;
-	window.polygons.sig.length = 0;
-	window.polygons.emd.length = 0;
+	window.polygons.sido.length, window.polygons.sig.length, window.polygons.emd.length = 0;
+	
+	const reloadPage = () => {
+	            location.reload();
+	        }
+	// 페이지 새로고침 실행
+	reloadPage();	
 	
 	// 맵 렌더링 재실행
 	initMap();
 	
 	// 모든 필드변수 초기화
-	polygonSelected = false;
-	sidoSelected = false;
-	sigSelected = false;
-	emdSelected = false;
-	industrySelected = false;
-	selectedRegionText = "";
-    areaName = "";
-    locationInnerText = "";
+	polygonSelected, sidoSelected, sigSelected, emdSelected, industrySelected = false;
+	selectedRegionText, areaName, locationInnerText = "";
 	
 	$(".categorySelector").text("업종을 선택해 주세요");
 
@@ -858,9 +843,7 @@ function resetSelection() {
 	
 	// 리셋 이후 데이터 재추출
 	fetchRegionData("LT_C_ADSIDO_INFO", null, "#sido_code", "ctprvn_cd", "ctp_kor_nm");
-	}
-	
-	
+	}	
 </script>
 
 </body>

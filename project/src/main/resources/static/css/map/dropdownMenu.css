@@ -1,6 +1,7 @@
 .form-group {
 	box-sizing: border-box;
 }
+/*드랍다운 버튼 컨테이너 스타일*/
 .dropdown {
     position: relative;
     display: block;
@@ -14,9 +15,10 @@
 	width: 100%;
 }
 
+/*드랍다운 버튼 스타일*/
 .region-dropdown-btn, .industry-dropdown-btn {
 	background-color: #ffffff;
-	color: gray;
+	color: black;
 	padding: 18px 10px;
 	font-size: 16px;
 	font-weight: 700;
@@ -32,7 +34,7 @@
 	border-radius: 10px 10px 0px 0px;
 }
 
-
+/*드랍다운 카테고리 child 태그들 일괄 적용*/
 .region-dropdown-btn:hover .locationPin,
 .region-dropdown-btn:hover .locationText, 
 .region-dropdown-btn:hover .regionDropdownArrow,
@@ -187,6 +189,7 @@
 .scrollbar::-webkit-scrollbar {
     width: 12px;  
 	border: 2px solid black;
+	cursor:pointer
 }
 
 /* 스크롤바 트랙 */
@@ -198,7 +201,7 @@
 .scrollbar::-webkit-scrollbar-thumb {
   background-color: #d71717;
   border-radius: 10px;
-  border: 1px thin #f1f1f1;
+  border: 2px solid lightcyan;
 }
 
 /* 스크롤바 thumb를 hover했을 때 */
