@@ -7,6 +7,7 @@ body, html {
 }
 .hero {
        background-color: #f8f9fa;
+       width:1680px;
        height: 80vh;
        display: flex;
        position: relative; /* 상대 위치 지정 */
