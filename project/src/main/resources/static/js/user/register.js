@@ -18,6 +18,10 @@ $(document).ready(function() {
         }, 1000); // 1초마다 업데이트
     }
 	
+	function endTimer(){
+		$('.timer').hide();
+	}
+	
 	function updateTimerDisplay(seconds) {
 	    var minutes = Math.floor(seconds / 60);
 	    var remainingSeconds = seconds % 60;
@@ -128,6 +132,7 @@ $(document).ready(function() {
 	            success: function(response) {
 	                if (response.result === 'success') {
 	                    registerFlag["certificationEMail"] = true;
+						endTimer();
 	                } else {
 						$('#duplication-email').html("인증번호가 다릅니다.<br>다시입력해주세요.").show();
 	                    // 인증 실패 시 할 작업
