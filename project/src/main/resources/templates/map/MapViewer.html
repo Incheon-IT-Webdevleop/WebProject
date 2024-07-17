@@ -28,7 +28,8 @@
 <div id="sidebar-container">
     <div id="sidebar">
         <div class="form-group locationContainer">
-			<a th:href="@{/}"><img src="/img/logo/frans_l0go_slogan.png" style="width: 250px; margin:0 50px; height: 140px;"></a> <!-- 이미지 파일 경로설정 다시하기-->
+            <a th:href="@{/}"><img src="/img/logo/frans_l0go_slogan.png"
+                                   style="width: 250px; margin:0 50px; height: 140px;"></a> <!-- 이미지 파일 경로설정 다시하기-->
             <label for="current-location" class="location-marker">현재 위치</label>
             <div class="input-container">
                 <input type="text" id="current-location" th:value="${areaName}" placeholder="지역을 선택해 주세요" readonly>
@@ -61,7 +62,8 @@
                         <ul id="regionList" class="gridrow-3">
                             <!-- 시/도, 시/군/구, 읍/면/동, 리/동 드롭다운 목록 -->
                             <ul id="sido_code" class="dropdown-content gridrow-3 scrollbar"></ul>
-                            <ul id="sigoon_code" class="dropdown-content gridrow-3 scrollbar" style="display:none;"></ul>
+                            <ul id="sigoon_code" class="dropdown-content gridrow-3 scrollbar"
+                                style="display:none;"></ul>
                             <ul id="dong_code" class="dropdown-content gridrow-3 scrollbar" style="display:none;"></ul>
                         </ul>
                     </div>
@@ -74,23 +76,23 @@
                 </button>
                 <div id="industryDropdown" class="dropdown-content">
                     <div class="industryDropdown-section">
-						<div class="industry-selector">
-							<span class="industryText">업종</span>							
-						</div>
+                        <div class="industry-selector">
+                            <span class="industryText">업종</span>
+                        </div>
                         <ul id="industryList" class="gridrow-3">
                             <!-- 업종 드롭다운 리스트 목록 -->
-							<li id="FD6" data-order="0" class="food" style="background-color: transparent;">
-								<span class="categorySpan">음식점</span>
-								<img class="categoryIcon" src="/img/Icons/restaurant.png"/>
-							</li>
-							<li id="CE7" data-order="1" class="cafe" style="background-color: transparent;">
-								<span class="categorySpan">카페</span>
-								<img class="categoryIcon" src="/img/Icons/cafe.png"/>
-							</li>
-							<li id="CS2" data-order="2" class="store" style="background-color: transparent;">
-								<span class="categorySpan">편의점</span>
-								<img class="categoryIcon" src="/img/Icons/convenienceStore.png"/>
-							</li>
+                            <li id="FD6" data-order="0" class="food" style="background-color: transparent;">
+                                <span class="categorySpan">음식점</span>
+                                <img class="categoryIcon" src="/img/Icons/restaurant.png"/>
+                            </li>
+                            <li id="CE7" data-order="1" class="cafe" style="background-color: transparent;">
+                                <span class="categorySpan">카페</span>
+                                <img class="categoryIcon" src="/img/Icons/cafe.png"/>
+                            </li>
+                            <li id="CS2" data-order="2" class="store" style="background-color: transparent;">
+                                <span class="categorySpan">편의점</span>
+                                <img class="categoryIcon" src="/img/Icons/convenienceStore.png"/>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -843,7 +845,7 @@ function resetSelection() {
 	
 	// 리셋 이후 데이터 재추출
 	fetchRegionData("LT_C_ADSIDO_INFO", null, "#sido_code", "ctprvn_cd", "ctp_kor_nm");
-	}	
+	}
 </script>
 
 </body>
