@@ -1,31 +1,18 @@
 $(document).ready(function() {
 		
-	$('#agreeForm').on('submit', function(event){
-		event.preventDefault();
-		let agreeTerms = $('#agreeTerms').is(':checked');
-		let agreePrivacy = $('#agreePrivacy').is(':checked');
+	$('.btn').on('click', function(event){
 		
-		$('.error-message').hide();
-		$.ajax({
-            type: 'POST',
-            url: $(this).attr('action'),
-            data: {agreeTerms: agreeTerms, agreePrivacy: agreePrivacy},
-            success: function(response) {
-                switch(response.result) {
-                    case 'Not AgreeTerms':
-                        $('.error-message').text(response.message).show();
-                        break;
-                    case 'Not AgreePrivacy':
-                        $('.error-message').text(response.message).show();
-                        break;
-                    case 'success':
-                        window.location.href = "/register";
-                        break;
-                }
-            },
-            error: function(xhr) {
-                $('.error-message').text('서버 오류가 발생했습니다.').show();
-            }
-        });
+		if(!$('#agreeTerms').is(':checked')){
+			$('.error-message').text("이용약관에 동의해주세요.").show();
+			$(this).focus();
+			return;
+		}
+		if(!$('#agreePrivacy').is(':checked')){
+			$('.error-message').text("개인정보 처리방침에 동의해주세요.").show();
+			$(this).focus();
+			return;
+		}
+		
+		location.href = '/register';
 	})
 });

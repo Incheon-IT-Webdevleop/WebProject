@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
+.error-container {
+	font-family: 'nanumsquare';
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    text-align: center;
+    max-width: 400px;
+    margin: 30px auto;
+}
+
+.error-container h1 {
+    color: #e74c3c;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.error-container p {
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.error-container a {
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.error-container a:hover {
+    background-color: #2980b9;
+}

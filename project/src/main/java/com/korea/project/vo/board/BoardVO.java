@@ -10,10 +10,7 @@ public class BoardVO {
 				boardSectors,//업종
 				boardCategory, // 게시판 종류(상권분석, 창업후기) 
 				boardView, // 조회수
-				boardDel, //삭제 여부
-				step, //댓글 순번
-				depth, //계층
-				ref; //게시글 번호
+				boardDel; //삭제 여부
 	private String 	boardBigArea, // 카테고리-시,도
 					boardSmallArea,// 카테고리 - 시, 군, 구
 					boardTitle, //게시글 제목

@@ -1,40 +1,76 @@
-
-.logo {
-  color: red;
-  font-size: 40px;
-  font-weight: bolder;
-}
-
 .header {
 	z-index: 2;
-	width: 80vw;
-	height: 80px;
+	width: 100%;
+	height: 130px;
 	margin: 0 auto;
-	height: 120px;
+
 	background-color: #ffffff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-bottom: 1px solid #ccc; 
+	min-width: 790px; 
+}
+
+.logo-container{
+	width: 240px;
+	height: 98px;
+	/* margin: auto; */
+}
+
+
+img{
+	margin:auto;	
+	width: 100%;
+	height: 100%;
+}
+
+.header-inner{
+	width: 70%;
+	height: 100%;
+}
+
+.header-inner a{
+	text-decoration: none;
+	color:#000;
 }
 
 .header-top {
+	width: 80%;
+	margin: auto;
+	margin-top: 50px;
+}
+
+.header-top-inner{
   list-style-type: none;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding-left: 0px;
 }
 
 .header-login {
   display: flex;
-  gap: 20px;
+  gap: 10px;
+  font-size:1rem;
+  align-items: center;
+  justify-content: center;
   
 }
 
 .header-menu {
-  display: flex;
-  list-style-type: none;
-  justify-content: space-between;
-  font-size: 18px;
-  padding-left: 0px;
-  font-weight: 600;
+	width: 80%;
+	height:60%;
+	margin: auto;
+}
+
+.header-menu-inner{
+	display: flex;
+	list-style-type: none;
+	justify-content: space-between;
+	font-size: 18px;
+	padding-left: 0px;
+	font-weight: 600;
 }
 
 .header-menu li a {
@@ -67,7 +103,7 @@
 .mouse {
   cursor: pointer;
 }
-a{
-	  text-decoration: none;
+header a{
+  text-decoration: none;
 	
 }

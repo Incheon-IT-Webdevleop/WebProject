@@ -1,8 +1,10 @@
 @charset "UTF-8";
 
+@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
 /* src/main/resources/static/css/style.css */
 body {
-    font-family: Arial, sans-serif;
+	font-family: 'nanumsquare';
     background-color: #f0f0f0;
     padding: 20px;
 }

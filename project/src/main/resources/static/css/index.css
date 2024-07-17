@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
+body, html {
+    margin: 0;
+    padding: 0;
+	font-family: 'nanumsquare';
+}
+.hero {
+       background-color: #f8f9fa;
+       width:1680px;
+       height: 80vh;
+       display: flex;
+       position: relative; /* 상대 위치 지정 */
+  	   overflow: hidden; /* 내부 요소의 넘치는 부분 숨기기 */
+}
+.hero img {
+    width: 1680px;
+    height: 100%;
+    margin-bottom: 30px;
+}
+
+.cta-button {
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    background-color: #FF6B6B;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+.cta-button:hover {
+    background-color: #FF8E8E;
+    transform: scale(1.05);
+}
+.features {
+    display: flex;
+    justify-content: space-around;
+    padding: 50px 0;
+    background-color: #f8f9fa;
+}
+.feature {
+    text-align: center;
+    padding: 20px;
+}
+.feature i {
+    font-size: 3rem;
+    color: #4ECDC4;
+    margin-bottom: 15px;
+}
+
+.features a{
+	text-decoration: none;
+	color: #000;
+}
+
+
+
+.stats {
+    background-color: #4ECDC4;
+    color: white;
+    padding: 50px 0;
+    text-align: center;
+}
+.stat-container {
+    display: flex;
+    justify-content: space-around;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.stat h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}

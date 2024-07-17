@@ -15,30 +15,38 @@ spring:
   datasource:
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://localhost:3306/project?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
-      username: ${db_userName}
-      password: ${db_userPwd}
+      ##로컬에서 디비연결
+      #jdbc-url: jdbc:mysql://localhost:3306/project?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+      #username: my_user
+      #password: 1111
+      #배포시 디비
+      jdbc-url: jdbc:mysql://mydb.c72ss0somxra.ap-northeast-2.rds.amazonaws.com:3306/project?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+      username: ${MYSQL_ID}
+      password: ${MYSQL_PWD}
 
   security:
     oauth2:
       client:
         registration:
           google:
-            client-id: ${google_id}
-            client-secret: ${google_pwd}
+            client-id: ${GOOGLE_ID}
+            client-secret: ${GOOGLE_PWD}
             scope:
               - email
               - profile
           naver:
-            client-id: ${naver_id}
-            client-secret: ${naver_pwd}
+            client-id: ${NAVER_ID}
+            client-secret: ${NAVER_PWD}
             scope:
               - name
               - email
               - nickname
             client-name: Naver
             authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8080/login/oauth2/code/naver
+            #redirect-uri: http://localhost:8080/login/oauth2/code/naver
+            #배포용 네이버 리다이레렉트
+            #redirect-uri: http://ec2-43-201-82-12.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/naver
+            redirect-uri: http://43.201.82.12:8080/login/oauth2/code/naver
         provider:
           naver:
             authorization-uri: https://nid.naver.com/oauth2.0/authorize
@@ -49,8 +57,12 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${gmail_id}
-    password: ${gmail_pwd}
+    #로컬용
+    #username: ${gamil_id}
+    #password: ${gmail_pwd}
+    # 배포용
+    username: ${GMAIL_ID}
+    password: ${GMAIL_PWD}
     properties:
       mail:
         debug: true

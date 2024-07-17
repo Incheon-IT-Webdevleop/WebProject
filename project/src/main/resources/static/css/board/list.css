@@ -1,5 +1,13 @@
-body {
-    font-family: Arial, sans-serif;
+@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
+body{
+	margin:0;
+	padding:0;
+	font-family: 'nanumsquare';
+}
+
+board1 {
+
     line-height: 1.6;
     color: #333;
     max-width: 1200px;
@@ -14,8 +22,9 @@ h1 {
 
 /* 테이블 스타일 */
 table {
-    width: 100%;
+    width: 80%;
     border-collapse: collapse;
+    margin:auto;
     margin-bottom: 20px;
 }
 
@@ -36,7 +45,7 @@ tr:nth-child(even) {
 
 /* 버튼 스타일 */
 button {
-    background-color: #4CAF50;
+    background-color: #d72828;
     border: none;
     color: white;
     padding: 10px 20px;
@@ -47,6 +56,10 @@ button {
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 4px;
+}
+
+button:hover {
+    background-color: #ac3131;
 }
 
 label{
@@ -70,46 +83,89 @@ label{
 }
 
 .paging .on {
-    background-color: #4CAF50;
+    background-color: #d72828;
     color: white;
-    border-color: #4CAF50;
+    border-color: #d72828;
 }
 
 /* 검색 폼 스타일 */
 #searchForm {
+	margin:auto;
     margin-top: 20px;
+    
 }
 
 #categoryContainer {
+	width:80%;
     display: flex;
-    /* justify-content: ;  */
+    justify-content:space-around ;
+    margin:auto;  
     margin-bottom: 20px;
+    
+}
+
+#boardTable a{
+	text-decoration: none;
+	color : #000;
+}
+
+#boardTable a:visited{
+	color: #555555;
 }
 
 #categoryContainer div {
-	width:100%;
+	display:flex;
+/* 	justify-content:center; */
+	align-items:center;
+	width:80%;
 	padding:0;
     /* flex: 1; */
    /*  margin-right: 10px; */
+   margin: auto;
 }
 
 #categoryContainer select, #categoryContainer input {
-    width: 60%;
+	box-sizing:border-box;
+    width: 70%;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    /* margin: auto; */
+}
+#categoryContainer select{
+	border-radius: 4px;
 }
 
+#categoryContainer input{
+	width: 70%;
+}
+
+
+
 #searchButton {
-    width: 100%;
+	width: 88px;
     padding: 10px;
-    background-color: #4CAF50;
+    background-color: #d72828;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
+#writeButtonContainer{
+	margin:auto;
+	display: flex;
+	width: 80%;
+	justify-content: flex-end;
+}
+
+
+.textfield{
+	display: flex;
+	justify-content: flex-end;
+}
+
+
 #searchButton:hover {
-    background-color: #45a049;
+    background-color: #ac3131;	
 }
