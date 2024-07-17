@@ -9,10 +9,8 @@
 </head>
 <body>
     <div class="container">
-        <h1 id="logo">
-			<img src="/img/logo/logo.png">
-		</h1>
-       
+        <h1>로고</h1>
+        <h2>회원가입</h2>
         <form id="register-form" action="/register" method="post">
             <input id="userId" class="margin-bottom-0" name="userId" type="text" placeholder="아이디" >
             <div class="email-container">
@@ -28,8 +26,7 @@
             </div>
             <div class="certification-number-container" style="display:none;">
 	            <input type="text" name="certification-number" id="certification-number" placeholder="인증번호 입력">
-	       		<button type="button" name="confirm-btn" id="confirm-btn">이메일 인증</button>
-	       		<div class="timer"></div>
+	       		<button type="button" name="confirm-btn" id="confirm-btn">이메일 인증</button>	
        		</div>
        		<div id="email-send-info" class="info"></div>
             <div id="duplication-id" class="error-message" ></div>

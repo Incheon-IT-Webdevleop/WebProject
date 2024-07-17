@@ -1,7 +1,7 @@
-@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
 
 body {
-	font-family: 'nanumsquare';
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     justify-content: center;
@@ -20,97 +20,54 @@ form {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 1000px;
+    width: 600px;
     max-width: 100%;
-    margin :auto;
 }
 
-.boardTitle{
-	width : 95%;
-	margin : auto;
-	height: 40px;
-}
-
-.boardTitle input{
-	box-sizing: border-box;
-	width : 100%;
-	margin : auto;
-	height: 40px;
-}
-
-#boardCategory{
-	width : 95%;
-	margin : 5px auto;
-	height: 40px;
-	display: flex;
-	border: 1px solid #a2a2a2;
-	box-sizing: border-box;
-	border-radius : 3px;
-	justify-content: center;
-	align-items: center;
-	gap:100px;
-}
-
-#categoryContainer{
-	width : 95%;
-	justify-content: space-between;
-	align-items: center;
-	display: flex;
-	border: 1px solid #a2a2a2;
-	border-radius : 3px;
-	height: 40px;
-	margin : auto;
-	box-sizing: border-box;
-}
-
-#categoryContainer select{
-	width : 100px;
-	padding: 0.5rem 0.25rem
-}
-	
-	
-.cont{
-	width : 95%;
-	justify-content: space-between;
-	align-items: center;
-	display: flex;
-	height: 400px;
-	margin : auto;
-	box-sizing: border-box;
-}
-
-.cont textarea{
-	width : 100%;
-	justify-content: space-between;
-	align-items: center;
-	display: flex;
-	height: 400px;
-	margin : auto;
-	box-sizing: border-box;
-	resize: none;
-}
-
-.submitBtn{
-	width : 95%;
-	margin : 10px auto;
-}
-
-.submitBtn button{
-	display: inline-block;
-    padding: 10px 20px;
+input[type="text"],
+select,
+textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
     margin: 10px 0;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #d72828;
-    border-radius: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    height: 200px;
+    resize: none;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
-    text-align: center;
-    border:none;
-    text-decoration: none;
+    float: right;
 }
 
-button:hover {
-    background-color: #ac3131;
+input[type="submit"]:hover {
+    background-color: #45a049;
 }
 
+#categoryContainer {
+    display: flex;
+    justify-content: space-between;
+}
 
+#categoryContainer div {
+    flex: 1;
+    margin: 0 5px;
+}
+
+#categoryContainer div:first-child {
+    margin-left: 0;
+}
+
+#categoryContainer div:last-child {
+    margin-right: 0;
+}

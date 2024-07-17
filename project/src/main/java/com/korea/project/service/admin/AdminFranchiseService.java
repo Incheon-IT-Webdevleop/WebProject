@@ -20,7 +20,6 @@ public interface AdminFranchiseService {
     int countFranchisesByName(String name);
 
 	List<FranchiseVO> selectAllFranchisesPaged(int offset, int pageSize);
-	List<FranchiseVO> getFranchisesBySectorPaged(int sector, int offset, int limit);
-	int countFranchisesBySector(int sector);
+
 
 }

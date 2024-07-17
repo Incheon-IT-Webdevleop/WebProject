@@ -1,17 +1,23 @@
 package com.korea.project.controller.board;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.korea.project.dto.board.BoardListRequest;
 import com.korea.project.dto.board.BoardResponse;
 import com.korea.project.dto.board.PagingResponse;
+import com.korea.project.mapper.board.BoardMapper;
 import com.korea.project.service.board.BoardService;
 import com.korea.project.vo.board.BoardVO;
 
@@ -92,12 +98,12 @@ public class BoardController {
 		
 		//조회수 올려주기
 		boardService.viewCount(boardIdx);
-		System.out.println(vo);
+		
 		return "board/boardView";
 	}
 	
 	//게시글 수정하기
-	//기존 글을 가져오기
+	//수정한 게시글을 보내주기
 	@GetMapping("update")
 	public String boardUpdate(int boardIdx, Model model) {
 		BoardResponse boardResponse = boardService.findById(boardIdx);
@@ -107,7 +113,7 @@ public class BoardController {
 	}
 	
 	
-	//수정한 게시글을 보내주기
+	//기존 글을 가져오기
 	@PostMapping("update")
 	public String updateForm(@ModelAttribute BoardResponse boardResponse) {
 		System.out.println(boardResponse);

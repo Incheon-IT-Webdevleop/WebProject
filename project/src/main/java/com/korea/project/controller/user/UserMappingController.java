@@ -60,12 +60,11 @@ public class UserMappingController {
     public String pwdCheckPage(	) {
     	
     	SessionUserDTO user = (SessionUserDTO)session.getAttribute("user");
-//    	System.out.println(user);
+    	
     	if(user == null ) {
     		return "redirect:/access-denied";
     	}
-    	//System.out.println(userService.selectBySession(user).getProvider());
-    	if(userService.selectBySession(user).getProviderId() != null) {
+    	if(userService.selectBySession(user).getProvider() != null) {
     		return "redirect:/user/mypage";
     	}
     	
@@ -127,8 +126,6 @@ public class UserMappingController {
   		if(user == null ) {
     		return "redirect:/access-denied";
     	}
-  		
-
   		
   		PagingResponse<BoardResponse> res = userService.myPost(params, user);
   		

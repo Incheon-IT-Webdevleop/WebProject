@@ -6,16 +6,13 @@
     <title>비밀번호 변경</title>
     <link rel="stylesheet" th:href="@{/css/user/changePwdPage.css}">
     <link rel="stylesheet" th:href="@{/css/user/sidebar.css}">
-    <link rel="stylesheet" th:href="@{/css/header.css}" />
 </head>
 <body>
-	<div th:replace="~{fragments/header :: header}"></div>
-	<div th:replace="~{fragments/sidebar :: sidebar}"></div>
     <div class="container">
         <!-- boardList.html에서 사용된 fragment 호출 -->
-		
+		<div th:replace="~{fragments/header :: header}"></div>
 
-        <div class="mypage-content">
+        <div class="content">
             <h1>비밀번호 변경</h1>
             <div class="password-form">
                 <div class="form-group">

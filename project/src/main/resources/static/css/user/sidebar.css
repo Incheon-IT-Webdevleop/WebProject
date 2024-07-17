@@ -1,14 +1,15 @@
 @charset "UTF-8";
 
-.sidebar {
-    margin: 0;
-    padding: 30px 20px;
-    position: absolute;
-    width: 240px;
-    background-color: #2c3e50;
-    height: calc(100vh - 191px);
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
 
+
+.sidebar {
+	margin:0;
+	padding:0;
+	position:absolute;
+    width: 20vh;
+    background-color: #ffebb5;
+    padding: 20px;
+    height: 70vh;
 }
 
 .sidebar ul {
@@ -17,30 +18,10 @@
 }
 
 .sidebar li {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .sidebar a {
     text-decoration: none;
-    color: #ecf0f1;
-    display: block;
-    padding: 12px 15px;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-}
-
-.sidebar a:hover {
-    background-color: #34495e;
-    transform: translateX(5px);
-}
-
-.sidebar i {
-    margin-right: 10px;
-    width: 20px;
-    text-align: center;
-}
-
-.sidebar a.active {
-    background-color: #3498db;
-    color: #fff;
+    color: #333;
 }

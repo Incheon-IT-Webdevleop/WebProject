@@ -1,7 +1,4 @@
-@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
-
 body {
-	font-family: 'nanumsquare';
 	padding:0;
 	margin:0;
     min-width: 640px; /* 페이지 최소 너비 고정 */
@@ -12,12 +9,25 @@ body {
 
 
 .board1 {
-    margin-left: 350px;
+    margin-left: 250px;
     padding: 20px;
     width: 70vw;
 }
 
+/* 미디어 쿼리 */
+@media (max-width: 1240px) {
+    .board1{
+    	width: 70vw;
+    }
+}
 
+/* 미디어 쿼리 */
+@media (max-width: 1100px) {
+    .board1{
+    
+	    left:25%;
+    }
+}
 
 .mouse {
     cursor: pointer;
@@ -107,24 +117,4 @@ button:hover {
 
 #categoryContainer input[type="button"]:hover {
     background-color: #555;
-}
-.paging {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.paging a, .paging span {
-    display: inline-block;
-    padding: 8px 12px;
-    margin: 0 4px;
-    border: 1px solid #ddd;
-    color: #333;
-    text-decoration: none;
-    cursor:pointer;
-}
-.paging .on {
-    background-color: #d72828;
-    color: white;
-    border-color: #d72828;
-    
 }
