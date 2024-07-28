@@ -21,10 +21,6 @@ Fran's는 프랜차이즈 창업 정보를 제공하고, 지역 및 분야별 �
 
 **🔎지역 검색 및 선택을 통한 근처 상권 검색**
 
-## 🐈‍⬛ GitHub
-
-[GitHub - Incheon-IT-Webdevleop/WebProject: 백엔드 최종 프로젝트](https://github.com/Incheon-IT-Webdevleop/WebProject)
-
 ### 📖노션
 
 [노션](https://www.notion.so/Team-Project-Template-4f0be32c156e40f1baaa1dff3ab6e07d?pvs=4)
