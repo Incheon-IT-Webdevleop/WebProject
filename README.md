@@ -27,7 +27,7 @@ Fran's는 프랜차이즈 창업 정보를 제공하고, 지역 및 분야별 �
 
 ## 🛠️ 개발 환경
 
-![Untitled](./readMe/Untitled.png)
+![Untitled](./readMe/lib.png)
 
 ## ↔️ ERD
 
