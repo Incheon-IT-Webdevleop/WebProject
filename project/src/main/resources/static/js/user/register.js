@@ -1,4 +1,36 @@
 $(document).ready(function() {
+<<<<<<< HEAD
+=======
+	var timer;
+    var timeLeft = 300; // 5분 = 300초
+
+    function startTimer() {
+        if (timer) clearInterval(timer); // 기존 타이머가 있다면 초기화
+        timeLeft = 300; // 타이머 초기화
+        updateTimerDisplay(timeLeft);
+
+        timer = setInterval(function() {
+            timeLeft--;
+            updateTimerDisplay(timeLeft);
+
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                $('.timer').text("시간 초과");
+            }
+        }, 1000); // 1초마다 업데이트
+    }
+	
+	function endTimer(){
+		$('.timer').hide();
+	}
+	
+	function updateTimerDisplay(seconds) {
+	    var minutes = Math.floor(seconds / 60);
+	    var remainingSeconds = seconds % 60;
+	    if (remainingSeconds < 10) remainingSeconds = "0" + remainingSeconds;
+	    $('.timer').text(minutes + ":" + remainingSeconds);
+	}
+>>>>>>> a2f75362240bed53d794a7d2eb8a311e76cf20e1
 	
 	// 모든 항목에 정상적으로 수행되었는지 확인하기 위한 객체
 	let registerFlag = {
@@ -102,6 +134,7 @@ $(document).ready(function() {
 	            success: function(response) {
 	                if (response.result === 'success') {
 	                    registerFlag["certificationEMail"] = true;
+						endTimer();
 	                } else {
 						$('#duplication-email').html("인증번호가 다릅니다.<br>다시입력해주세요.").show();
 	                    // 인증 실패 시 할 작업
