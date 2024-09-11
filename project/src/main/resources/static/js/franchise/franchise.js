@@ -27,14 +27,23 @@ function formatMoney(amount) {
 
 // 페이지가 로드될 때 실행되는 함수
 window.onload = function() {
-    // Franchise 데이터 가져오기
-    let avgSalesElement = document.querySelector('.franchise-description .avg-sales');
-    let startupCostElement = document.querySelector('.franchise-description .startup-cost');
+    console.log("Script loaded"); // 스크립트가 로드되었는지 확인
+
+    let avgSalesElement = document.querySelector('.avg-sales');
+    let startupCostElement = document.querySelector('.startup-cost');
     
-    // 값 포맷
-    let avgSales = parseInt(avgSalesElement.textContent.replace(/,/g, ''));
-    let startupCost = parseInt(startupCostElement.textContent.replace(/,/g, ''));
-    
-    avgSalesElement.textContent = formatMoney(avgSales);
-    startupCostElement.textContent = formatMoney(startupCost);
+    if(avgSalesElement && startupCostElement) {
+        console.log("Elements found"); // 요소들을 찾았는지 확인
+        
+        let avgSales = parseInt(avgSalesElement.textContent.replace(/[^\d]/g, ''));
+        let startupCost = parseInt(startupCostElement.textContent.replace(/[^\d]/g, ''));
+        
+        console.log("Avg Sales:", avgSales); // 파싱된 값 확인
+        console.log("Startup Cost:", startupCost);
+
+        avgSalesElement.textContent = formatMoney(avgSales);
+        startupCostElement.textContent = formatMoney(startupCost);
+    } else {
+        console.log("Elements not found"); // 요소를 찾지 못했을 경우
+    }
 };

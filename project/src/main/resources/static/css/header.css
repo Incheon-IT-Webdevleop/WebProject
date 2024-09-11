@@ -12,6 +12,7 @@
 	margin: 0 auto;
 	height: 120px;
 	background-color: #ffffff;
+	max-width: 1200px;
 }
 
 .header-top {
